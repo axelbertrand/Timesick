@@ -482,3 +482,7 @@ MigrationBackup/
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
+
+
+# Never ignore Plugin files
+!/[Aa]ssets/Plugins/*
