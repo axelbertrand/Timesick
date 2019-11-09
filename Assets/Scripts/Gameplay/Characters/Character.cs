@@ -40,7 +40,6 @@ namespace uqac.gameplay
 
             OnPositionChange += TryRotateTowardNewPosition; //lambda function
 
-            rb.velocity = Vector2.right;
         }
 
         //endregion
