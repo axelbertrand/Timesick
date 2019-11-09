@@ -15,6 +15,10 @@ public class StaminaBar : MonoBehaviour
     public Color emptyColor;
 
     public int currentValue;
+    public float pointsOffset = 0.005f;
+
+    public float yAnchorMin = 0.1f;
+    public float yAnchorMax = 0.9f;
 
     public void Initialize(int value)
     {
@@ -25,13 +29,13 @@ public class StaminaBar : MonoBehaviour
 
         for(int i = 0;i<value;i++)
         {
-            float leftAnchor = ((float) i / value) + 0.005f;
-            float rightAnchor = ((float) (i+1) / value) - 0.005f;
+            float leftAnchor = ((float) i / value) + pointsOffset;
+            float rightAnchor = ((float) (i+1) / value) - pointsOffset;
 
             GameObject newPoint = Instantiate(pointExemple);
             newPoint.GetComponent<RectTransform>().SetParent(this.GetComponent<RectTransform>());
-            newPoint.GetComponent<RectTransform>().anchorMin = new Vector2(leftAnchor, 0.1f);
-            newPoint.GetComponent<RectTransform>().anchorMax = new Vector2(rightAnchor, 0.9f);
+            newPoint.GetComponent<RectTransform>().anchorMin = new Vector2(leftAnchor, yAnchorMin);
+            newPoint.GetComponent<RectTransform>().anchorMax = new Vector2(rightAnchor, yAnchorMax);
         
             newPoint.GetComponent<RectTransform>().offsetMin = new Vector2(0, 0);
             newPoint.GetComponent<RectTransform>().offsetMax = new Vector2(0, 0);
