@@ -223,6 +223,8 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  currentHealth: 10
+  maxHealth: 10
 --- !u!1 &9129125821355414155
 GameObject:
   m_ObjectHideFlags: 0

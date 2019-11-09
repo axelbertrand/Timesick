@@ -14,12 +14,24 @@ namespace uqac.timesick.gameplay
         [ShowInInspector]
         protected float speed = 3f;
 
+        [BoxGroup("Health bar"), SerializeField]
+        [ProgressBar(0, "maxHealth", ColorMember = "GetHealthBarColor", Segmented = true)]
+        protected int currentHealth;
+
+        [BoxGroup("Health bar"), SerializeField]
+        protected int maxHealth = 10;
+
+
         private Rigidbody2D rb;
 
-        //Trigger on position change, (PreviousPos, NewPos)
+            //Trigger on position change, (PreviousPos, NewPos)
         protected Action<Vector2, Vector2> OnPositionChange = null;
 
-        //region Properties
+            // PreviousHealth, NewHealth
+        protected Action<int, int> OnHealthChange = null;
+        protected Action OnDeath = null;
+
+        #region Properties
 
         public Vector2 Position
         {
@@ -31,21 +43,48 @@ namespace uqac.timesick.gameplay
             }
         }
 
-        //endregion
+        public int CurrentHealth
+        {
+            get => currentHealth;
+            protected set
+            {
+                //clamp the value within the correct values
+                value = Mathf.Clamp(value, 0, maxHealth);
+
+                if (currentHealth == value)
+                    return;
+
+                OnHealthChange?.Invoke(currentHealth, value);
+                currentHealth = value;
+            }
+        }
+
+        #endregion
 
 
-        //region MonoBehaviour Loop
+        #region MonoBehaviour Loop
 
         protected virtual void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
 
-            OnPositionChange += TryRotateTowardNewPosition; //lambda function
+            OnPositionChange += (oldP, newP) => RotateToward(newP); //lambda function
 
         }
 
-        //endregion
+        #endregion
 
+        public virtual void DealDamage(int damage)
+        {
+            currentHealth -= damage;
+
+            if (currentHealth == 0)
+            {
+                OnDeath?.Invoke();
+            }
+        }
+
+        #region Movements
 
         protected void MoveToward(Vector2 worldPos)
         {
@@ -54,7 +93,6 @@ namespace uqac.timesick.gameplay
 
             Vector2 deltaMovement = speed * Time.deltaTime * direction;
 
-            //rb.velocity = deltaMovement;
             Position += deltaMovement;
         }
 
@@ -77,14 +115,14 @@ namespace uqac.timesick.gameplay
             //transform.rotation = Quaternion.Slerp(transform.rotation, q, RotateSpeed * Time.deltaTime);
         }
 
-        public void OnSight()
+        #endregion
+
+
+        //Get the color of the healt bar in the Inspector's UI. (ODIN)
+        private Color GetHealthBarColor(int value)
         {
-            throw new NotImplementedException();
+            return Color.Lerp(Color.yellow, Color.green, (float)value / maxHealth);
         }
 
-        public void OnLoseOfSight()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

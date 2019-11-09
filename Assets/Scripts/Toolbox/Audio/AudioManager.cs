@@ -13,7 +13,7 @@ namespace Cawotte.Toolbox.Audio
     public class AudioManager : Singleton<AudioManager>
     {
 
-        [SerializeField] private SoundBank soundBank;
+        [SerializeField] private SoundBank soundBank = null;
 
         private AudioSourcePlayer player; //Used for musics
         private string currentlyPlayedMusic = "";

@@ -14,14 +14,14 @@ namespace Cawotte.Toolbox.Audio {
         
         //Individual Sounds
         [SerializeField]
-        private Sound[] sounds;
+        private Sound[] sounds = null;
 
         //List of similar sounds that can be swapped.
         [SerializeField]
-        private SoundList[] soundLists;
+        private SoundList[] soundLists = null;
         
         [SerializeField]
-        private Sound[] musics;
+        private Sound[] musics = null;
 
         public Sound[] Sounds { get => sounds; }
         public Sound[] Musics { get => musics; }

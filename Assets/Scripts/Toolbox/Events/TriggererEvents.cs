@@ -10,7 +10,7 @@
     public class TriggererEvents : MonoBehaviour
     {
         [SerializeField]
-        private List<TriggerType> triggererTypes;
+        private List<TriggerType> triggererTypes = null;
 
         public List<TriggerType> TriggererTypes { get => triggererTypes; }
     }

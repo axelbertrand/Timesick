@@ -11,9 +11,9 @@
     public class SoundList
     {
         [SerializeField]
-        private string listName;
+        private string listName = null;
         [SerializeField]
-        private Sound[] sounds;
+        private Sound[] sounds = null;
 
         public Sound[] Sounds { get => sounds; }
         public string Name { get => listName; }

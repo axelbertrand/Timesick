@@ -7,9 +7,7 @@ namespace uqac.timesick.gameplay
 {
     public interface IDetectable
     {
-        void OnSight();
-        void OnLoseOfSight();
-
+        //Marker interface for Sightables
 
     }
 }

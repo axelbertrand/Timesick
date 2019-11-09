@@ -13,7 +13,7 @@ namespace Cawotte.Toolbox
     public class RulerGameObject : MonoBehaviour
     {
         [SerializeField]
-        Transform target;
+        Transform target = null;
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {

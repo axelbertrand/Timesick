@@ -1,13 +1,13 @@
 ﻿
 namespace uqac.timesick.gameplay
 {
+    using Sirenix.OdinInspector;
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
 
     public class Guard : Character
     {
-
         private DetectableSensor sensor = null;
 
         protected override void Awake()
@@ -16,8 +16,6 @@ namespace uqac.timesick.gameplay
 
             sensor = GetComponentInChildren<DetectableSensor>();
 
-            sensor.OnSight += (dec) => Debug.Log(gameObject.name + " Sighted something!");
-            sensor.OnLoseOfSight += (dec) => Debug.Log(gameObject.name + " unsighted something!");
         }
 
         // Start is called before the first frame update
