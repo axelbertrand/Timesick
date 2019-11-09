@@ -3,6 +3,7 @@
     using System;
     using UnityEngine;
     using UnityEngine.Events;
+    using Cawotte.Toolbox.Attributes;
 
     /// <summary>
     /// Component and base class that holds events that can be called and triggered by other scripts. 

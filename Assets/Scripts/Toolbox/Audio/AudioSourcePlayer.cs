@@ -1,5 +1,6 @@
 ﻿namespace Cawotte.Toolbox.Audio
 {
+    using Cawotte.Toolbox.Attributes;
     using System;
     using System.Collections;
     using System.Collections.Generic;

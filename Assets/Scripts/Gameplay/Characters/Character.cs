@@ -1,12 +1,14 @@
-﻿using Sirenix.OdinInspector;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace uqac.gameplay
+﻿
+namespace uqac.timesick.gameplay
 {
-    public class Character : MonoBehaviour
+    using Sirenix.OdinInspector;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using UnityEngine;
+
+    [Serializable]
+    public class Character : SerializedMonoBehaviour, IDetectable
     {
 
         [ShowInInspector]
@@ -34,7 +36,7 @@ namespace uqac.gameplay
 
         //region MonoBehaviour Loop
 
-        protected void Awake()
+        protected virtual void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
 
@@ -73,6 +75,16 @@ namespace uqac.gameplay
             transform.rotation = q;
 
             //transform.rotation = Quaternion.Slerp(transform.rotation, q, RotateSpeed * Time.deltaTime);
+        }
+
+        public void OnSight()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void OnLoseOfSight()
+        {
+            throw new NotImplementedException();
         }
     }
 }

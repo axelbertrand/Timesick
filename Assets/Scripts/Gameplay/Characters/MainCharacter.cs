@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace uqac.gameplay
+namespace uqac.timesick.gameplay
 {
     public class MainCharacter : Character
     {

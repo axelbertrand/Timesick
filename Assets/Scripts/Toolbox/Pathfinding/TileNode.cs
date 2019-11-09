@@ -2,6 +2,7 @@
 {
     using UnityEngine;
     using System;
+    using Cawotte.Toolbox.Attributes;
 
     /// <summary>
     /// Class that hold a tile data, read from a tilemap.
