@@ -485,4 +485,4 @@ MigrationBackup/
 
 
 # Never ignore Plugin files
-!/[Aa]ssets/Plugins/*
+!/[Aa]ssets/Plugins/**
