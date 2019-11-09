@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class StaminaBar : MonoBehaviour
 {
     private int valueMax;
-    public int value;
 
     public GameObject pointExemple;
 
@@ -17,7 +16,7 @@ public class StaminaBar : MonoBehaviour
 
     public int currentValue;
 
-    public void Initialize()//int value)
+    public void Initialize(int value)
     {
         points = new List<GameObject>();
 
@@ -67,7 +66,7 @@ public class StaminaBar : MonoBehaviour
     {
         if(newValue > currentValue)
         {
-            Refill(currentValue - value); 
+            Refill(currentValue - newValue); 
         }
         else if (currentValue < newValue)
         {

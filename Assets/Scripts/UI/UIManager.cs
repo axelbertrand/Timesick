@@ -10,7 +10,7 @@ public class UIManager : Singleton<UIManager>
     private void Start()
     {
         timer.RunTimer();
-        staminaBar.Initialize();
+        staminaBar.Initialize(5);
     }
 
     public void RunTimer()
