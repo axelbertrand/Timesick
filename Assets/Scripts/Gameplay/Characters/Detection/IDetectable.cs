@@ -9,5 +9,15 @@ namespace uqac.timesick.gameplay
     {
         //Marker interface for Sightables
 
+        GameObject gameObject
+        {
+            get;
+        }
+
+        Vector2 Position
+        {
+            get;
+        }
+
     }
 }

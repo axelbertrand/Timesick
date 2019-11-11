@@ -15,6 +15,7 @@ namespace uqac.timesick.gameplay
             base.Awake();
 
             sensor = GetComponentInChildren<DetectableSensor>();
+            sensor.Eye = transform;
 
         }
 
