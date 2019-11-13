@@ -11,7 +11,7 @@ namespace uqac.timesick.gameplay
     public class Character : SerializedMonoBehaviour, IDetectable
     {
 
-        [ShowInInspector]
+        [SerializeField]
         protected float speed = 3f;
 
         [BoxGroup("Health bar"), SerializeField]
@@ -21,6 +21,8 @@ namespace uqac.timesick.gameplay
         [BoxGroup("Health bar"), SerializeField]
         protected int maxHealth = 10;
 
+        [ShowInInspector, ReadOnly]
+        protected bool isMoving = false;
 
         private Rigidbody2D rb;
 
@@ -59,6 +61,8 @@ namespace uqac.timesick.gameplay
             }
         }
 
+        public bool IsMoving { get => isMoving; }
+
         #endregion
 
 
@@ -96,11 +100,6 @@ namespace uqac.timesick.gameplay
             Position += deltaMovement;
         }
 
-        protected void TryRotateTowardNewPosition(Vector2 oldP, Vector2 newP)
-        {
-            Vector2 dir = newP - oldP;
-            RotateToward(newP);
-        }
 
         protected void RotateToward(Vector2 worldPos)
         {

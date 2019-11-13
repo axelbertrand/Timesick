@@ -47,10 +47,12 @@
 
             if (start.Equals(goal))
             {
+                Debug.Log("Path is empty");
                 return new Stack<TileNode>(); //return empty path.
             }
             if (mapGrid[endGridPos].IsObstacle)
             {
+                Debug.Log("Goal is wall, go to nearest");
                 goal = new StarCell(GetNearestGoal(startGridPos, endGridPos));
             }
 

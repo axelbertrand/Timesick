@@ -3,17 +3,22 @@
     using System.Collections.Generic;
     using UnityEngine;
     using System.Linq;
+    using System;
 
     /// <summary>
     /// Class that contains the resulting Path of a pathfinding algorithm, as a list of tile.
     /// </summary>
+    /// 
+    [Serializable]
     public class TilePath
     {
+        [SerializeField]
         private TileNode[] path;  //Full path
         private TilePath simplifiedPath; //Paths that only contains tiles where a turn need to be made.  
         private Vector3Int[] directionPath; //Path with only the directions to the next tile.
 
-        private int currentTileIndex = 0;
+        private PathIterator iteratorSimplePath;
+        private PathIterator iteratorPath;
 
         public TileNode Start
         {
@@ -37,6 +42,9 @@
 
         public TilePath SimplifiedPath { get => simplifiedPath;  }
 
+        public PathIterator IteratorSimplePath { get => iteratorSimplePath; }
+        public PathIterator IteratorPath { get => iteratorPath; }
+
         public TileNode this[int i]
         {
             get => path[i];
@@ -47,32 +55,20 @@
         /// </summary>
         public TilePath()
         {
-
         }
 
         public TilePath(IEnumerable<TileNode> tiles, bool isSimplified = false)
         {
             this.path = tiles.ToArray();
+            this.iteratorPath = new PathIterator(this);
 
-            /*
             LoadDirectionPath();
 
             if (!isSimplified)
             {
                 LoadSimplifiedPath();
-             */
-        }
-
-        public TileNode Next()
-        {
-            TileNode next = path[currentTileIndex];
-            currentTileIndex++;
-            return next;
-        }
-        
-        public bool HasNext()
-        {
-            return currentTileIndex < Size;
+                this.iteratorSimplePath = new PathIterator(simplifiedPath);
+            }
         }
 
         private void LoadDirectionPath()
@@ -112,6 +108,43 @@
             }
 
             simplifiedPath = new TilePath(simplePath, true);
+        }
+
+        [Serializable]
+        public class PathIterator
+        {
+            private TilePath path;
+
+            [SerializeField]
+            private int currentIndex;
+
+
+            public TileNode Current
+            {
+                get => path[currentIndex];
+            }
+
+            public PathIterator(TilePath path)
+            {
+                this.path = path;
+                this.currentIndex = 0;
+            }
+
+            public void Reset()
+            {
+                currentIndex = 0;
+            }
+
+            public TileNode Next()
+            {
+                return path[++currentIndex];
+            }
+
+            public bool HasNext()
+            {
+                return currentIndex < path.Size - 1;
+            }
+
         }
 
     }

@@ -9,7 +9,7 @@ namespace uqac.timesick.gameplay
     using Sirenix.OdinInspector;
 
     [Serializable]
-    public class DetectableSensor : SerializedMonoBehaviour
+    public class Sensor : SerializedMonoBehaviour
     {
         [ShowInInspector, ReadOnly]
         private List<IDetectable> sighted = new List<IDetectable>();
