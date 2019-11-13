@@ -43,6 +43,11 @@ namespace uqac.timesick.gameplay
 
         private bool HasLineOfSightOn(IDetectable detectable)
         {
+            if (detectable.IsInvisible)
+            {
+                return false;
+            }
+
             GameObject go = detectable.gameObject;
             Vector2 direction = detectable.Position - (Vector2)eye.position;
 

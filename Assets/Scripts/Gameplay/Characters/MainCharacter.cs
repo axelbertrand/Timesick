@@ -20,7 +20,7 @@ namespace uqac.timesick.gameplay
         {
             HandleMovements();
 
-            
+            HandleSkills();
 
         }
 
@@ -44,5 +44,27 @@ namespace uqac.timesick.gameplay
 
         }
 
+        private void HandleSkills()
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                if (IsInvisible)
+                {
+                    return;
+                }
+
+                IsInvisible = true;
+                Debug.Log("Start of invisibility");
+
+                StartCoroutine(WaitAndSetVisible(2f));
+            }
+        }
+
+        private IEnumerator WaitAndSetVisible(float seconds)
+        {
+            yield return new WaitForSeconds(seconds);
+            IsInvisible = false;
+            Debug.Log("End of invisibility");
+        }
     }
 }
