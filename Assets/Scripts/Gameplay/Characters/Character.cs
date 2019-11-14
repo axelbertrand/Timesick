@@ -21,13 +21,6 @@ namespace uqac.timesick.gameplay
         [BoxGroup("Health bar"), SerializeField]
         protected int maxHealth = 10;
 
-        [BoxGroup("Stamina bar"), SerializeField]
-        [ProgressBar(0, "maxStamina", ColorMember = "GetStaminaBarColor", Segmented = true)]
-        protected int currentStamina;
-
-        [BoxGroup("Stamina bar"), SerializeField]
-        protected int maxStamina = 10;
-
 
         private Rigidbody2D rb;
 
@@ -134,12 +127,6 @@ namespace uqac.timesick.gameplay
         private Color GetHealthBarColor(int value)
         {
             return Color.Lerp(Color.yellow, Color.green, (float)value / maxHealth);
-        }
-
-        //Get the color of the stamina bar in the Inspector's UI. (ODIN)
-        private Color GetStaminaBarColor(int value)
-        {
-            return Color.Lerp(Color.yellow, Color.green, (float)value / maxStamina);
         }
     }
 }

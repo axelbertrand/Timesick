@@ -8,6 +8,17 @@ namespace uqac.timesick.gameplay
 {
     public class MainCharacter : Character
     {
+        [BoxGroup("Invisibility cost"), SerializeField]
+        [ProgressBar(0, "maxStamina", ColorMember = "GetStaminaBarColor", Segmented = true)]
+        private int invisibilityCost = 1;
+
+        [BoxGroup("Stamina bar"), SerializeField]
+        [ProgressBar(0, "maxStamina", ColorMember = "GetStaminaBarColor", Segmented = true)]
+        private int currentStamina;
+
+        [BoxGroup("Stamina bar"), SerializeField]
+        private int maxStamina = 10;
+
         SpriteRenderer spriteRenderer;
         private bool isInvisible;
 
@@ -70,14 +81,16 @@ namespace uqac.timesick.gameplay
 
         private void HandleSkills()
         {
+            // Invisibility
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                if (IsInvisible)
+                if (IsInvisible || currentStamina < invisibilityCost)
                 {
                     return;
                 }
 
                 IsInvisible = true;
+                currentStamina -= invisibilityCost;
 
                 Debug.Log("Start of invisibility");
 
@@ -90,6 +103,12 @@ namespace uqac.timesick.gameplay
             yield return new WaitForSeconds(seconds);
             IsInvisible = false;
             Debug.Log("End of invisibility");
+        }
+
+        //Get the color of the stamina bar in the Inspector's UI. (ODIN)
+        private Color GetStaminaBarColor(int value)
+        {
+            return Color.Lerp(Color.yellow, Color.green, (float)value / maxStamina);
         }
     }
 }
