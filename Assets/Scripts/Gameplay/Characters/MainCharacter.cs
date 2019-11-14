@@ -46,7 +46,6 @@ namespace uqac.timesick.gameplay
         void Update()
         {
 
-            //Debug.Log(selected);
             //Moove the mainCharacter if he presses the movement keys
             if(currentAction == null || !inQTE)
             {
@@ -157,12 +156,10 @@ namespace uqac.timesick.gameplay
                 }
                 else
                 {
-                    Debug.Log("on va  deselectionne");
 
                     updatePopup(null);
                     if (selected != null)
                     {
-                        Debug.Log("on deselectionne");
                         selected.GetComponent<Interactive>().Deselect();
                         selected = null;
                     }
@@ -180,7 +177,7 @@ namespace uqac.timesick.gameplay
                 Text combos = popup.GetComponentsInChildren<Text>()[2];
                 Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, transform.GetComponentInChildren<Renderer>().bounds.size.y));
 
-                if (action == currentAction)
+                if (inQTE)
                 {
                     if (action.combos == null)
                     {
@@ -248,8 +245,6 @@ namespace uqac.timesick.gameplay
             {
                 inRange.Remove(collision.gameObject);
             }
-            Debug.Log("On est sortie de la zone d'interaction d'un objet.");
-            Debug.Log(inRange.Count);
         }
 
         //Abstraction functions
