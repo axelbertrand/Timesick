@@ -10,12 +10,12 @@
         // True if the medicine has not yet been stolen, false otherwise
         private bool hasMedicine = true;
 
-        private Renderer renderer;
+        private SpriteRenderer rd;
 
 
         void Start()
         {
-            renderer = GetComponent<SpriteRenderer>();
+            rd = GetComponent<SpriteRenderer>();
         }
 
         void Update()
@@ -26,28 +26,43 @@
         public void Select()
         {
             //Visual feedback, if the mainCharacter can interact wiht this object
-            renderer.material.SetInt("_OutlineEnabled", 1);
-            renderer.transform.localScale = new Vector3(1.15f, 1.15f, 1.15f);
+            rd.material.SetInt("_OutlineEnabled", 1);
+            rd.transform.localScale = new Vector3(1.15f, 1.15f, 1.15f);
         }
 
         public void Deselect()
         {
             //Remove the Visual feedback, if the mainCharacter cannot interact wiht this object any longer
-            renderer.material.SetInt("_OutlineEnabled", 0);
-            renderer.transform.localScale = new Vector3(1f, 1f, 1f);
+            rd.material.SetInt("_OutlineEnabled", 0);
+            rd.transform.localScale = new Vector3(1f, 1f, 1f);
         }
 
         public UserAction GetAction(MainCharacter mainCharacter)
         {
             if (MedicineAvailable())
             {
-                return new UserAction("Voler", Button.A, new List<Button>() { Button.UP, Button.DOWN }, 3, () => mainCharacter.CollectMedicine());
+                return new UserAction("Voler", Button.A, new List<Button>() { Button.UP, Button.DOWN }, 3, () => mainCharacter.CollectMedicine(this));
             }
             else
             {
                 return null;
             }
         }
+
+        public bool StealMedicine()
+        {
+            if (MedicineAvailable())
+            {
+                hasMedicine = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+                
+        }
+
 
         private bool MedicineAvailable()
         {

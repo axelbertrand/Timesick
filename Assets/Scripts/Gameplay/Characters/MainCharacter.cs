@@ -11,6 +11,8 @@ namespace uqac.timesick.gameplay
     {
         #region Variables
         #region Public
+        [SerializeField]
+        private GameObject popup = null;
         #endregion
         #region Private
         //True if the mainCharacter has stolen the medicine successfully
@@ -20,7 +22,9 @@ namespace uqac.timesick.gameplay
         //Contains the current action selected
         private UserAction currentAction;
         //Contains the interactive GameObject currently selected 
-        private GameObject selected;
+        private GameObject selected = null;
+        //True if the mainCharacter is doing a QTE
+        private bool inQTE = false;
 
 
         #endregion
@@ -34,13 +38,20 @@ namespace uqac.timesick.gameplay
         {
             selected = null;
             inRange = new HashSet<GameObject>();
+            updatePopup(null);
+
         }
 
 
         void Update()
         {
+
+            //Debug.Log(selected);
             //Moove the mainCharacter if he presses the movement keys
-            HandleMovements();
+            if(currentAction == null || !inQTE)
+            {
+                HandleMovements();
+            }
 
             //Execute the current action (if one available) if the mainCharacter press the actions's button
             HandleAction();
@@ -84,10 +95,20 @@ namespace uqac.timesick.gameplay
                 if (InputManager.GetButton(currentAction.button))
                 {
                     currentAction.Do();
-                    //updatePopup(currentAction);
+                    updatePopup(currentAction);
+                    if (currentAction.IsDone())
+                    {
+                        currentAction = null;
+                        inQTE = false;
+                    }
+                    else
+                    {
+                        inQTE = true;
+                    }
                 }
                 else
                 {
+                    inQTE = false;
                     currentAction = null;
                 }
             }
@@ -107,29 +128,41 @@ namespace uqac.timesick.gameplay
                     {
                         UserAction action = o.GetComponent<Interactive>().GetAction(this);
                         float distance = (o.transform.position - transform.position).magnitude;
-                        if (distance < distanceMin)
+                        if (action != null && distance < distanceMin )
                         {
                             distanceMin = distance;
                             nearest = o;
+                            bestAction = action;
                         }
                     }
 
                     // On désélectionne l'objet sélectionné auparavant
-                    if (selected != null)
+                    if (selected != null )
+                    {
                         selected.GetComponent<Interactive>().Deselect();
+                    }
 
                     selected = nearest;
-                    Interactive interactive = selected.GetComponent<Interactive>();
-                    // On le sélectionne (mise en surbrillance)
-                    interactive.Select();
+                    // Si l'interactive le plus proche a une action disponible, alors on la selectionne
+                    if ( nearest != null)
+                    {
+                        Interactive interactive = selected.GetComponent<Interactive>();
+                        interactive.Select();
+                    }
 
-                    //updatePopup(bestAction);
+                    //L'action de l'object selectionner devient notre nouvelle action courante
+                    currentAction = bestAction;
+
+                    updatePopup(currentAction);
                 }
                 else
                 {
-                    //updatePopup(null);
+                    Debug.Log("on va  deselectionne");
+
+                    updatePopup(null);
                     if (selected != null)
                     {
+                        Debug.Log("on deselectionne");
                         selected.GetComponent<Interactive>().Deselect();
                         selected = null;
                     }
@@ -138,7 +171,7 @@ namespace uqac.timesick.gameplay
         }
 
         //Display of the popup
-        /*private void updatePopup(UserAction action)
+        private void updatePopup(UserAction action)
         {
             if (action != null)
             {
@@ -193,7 +226,7 @@ namespace uqac.timesick.gameplay
                     popup.gameObject.SetActive(false);
                 }
             }
-        }*/
+        }
 
 
         //Collision with Interactives
@@ -215,12 +248,19 @@ namespace uqac.timesick.gameplay
             {
                 inRange.Remove(collision.gameObject);
             }
+            Debug.Log("On est sortie de la zone d'interaction d'un objet.");
+            Debug.Log(inRange.Count);
         }
 
         //Abstraction functions
-        public void CollectMedicine()
+        public void CollectMedicine(MedicineContainer medicineContainer)
         {
-            hasMedicine = true;
+
+            if (medicineContainer.StealMedicine())
+            {
+                hasMedicine = true;
+            }
+
             //TODO, Start the escape process
         }
         #endregion
