@@ -53,7 +53,6 @@ namespace uqac.timesick.gameplay
         public bool IsInvisible
         {
             get;
-            set;
         }
 
         public int CurrentHealth

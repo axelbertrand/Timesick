@@ -8,20 +8,39 @@ namespace uqac.timesick.gameplay
 {
     public class MainCharacter : Character
     {
-
+        SpriteRenderer spriteRenderer;
+        private bool isInvisible;
 
         //endregion
+        public new bool IsInvisible
+        {
+            get => isInvisible;
+            set
+            {
+                if (isInvisible == value) return;
+                isInvisible = value;
 
+                float alpha = isInvisible ? 0.5f : 1f;
+                Color color = spriteRenderer.color;
+                color.a = alpha;
+                spriteRenderer.color = color;
+            }
+        }
 
         //region MonoBehaviour Loop
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
 
         // Update is called once per frame
         void Update()
         {
             HandleMovements();
-
             HandleSkills();
-
         }
 
         //endregion
@@ -35,6 +54,11 @@ namespace uqac.timesick.gameplay
             if (inputDirection.magnitude < Mathf.Epsilon)
             {
                 return;
+            }
+
+            if (IsInvisible)
+            {
+                IsInvisible = false;
             }
 
             //They are normalized for constant speed in all directions.
@@ -54,6 +78,7 @@ namespace uqac.timesick.gameplay
                 }
 
                 IsInvisible = true;
+
                 Debug.Log("Start of invisibility");
 
                 StartCoroutine(WaitAndSetVisible(2f));
