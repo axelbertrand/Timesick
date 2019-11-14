@@ -8,16 +8,25 @@ namespace uqac.timesick.gameplay
 {
     public class MainCharacter : Character
     {
-        [BoxGroup("Invisibility cost"), SerializeField]
-        [ProgressBar(0, "maxStamina", ColorMember = "GetStaminaBarColor", Segmented = true)]
-        private int invisibilityCost = 1;
-
         [BoxGroup("Stamina bar"), SerializeField]
         [ProgressBar(0, "maxStamina", ColorMember = "GetStaminaBarColor", Segmented = true)]
         private int currentStamina;
 
         [BoxGroup("Stamina bar"), SerializeField]
         private int maxStamina = 10;
+
+        [BoxGroup("Stamina bar"), SerializeField]
+        private int delayAfterStaminaRestauration = 3;
+
+        [BoxGroup("Stamina bar"), SerializeField]
+        private int staminaRestaurationTime = 1;
+
+        [BoxGroup("Invisibility"), SerializeField]
+        [ProgressBar(0, "maxStamina", ColorMember = "GetStaminaBarColor", Segmented = true)]
+        private int invisibilityCost = 1;
+
+        [BoxGroup("Invisibility"), SerializeField]
+        private float invisibilityTime = 2f;
 
         SpriteRenderer spriteRenderer;
         private bool isInvisible;
@@ -91,18 +100,26 @@ namespace uqac.timesick.gameplay
 
                 IsInvisible = true;
                 currentStamina -= invisibilityCost;
-
+                Invoke("RestaureStamina", delayAfterStaminaRestauration);
                 Debug.Log("Start of invisibility");
 
-                StartCoroutine(WaitAndSetVisible(2f));
+                Invoke("WaitAndSetVisible", invisibilityTime);
             }
         }
 
-        private IEnumerator WaitAndSetVisible(float seconds)
+        private void WaitAndSetVisible()
         {
-            yield return new WaitForSeconds(seconds);
             IsInvisible = false;
             Debug.Log("End of invisibility");
+        }
+
+        private void RestaureStamina()
+        {
+            currentStamina = Math.Min(currentStamina + 1, maxStamina);
+            if (currentStamina < maxStamina)
+            {
+                Invoke("RestaureStamina", staminaRestaurationTime);
+            }
         }
 
         //Get the color of the stamina bar in the Inspector's UI. (ODIN)
