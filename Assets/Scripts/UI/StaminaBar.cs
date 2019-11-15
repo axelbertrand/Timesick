@@ -6,19 +6,71 @@ using UnityEngine.UI;
 public class StaminaBar : MonoBehaviour
 {
     private int valueMax;
+    private int currentValue;
 
     public GameObject pointExemple;
 
-    public List<GameObject> points;
+    private List<GameObject> points;
 
-    public Color fullColor;
-    public Color emptyColor;
+    [SerializeField]
+    protected Color fullColor;
+    [SerializeField]
+    protected Color emptyColor;
 
-    public int currentValue;
-    public float pointsOffset = 0.005f;
+    [SerializeField]
+    protected float pointsOffset = 0.005f;
+    [SerializeField]
+    protected float yAnchorMin = 0.1f;
+    [SerializeField]
+    protected float yAnchorMax = 0.9f;
 
-    public float yAnchorMin = 0.1f;
-    public float yAnchorMax = 0.9f;
+    #region Properties
+    public Color FullColor
+    {
+        get => fullColor;
+        protected set
+        {
+            fullColor = value;
+        }
+    }
+
+    public Color EmptyColor
+    {
+        get => emptyColor;
+        protected set
+        {
+            emptyColor = value;
+        }
+    }
+
+    public float PointsOffset
+    {
+        get => pointsOffset;
+        protected set
+        {
+            pointsOffset = value;
+        }
+    }
+
+    public float YAnchorMin
+    {
+        get => yAnchorMin;
+        protected set
+        {
+            yAnchorMin = value;
+        }
+    }
+
+    public float YAnchorMax
+    {
+        get => yAnchorMax;
+        protected set
+        {
+            yAnchorMax = value;
+        }
+    }
+    #endregion
+
 
     public void Initialize(int value)
     {
