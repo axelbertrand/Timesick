@@ -1,4 +1,4 @@
-﻿
+
 namespace uqac.timesick.gameplay
 {
     using Cawotte.Toolbox.Pathfinding;
@@ -21,6 +21,32 @@ namespace uqac.timesick.gameplay
         private StateMachine<Guard> stateMachine;
 
         private const float minDistForNextPath = 0.2f;
+
+        #region Audio properties
+        [Header("Audio properties")]
+        [SerializeField]
+        private string chaseSoundName;
+        [SerializeField]
+        private string lostSoundName;
+
+        public string ChaseSoundName
+        {
+            get => chaseSoundName;
+            protected set
+            {
+                chaseSoundName = value;
+            }
+        }
+
+        public string LostSoundName
+        {
+            get => lostSoundName;
+            protected set
+            {
+                lostSoundName = value;
+            }
+        }
+        #endregion
 
         protected override void Awake()
         {

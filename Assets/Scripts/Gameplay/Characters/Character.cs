@@ -6,10 +6,12 @@ namespace uqac.timesick.gameplay
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using Cawotte.Toolbox.Audio;
 
     [Serializable]
     public class Character : SerializedMonoBehaviour, IDetectable
     {
+        protected AudioSourcePlayer player;
 
         [SerializeField]
         protected float speed = 3f;
@@ -73,7 +75,7 @@ namespace uqac.timesick.gameplay
             rb = GetComponent<Rigidbody2D>();
 
             OnPositionChange += (oldP, newP) => RotateToward(newP); //lambda function
-
+            player = gameObject.AddComponent<AudioSourcePlayer>();
         }
 
         #endregion

@@ -5,6 +5,7 @@
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using Cawotte.Toolbox.Audio;
 
     public class StateChase : State<Guard>
     {
@@ -26,6 +27,7 @@
         public override void StartState()
         {
             stateMachine.Subject.Sensor.OnLoseOfSight += IdleIfCharacter;
+            AudioManager.Instance.PlaySound(StateMachine.Subject.ChaseSoundName);
         }
 
         public override void EndState()
