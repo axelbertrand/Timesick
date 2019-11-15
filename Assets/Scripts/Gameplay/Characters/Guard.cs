@@ -8,15 +8,17 @@ namespace uqac.timesick.gameplay
 
     public class Guard : Character
     {
-        private DetectableSensor sensor = null;
+        private DetectableSensor sightSensor = null;
+        private NoiseDetector hearingSensor = null;
 
         protected override void Awake()
         {
             base.Awake();
 
-            sensor = GetComponentInChildren<DetectableSensor>();
-            sensor.Eye = transform;
+            sightSensor = GetComponentInChildren<DetectableSensor>();
+            sightSensor.Eye = transform;
 
+            hearingSensor = GetComponentInChildren<NoiseDetector>();
         }
 
         // Start is called before the first frame update
@@ -29,18 +31,23 @@ namespace uqac.timesick.gameplay
         void Update()
         {
 
-            List<MainCharacter> mcs = sensor.GetSightedFromType<MainCharacter>();
+            List<MainCharacter> mcs = sightSensor.GetSightedFromType<MainCharacter>();
             if (mcs.Count > 0)
             {
                 RotateToward(mcs[0].Position);
+            }
+            List<Vector4> noises = hearingSensor.GetHeardNoises();
+            if(noises.Count > 0)
+            {
+                GetComponent<SpriteRenderer>().color = Color.red;
             }
         }
 
         private void OnDrawGizmos()
         {
-            if (sensor != null)
+            if (sightSensor != null)
             {
-                foreach (IDetectable detectable in sensor.Sighted)
+                foreach (IDetectable detectable in sightSensor.Sighted)
                 {
                     Gizmos.color = Color.red;
                     Gizmos.DrawLine(transform.position, ((MonoBehaviour)detectable).transform.position);

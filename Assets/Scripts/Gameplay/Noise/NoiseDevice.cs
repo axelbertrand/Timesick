@@ -18,7 +18,6 @@ namespace uqac.timesick.gameplay
         private bool isExploding=false;
         void Start()
         {
-            Debug.Log("Mine Posée.");
             GetComponent<SpriteRenderer>().sprite = idleSprite;
             GetComponent<CircleCollider2D>().enabled = false;
 
@@ -62,7 +61,6 @@ namespace uqac.timesick.gameplay
 
         private void Explode()
         {
-            Debug.Log("triggerExplosion.");
             isExploding = true;
             timeSinceExplosion = explosionTimer - timeBeforeExplosion;
             GetComponent<SpriteRenderer>().sprite = explosionSprite;
@@ -71,8 +69,6 @@ namespace uqac.timesick.gameplay
         }
         private void Exploded()
         {
-            Debug.Log("Destroying.");
-
             Destroy(gameObject, 0.0f);
         }
 
