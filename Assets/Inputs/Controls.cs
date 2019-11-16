@@ -21,7 +21,7 @@ public class @Controls : IInputActionCollection, IDisposable
                 {
                     ""name"": ""ButtonSouth"",
                     ""type"": ""Button"",
-                    ""id"": ""aaba128f-5f35-48cc-8783-cb6f1867cd79"",
+                    ""id"": ""fe61af5a-8bc3-4c70-b5a9-6afccc42005c"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -29,7 +29,7 @@ public class @Controls : IInputActionCollection, IDisposable
                 {
                     ""name"": ""ButtonNorth"",
                     ""type"": ""Button"",
-                    ""id"": ""fe61af5a-8bc3-4c70-b5a9-6afccc42005c"",
+                    ""id"": ""48b65a87-4e59-4b42-9d90-e4a6a9347118"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -37,7 +37,7 @@ public class @Controls : IInputActionCollection, IDisposable
                 {
                     ""name"": ""ButtonWest"",
                     ""type"": ""Button"",
-                    ""id"": ""48b65a87-4e59-4b42-9d90-e4a6a9347118"",
+                    ""id"": ""fe0466cf-238c-4bce-b0fc-7a9d24aa0408"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -45,35 +45,21 @@ public class @Controls : IInputActionCollection, IDisposable
                 {
                     ""name"": ""ButtonEast"",
                     ""type"": ""Button"",
-                    ""id"": ""fe0466cf-238c-4bce-b0fc-7a9d24aa0408"",
+                    ""id"": ""a3b75ae9-dbab-412a-8171-c9b3ad4b785d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Invisibility"",
+                    ""type"": ""Button"",
+                    ""id"": ""a0d82990-ca3f-453b-a35f-298147ce5711"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""8f559ec0-5d37-4ac7-ac63-cfa6a0fd466f"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ButtonSouth"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""23885bc2-c9a6-4549-88fa-00f0992f8b1f"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ButtonSouth"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""856cc6a8-3e06-4b50-a3eb-79ebdb9d9d18"",
@@ -139,6 +125,39 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""ButtonEast"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e77510d0-6360-402d-8f06-9d2f8741c749"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Invisibility"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f9dffa83-603e-44ed-ae31-683f3b9d2c0a"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ButtonSouth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1da01efb-b024-4a6d-9d21-cff9ae17a154"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ButtonSouth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -151,6 +170,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_QTE_ButtonNorth = m_QTE.FindAction("ButtonNorth", throwIfNotFound: true);
         m_QTE_ButtonWest = m_QTE.FindAction("ButtonWest", throwIfNotFound: true);
         m_QTE_ButtonEast = m_QTE.FindAction("ButtonEast", throwIfNotFound: true);
+        m_QTE_Invisibility = m_QTE.FindAction("Invisibility", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -204,6 +224,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_QTE_ButtonNorth;
     private readonly InputAction m_QTE_ButtonWest;
     private readonly InputAction m_QTE_ButtonEast;
+    private readonly InputAction m_QTE_Invisibility;
     public struct QTEActions
     {
         private @Controls m_Wrapper;
@@ -212,6 +233,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @ButtonNorth => m_Wrapper.m_QTE_ButtonNorth;
         public InputAction @ButtonWest => m_Wrapper.m_QTE_ButtonWest;
         public InputAction @ButtonEast => m_Wrapper.m_QTE_ButtonEast;
+        public InputAction @Invisibility => m_Wrapper.m_QTE_Invisibility;
         public InputActionMap Get() { return m_Wrapper.m_QTE; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -233,6 +255,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @ButtonEast.started -= m_Wrapper.m_QTEActionsCallbackInterface.OnButtonEast;
                 @ButtonEast.performed -= m_Wrapper.m_QTEActionsCallbackInterface.OnButtonEast;
                 @ButtonEast.canceled -= m_Wrapper.m_QTEActionsCallbackInterface.OnButtonEast;
+                @Invisibility.started -= m_Wrapper.m_QTEActionsCallbackInterface.OnInvisibility;
+                @Invisibility.performed -= m_Wrapper.m_QTEActionsCallbackInterface.OnInvisibility;
+                @Invisibility.canceled -= m_Wrapper.m_QTEActionsCallbackInterface.OnInvisibility;
             }
             m_Wrapper.m_QTEActionsCallbackInterface = instance;
             if (instance != null)
@@ -249,6 +274,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @ButtonEast.started += instance.OnButtonEast;
                 @ButtonEast.performed += instance.OnButtonEast;
                 @ButtonEast.canceled += instance.OnButtonEast;
+                @Invisibility.started += instance.OnInvisibility;
+                @Invisibility.performed += instance.OnInvisibility;
+                @Invisibility.canceled += instance.OnInvisibility;
             }
         }
     }
@@ -259,5 +287,6 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnButtonNorth(InputAction.CallbackContext context);
         void OnButtonWest(InputAction.CallbackContext context);
         void OnButtonEast(InputAction.CallbackContext context);
+        void OnInvisibility(InputAction.CallbackContext context);
     }
 }

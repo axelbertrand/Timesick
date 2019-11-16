@@ -19,5 +19,9 @@ namespace uqac.timesick.gameplay
             get;
         }
 
+        bool IsInvisible
+        {
+            get;
+        }
     }
 }

@@ -47,6 +47,11 @@ namespace uqac.timesick.gameplay
             }
         }
 
+        public bool IsInvisible
+        {
+            get;
+        }
+
         public int CurrentHealth
         {
             get => currentHealth;
@@ -119,11 +124,10 @@ namespace uqac.timesick.gameplay
         #endregion
 
 
-        //Get the color of the healt bar in the Inspector's UI. (ODIN)
+        //Get the color of the health bar in the Inspector's UI. (ODIN)
         private Color GetHealthBarColor(int value)
         {
             return Color.Lerp(Color.yellow, Color.green, (float)value / maxHealth);
         }
-
     }
 }
