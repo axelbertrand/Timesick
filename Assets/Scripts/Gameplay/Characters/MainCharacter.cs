@@ -100,7 +100,7 @@ namespace uqac.timesick.gameplay
         private void HandleSkills()
         {
             // Invisibility
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 // Return if invisibility skill can't be used
                 if (IsInvisible || currentStamina < invisibilityCost)
