@@ -1,4 +1,4 @@
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,11 +15,17 @@ namespace uqac.timesick.gameplay
         [BoxGroup("Stamina bar"), SerializeField]
         private int maxStamina = 10;
 
+        /**
+         * Delay after starting of stamina regeneration
+         */
         [BoxGroup("Stamina bar"), SerializeField]
-        private int delayAfterStaminaRegeneration = 3;
+        private float staminaRegenerationDelay = 3f;
 
+        /**
+         * Interval between each stamina regeneration
+         */
         [BoxGroup("Stamina bar"), SerializeField]
-        private int staminaRegenerationInterval = 1;
+        private float staminaRegenerationInterval = 1f;
 
         [BoxGroup("Invisibility"), SerializeField]
         [ProgressBar(0, "maxStamina", ColorMember = "GetStaminaBarColor", Segmented = true)]
@@ -30,7 +36,8 @@ namespace uqac.timesick.gameplay
 
         private SpriteRenderer spriteRenderer;
         private bool isInvisible;
-        private float staminaRegenerationTimer = 0f;
+        private float staminaRegenerationDelayTimer = 0f;
+        private float staminaRegenerationIntervalTimer = 0f;
 
         //endregion
         public new bool IsInvisible
@@ -80,7 +87,7 @@ namespace uqac.timesick.gameplay
             if (IsInvisible)
             {
                 IsInvisible = false;
-                staminaRegenerationTimer = 0f;
+                staminaRegenerationDelayTimer = 0f;
             }
 
             //They are normalized for constant speed in all directions.
@@ -103,19 +110,30 @@ namespace uqac.timesick.gameplay
 
                 IsInvisible = true;
                 currentStamina -= invisibilityCost;
+                staminaRegenerationDelayTimer = 0f;
                 Debug.Log("Start of invisibility");
 
                 Invoke("WaitAndSetVisible", invisibilityTime);
             }
-            else if (currentStamina < maxStamina)
+            else if (currentStamina < maxStamina && !IsInvisible)
             {
-                if (staminaRegenerationTimer >= delayAfterStaminaRegeneration)
+                if (staminaRegenerationDelayTimer >= staminaRegenerationDelay)
                 {
-                    currentStamina = Math.Min(currentStamina + 1, maxStamina);
+                    // Delay after stamina regeneration is over
+
+                    if (staminaRegenerationIntervalTimer >= staminaRegenerationInterval)
+                    {
+                        currentStamina = Math.Min(currentStamina + 1, maxStamina);
+                        staminaRegenerationIntervalTimer = 0f;
+                    }
+                    else
+                    {
+                        staminaRegenerationIntervalTimer += Time.deltaTime;
+                    }
                 }
                 else
                 {
-                    staminaRegenerationTimer += Time.deltaTime;
+                    staminaRegenerationDelayTimer += Time.deltaTime;
                 }
             }
         }
@@ -123,7 +141,7 @@ namespace uqac.timesick.gameplay
         private void WaitAndSetVisible()
         {
             IsInvisible = false;
-            staminaRegenerationTimer = 0f;
+            staminaRegenerationDelayTimer = 0f;
             Debug.Log("End of invisibility");
         }
 
