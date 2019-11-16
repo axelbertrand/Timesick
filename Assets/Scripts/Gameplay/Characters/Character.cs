@@ -13,8 +13,10 @@ namespace uqac.timesick.gameplay
     {
         protected AudioSourcePlayer player;
 
-        [SerializeField]
-        protected float speed = 3f;
+        [ShowInInspector]
+        protected float walkingSpeed = 5f;
+        [ShowInInspector]
+        protected float sprintingSpeed = 9f;
 
         [BoxGroup("Health bar"), SerializeField]
         [ProgressBar(0, "maxHealth", ColorMember = "GetHealthBarColor", Segmented = true)]
@@ -97,13 +99,20 @@ namespace uqac.timesick.gameplay
 
         #region Movements
 
-        protected void MoveToward(Vector2 worldPos)
+        protected void MoveToward(Vector2 worldPos, bool sprinting)
         {
 
             Vector2 direction = (worldPos - rb.position).normalized;
 
-            Vector2 deltaMovement = speed * Time.deltaTime * direction;
-
+            Vector2 deltaMovement;
+            if (sprinting)
+            {
+                deltaMovement = sprintingSpeed * Time.deltaTime * direction;
+            }
+            else
+            {
+                deltaMovement = walkingSpeed * Time.deltaTime * direction;
+            }
             Position += deltaMovement;
         }
 

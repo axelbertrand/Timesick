@@ -126,9 +126,14 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  speed: 5
-  currentHealth: 0
+  currentHealth: 5
   maxHealth: 10
+  popup: {fileID: 0}
+  footsteps: {fileID: 4413518753259738751, guid: 1bb5042f4e53e234d9f2950455dc4362,
+    type: 3}
+  noiseDevice: {fileID: 5991989177141580737, guid: 62413e33293765f44a4bd790e6adb22e,
+    type: 3}
+  speed: 5
 --- !u!58 &6989738295210304784
 CircleCollider2D:
   m_ObjectHideFlags: 0
