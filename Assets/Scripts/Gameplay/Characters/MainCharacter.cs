@@ -29,6 +29,12 @@ namespace uqac.timesick.gameplay
         private GameObject selected = null;
         //True if the mainCharacter is doing a QTE
         private bool inQTE = false;
+        
+        //the name is self explanatory 
+        private float timeSinceLastFootstep = 0f;
+        //same
+        [ShowInInspector]
+        private float timeBetweenFootsteps = 0.5f;
 
 
         #endregion
@@ -43,6 +49,7 @@ namespace uqac.timesick.gameplay
             selected = null;
             inRange = new HashSet<GameObject>();
             updatePopup(null);
+            timeSinceLastFootstep = float.PositiveInfinity;
 
         }
 
@@ -84,9 +91,30 @@ namespace uqac.timesick.gameplay
 
                 //They are normalized for constant speed in all directions.
                 inputDirection = inputDirection.normalized;
+                
+                //Handle the change of speed if the mainCharacter is sprinting
+                bool sprinting=false;
+                if (InputManager.GetButton(Button.SPRINT))
+                {
+                    sprinting = true;
+                    if(timeSinceLastFootstep < timeBetweenFootsteps)
+                    {
+                        timeSinceLastFootstep += Time.deltaTime;
+                    }
+                    else
+                    {
+                        Instantiate(footsteps, transform.position, Quaternion.identity);
+                        timeSinceLastFootstep = 0f;
+                    }
+                }
 
-                MoveToward(Position + inputDirection);
+                MoveToward(Position + inputDirection,sprinting);
             }
+        }
+
+        private void HandleFootsteps()
+        {
+
         }
         #endregion
 
@@ -269,7 +297,7 @@ namespace uqac.timesick.gameplay
         #region Abilities
         private void HandleNoiseDevice()
         {
-            if (!inQTE && InputManager.GetButtonDown(Button.Y))
+            if (!inQTE && InputManager.GetButtonDown(Button.NOISEDEVICE))
             {
                 Instantiate(noiseDevice,transform.position, Quaternion.identity);
             }

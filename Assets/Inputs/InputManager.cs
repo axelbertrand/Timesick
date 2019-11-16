@@ -11,7 +11,12 @@ public enum Button
     LEFT,
     RIGHT,
     UP,
-    DOWN
+    DOWN,
+    SPRINT,
+    NOISEDEVICE,
+    INTERACT,
+    INVISIBILITY
+
 }
 
 public enum Axis
@@ -27,17 +32,21 @@ public class InputManager
         switch (button)
         {
             case Button.A:
+            case Button.INTERACT:
                 return Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Joystick1Button0) || Input.GetKeyDown(KeyCode.Joystick2Button0);
             case Button.B:
+            case Button.INVISIBILITY:
                 return Input.GetKeyDown(KeyCode.F) || Input.GetKeyDown(KeyCode.Joystick1Button1) || Input.GetKeyDown(KeyCode.Joystick2Button1);
             case Button.X:
                 return Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Joystick1Button2) || Input.GetKeyDown(KeyCode.Joystick2Button2);
             case Button.Y:
-                return Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.Joystick2Button3);
+            case Button.NOISEDEVICE:
+                return Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.Joystick2Button3);
             case Button.LB:
                 return Input.GetKeyDown(KeyCode.Y) || Input.GetKeyDown(KeyCode.Joystick1Button4) || Input.GetKeyDown(KeyCode.Joystick2Button4);
             case Button.RB:
-                return Input.GetKeyDown(KeyCode.H) || Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Joystick2Button5);
+            case Button.SPRINT:
+                return Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Joystick2Button5);
             case Button.LEFT:
                 return Input.GetAxisRaw("Horizontal") < -.2f;
             case Button.RIGHT:
@@ -55,17 +64,21 @@ public class InputManager
         switch (button)
         {
             case Button.A:
+            case Button.INTERACT:
                 return Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Joystick1Button0) || Input.GetKey(KeyCode.Joystick2Button0);
             case Button.B:
+            case Button.INVISIBILITY:
                 return Input.GetKey(KeyCode.F) || Input.GetKey(KeyCode.Joystick1Button1) || Input.GetKey(KeyCode.Joystick2Button1);
             case Button.X:
-                return Input.GetKey(KeyCode.R) || Input.GetKey(KeyCode.Joystick1Button2) || Input.GetKey(KeyCode.Joystick2Button2);
+                return Input.GetKey(KeyCode.X) || Input.GetKey(KeyCode.Joystick1Button2) || Input.GetKey(KeyCode.Joystick2Button2);
             case Button.Y:
-                return Input.GetKey(KeyCode.G) || Input.GetKey(KeyCode.Joystick1Button3) || Input.GetKey(KeyCode.Joystick2Button3);
+            case Button.NOISEDEVICE:
+                return Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.Joystick1Button3) || Input.GetKey(KeyCode.Joystick2Button3);
             case Button.LB:
                 return Input.GetKey(KeyCode.Y) || Input.GetKey(KeyCode.Joystick1Button4) || Input.GetKey(KeyCode.Joystick2Button4);
             case Button.RB:
-                return Input.GetKey(KeyCode.H) || Input.GetKey(KeyCode.Joystick1Button5) || Input.GetKey(KeyCode.Joystick2Button5);
+            case Button.SPRINT:
+                return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.Joystick1Button5) || Input.GetKey(KeyCode.Joystick2Button5);
             case Button.LEFT:
                 return Input.GetAxisRaw("Horizontal") < -.2f;
             case Button.RIGHT:
@@ -98,8 +111,10 @@ public class InputManager
             switch (button)
             {
                 case Button.A:
+                case Button.INTERACT:
                     return "A";
                 case Button.B:
+                case Button.INVISIBILITY:
                     return "B";
                 case Button.LEFT:
                     return "←";
@@ -116,8 +131,10 @@ public class InputManager
             switch (button)
             {
                 case Button.A:
+                case Button.INTERACT:
                     return "E";
                 case Button.B:
+                case Button.INVISIBILITY:
                     return "F";
                 case Button.LEFT:
                     return "←";

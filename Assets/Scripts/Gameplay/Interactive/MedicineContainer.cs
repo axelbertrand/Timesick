@@ -41,7 +41,7 @@
         {
             if (MedicineAvailable())
             {
-                return new UserAction("Voler", Button.A, new List<Button>() { Button.UP, Button.DOWN }, 3, () => mainCharacter.CollectMedicine(this));
+                return new UserAction("Voler", Button.INTERACT, new List<Button>() { Button.UP, Button.DOWN }, 3, () => mainCharacter.CollectMedicine(this));
             }
             else
             {
