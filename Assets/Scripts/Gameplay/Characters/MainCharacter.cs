@@ -1,4 +1,4 @@
-﻿using Sirenix.OdinInspector;
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,10 +16,10 @@ namespace uqac.timesick.gameplay
         private int maxStamina = 10;
 
         [BoxGroup("Stamina bar"), SerializeField]
-        private int delayAfterStaminaRestauration = 3;
+        private int delayAfterStaminaRegeneration = 3;
 
         [BoxGroup("Stamina bar"), SerializeField]
-        private int staminaRestaurationTime = 1;
+        private int staminaRegenerationInterval = 1;
 
         [BoxGroup("Invisibility"), SerializeField]
         [ProgressBar(0, "maxStamina", ColorMember = "GetStaminaBarColor", Segmented = true)]
@@ -28,8 +28,9 @@ namespace uqac.timesick.gameplay
         [BoxGroup("Invisibility"), SerializeField]
         private float invisibilityTime = 2f;
 
-        SpriteRenderer spriteRenderer;
+        private SpriteRenderer spriteRenderer;
         private bool isInvisible;
+        private float staminaRegenerationTimer = 0f;
 
         //endregion
         public new bool IsInvisible
@@ -79,6 +80,7 @@ namespace uqac.timesick.gameplay
             if (IsInvisible)
             {
                 IsInvisible = false;
+                staminaRegenerationTimer = 0f;
             }
 
             //They are normalized for constant speed in all directions.
@@ -91,8 +93,9 @@ namespace uqac.timesick.gameplay
         private void HandleSkills()
         {
             // Invisibility
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
+                // Return if invisibility skill can't be used
                 if (IsInvisible || currentStamina < invisibilityCost)
                 {
                     return;
@@ -100,26 +103,28 @@ namespace uqac.timesick.gameplay
 
                 IsInvisible = true;
                 currentStamina -= invisibilityCost;
-                Invoke("RestaureStamina", delayAfterStaminaRestauration);
                 Debug.Log("Start of invisibility");
 
                 Invoke("WaitAndSetVisible", invisibilityTime);
+            }
+            else if (currentStamina < maxStamina)
+            {
+                if (staminaRegenerationTimer >= delayAfterStaminaRegeneration)
+                {
+                    currentStamina = Math.Min(currentStamina + 1, maxStamina);
+                }
+                else
+                {
+                    staminaRegenerationTimer += Time.deltaTime;
+                }
             }
         }
 
         private void WaitAndSetVisible()
         {
             IsInvisible = false;
+            staminaRegenerationTimer = 0f;
             Debug.Log("End of invisibility");
-        }
-
-        private void RestaureStamina()
-        {
-            currentStamina = Math.Min(currentStamina + 1, maxStamina);
-            if (currentStamina < maxStamina)
-            {
-                Invoke("RestaureStamina", staminaRestaurationTime);
-            }
         }
 
         //Get the color of the stamina bar in the Inspector's UI. (ODIN)
