@@ -10,10 +10,10 @@ namespace uqac.timesick.gameplay
 
     public class Guard : Character
     {
-        private Sensor sensor = null;
+        private Sensor sightSensor = null;
         private NoiseDetector hearingSensor = null;
 
-        public Sensor Sensor { get => sensor; }
+        public Sensor SightSensor { get => sightSensor; }
 
         [SerializeField]
         private TilePath pathToFollow = null;
@@ -53,8 +53,8 @@ namespace uqac.timesick.gameplay
         {
             base.Awake();
 
-            sensor = GetComponentInChildren<Sensor>();
-            sensor.Eye = transform;
+            sightSensor = GetComponentInChildren<Sensor>();
+            sightSensor.Eye = transform;
 
             hearingSensor = GetComponentInChildren<NoiseDetector>();
             //Init state machine
@@ -75,7 +75,7 @@ namespace uqac.timesick.gameplay
 
             HandleMovements();
 
-            List<MainCharacter> mcs = sensor.GetSightedFromType<MainCharacter>();
+            List<MainCharacter> mcs = sightSensor.GetSightedFromType<MainCharacter>();
             if (mcs.Count > 0)
             {
                 RotateToward(mcs[0].Position);
@@ -119,7 +119,7 @@ namespace uqac.timesick.gameplay
                 //If the guard is not close enough to the next path point, move towards it.
                 if ( Vector2.Distance(Position, current.CenterWorld) > minDistForNextPath)
                 {
-                    MoveToward(current.CenterWorld);
+                    MoveToward(current.CenterWorld,false);
                 }
                 else
                 {
@@ -127,7 +127,7 @@ namespace uqac.timesick.gameplay
                     if (pathToFollow.IteratorSimplePath.HasNext())
                     {
                         current = pathToFollow.IteratorSimplePath.Next();
-                        MoveToward(current.CenterWorld);
+                        MoveToward(current.CenterWorld,false);
                     }
                     //If there' no next one, we stahp
                     else

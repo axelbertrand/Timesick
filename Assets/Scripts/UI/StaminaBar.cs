@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class StaminaBar : MonoBehaviour
 {
-    private int valueMax;
-    private int currentValue;
+    public int valueMax;
+    public int currentValue;
 
     public GameObject pointExemple;
 
@@ -72,17 +72,17 @@ public class StaminaBar : MonoBehaviour
     #endregion
 
 
-    public void Initialize(int value)
+    public void Initialize(int max,int current)
     {
         points = new List<GameObject>();
 
-        valueMax = value;
-        currentValue = value;
+        valueMax = max;
+        currentValue = current;
 
-        for(int i = 0;i<value;i++)
+        for(int i = 0;i< valueMax; i++)
         {
-            float leftAnchor = ((float) i / value) + pointsOffset;
-            float rightAnchor = ((float) (i+1) / value) - pointsOffset;
+            float leftAnchor = ((float) i / valueMax) + pointsOffset;
+            float rightAnchor = ((float) (i+1) / valueMax) - pointsOffset;
 
             GameObject newPoint = Instantiate(pointExemple);
             newPoint.GetComponent<RectTransform>().SetParent(this.GetComponent<RectTransform>());
@@ -94,10 +94,19 @@ public class StaminaBar : MonoBehaviour
 
             newPoint.SetActive(true);
 
+            if(currentValue > i)
+            {
+                newPoint.GetComponent<Image>().color = fullColor;
+            }
+            else
+            {
+                newPoint.GetComponent<Image>().color = emptyColor;
+            }
+
             points.Add(newPoint);
         }
 
-        FillBar();
+        //FillBar();
     }
 
     private void ChangeAll(Color newColor)
@@ -122,11 +131,11 @@ public class StaminaBar : MonoBehaviour
     {
         if(newValue > currentValue)
         {
-            Refill(currentValue - newValue); 
+            Refill(newValue - currentValue); 
         }
-        else if (currentValue < newValue)
+        else if (currentValue > newValue)
         {
-            Consume(newValue - currentValue);
+            Consume(currentValue - newValue);
         }
     }
 
@@ -138,7 +147,7 @@ public class StaminaBar : MonoBehaviour
         }
         else
         {
-            for(int i = currentValue-1; i < currentValue + howMuch; i++)
+            for (int i = currentValue-1; i < currentValue + howMuch ; i++)
             {
                 points[i].GetComponent<Image>().color = fullColor;
             }
@@ -155,6 +164,7 @@ public class StaminaBar : MonoBehaviour
         {
             for (int i = currentValue - 1; i > currentValue - howMuch - 1; i--)
             {
+                Debug.Log("Loop !");
                 points[i].GetComponent<Image>().color = emptyColor;
             }
         }

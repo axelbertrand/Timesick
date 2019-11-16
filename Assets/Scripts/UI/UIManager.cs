@@ -10,7 +10,7 @@ public class UIManager : Singleton<UIManager>
     private void Start()
     {
         timer.RunTimer();
-        staminaBar.Initialize(5);
+        //staminaBar.Initialize(5);
     }
 
     public void RunTimer()
@@ -26,6 +26,12 @@ public class UIManager : Singleton<UIManager>
     public void ResumeTimer()
     {
         timer.ResumeTimer();
+    }
+
+    public void InitializeStaminaBar(int staminaMax, int currentStamina)
+    {
+        staminaBar.Initialize(staminaMax,currentStamina);
+        //staminaBar.UpdateValue(currentStamina);
     }
 
     public void UpdateBar(int value)

@@ -45,6 +45,38 @@ namespace uqac.timesick.gameplay
         private int maxStamina = 10;
 
         
+        /**
+         * Delay after starting of stamina regeneration
+         */
+        [BoxGroup("Stamina bar"), SerializeField]
+        private float staminaRegenerationDelay = 3f;
+
+        /**
+         * Interval between each stamina regeneration
+         */
+        [BoxGroup("Stamina bar"), SerializeField]
+        private float staminaRegenerationInterval = 1f;
+
+        [BoxGroup("Invisibility"), SerializeField]
+        [ProgressBar(0, "maxStamina", ColorMember = "GetStaminaBarColor", Segmented = true)]
+        private int invisibilityCost = 1;
+
+        [BoxGroup("Invisibility"), SerializeField]
+        private float invisibilityTime = 2f;
+
+        private SpriteRenderer spriteRenderer;
+        private bool isInvisible;
+        private float staminaRegenerationDelayTimer = 0f;
+        private float staminaRegenerationIntervalTimer = 0f;
+
+        //endregion
+        public bool IsInvisible
+        {
+            get => isInvisible;
+            set
+            {
+                if (isInvisible == value) return;
+                isInvisible = value;
 
                 float alpha = isInvisible ? 0.5f : 1f;
                 Color color = spriteRenderer.color;
@@ -52,7 +84,6 @@ namespace uqac.timesick.gameplay
                 spriteRenderer.color = color;
             }
         }
-
 
         protected override void Awake()
         {
@@ -70,7 +101,7 @@ namespace uqac.timesick.gameplay
             inRange = new HashSet<GameObject>();
             updatePopup(null);
             timeSinceLastFootstep = float.PositiveInfinity;
-
+            UIManager.Instance.InitializeStaminaBar(maxStamina,currentStamina);
         }
 
 
@@ -88,9 +119,6 @@ namespace uqac.timesick.gameplay
             UpdateSelection();
 
             HandleNoiseDevice();
-
-
-
 
             HandleSkills();
         }
@@ -113,7 +141,7 @@ namespace uqac.timesick.gameplay
                 if (IsInvisible)
                 {
                     IsInvisible = false;
-                    taminaRegenerationDelayTimer = 0f;
+                    staminaRegenerationDelayTimer = 0f;
                 }
 
                 //They are normalized for constant speed in all directions.
@@ -333,7 +361,7 @@ namespace uqac.timesick.gameplay
         private void HandleSkills()
         {
             // Invisibility
-            if (Input.GetKeyDown(KeyCode.E))
+            if (InputManager.GetButtonDown(Button.INVISIBILITY))
             {
                 // Return if invisibility skill can't be used
                 if (IsInvisible || currentStamina < invisibilityCost)

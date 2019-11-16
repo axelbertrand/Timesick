@@ -26,7 +26,7 @@
 
         public override void StartState()
         {
-            stateMachine.Subject.Sensor.OnLoseOfSight += IdleIfCharacter;
+            stateMachine.Subject.SightSensor.OnLoseOfSight += IdleIfCharacter;
 
             if(!StateMachine.Subject.ChaseSoundName.Equals(""))
             {
@@ -36,7 +36,7 @@
 
         public override void EndState()
         {
-            stateMachine.Subject.Sensor.OnLoseOfSight -= IdleIfCharacter;
+            stateMachine.Subject.SightSensor.OnLoseOfSight -= IdleIfCharacter;
             StateMachine.Subject.StopMovement();
         }
 

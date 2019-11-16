@@ -20,12 +20,12 @@
 
         public override void StartState()
         {
-            stateMachine.Subject.Sensor.OnSight += PursuitDetectableIfCharacter;
+            stateMachine.Subject.SightSensor.OnSight += PursuitDetectableIfCharacter;
         }
 
         public override void EndState()
         {
-            stateMachine.Subject.Sensor.OnSight -= PursuitDetectableIfCharacter;
+            stateMachine.Subject.SightSensor.OnSight -= PursuitDetectableIfCharacter;
         }
 
 
