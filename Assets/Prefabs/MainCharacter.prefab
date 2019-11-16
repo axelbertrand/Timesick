@@ -117,6 +117,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25c21e35723d8864b95be51941743127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  currentHealth: 5
+  maxHealth: 10
+  popup: {fileID: 9169798961506460669, guid: 131300922a19c9243aa95c7e64b6841e, type: 3}
+  footsteps: {fileID: 0}
+  noiseDevice: {fileID: 5991989177141580737, guid: 62413e33293765f44a4bd790e6adb22e,
+    type: 3}
 --- !u!58 &6989738295210304784
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -13,6 +13,10 @@ namespace uqac.timesick.gameplay
         #region Public
         [SerializeField]
         private GameObject popup = null;
+        [SerializeField]
+        private GameObject footsteps = null;
+        [SerializeField]
+        private GameObject noiseDevice = null;
         #endregion
         #region Private
         //True if the mainCharacter has stolen the medicine successfully
@@ -47,16 +51,16 @@ namespace uqac.timesick.gameplay
         {
 
             //Moove the mainCharacter if he presses the movement keys
-            if(currentAction == null || !inQTE)
-            {
-                HandleMovements();
-            }
+            HandleMovements();
+
 
             //Execute the current action (if one available) if the mainCharacter press the actions's button
             HandleAction();
 
             //Update the current selection of the nearest Interactive
             UpdateSelection();
+
+            HandleNoiseDevice();
 
 
 
@@ -68,20 +72,21 @@ namespace uqac.timesick.gameplay
         #region Movement
         private void HandleMovements()
         {
-
-            //Read the direction of the current inputs
-            Vector2 inputDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-            if (inputDirection.magnitude < Mathf.Epsilon)
+            if (currentAction == null || !inQTE)
             {
-                return;
+                //Read the direction of the current inputs
+                Vector2 inputDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+                if (inputDirection.magnitude < Mathf.Epsilon)
+                {
+                    return;
+                }
+
+                //They are normalized for constant speed in all directions.
+                inputDirection = inputDirection.normalized;
+
+                MoveToward(Position + inputDirection);
             }
-
-            //They are normalized for constant speed in all directions.
-            inputDirection = inputDirection.normalized;
-
-            MoveToward(Position + inputDirection);
-
         }
         #endregion
 
@@ -257,6 +262,17 @@ namespace uqac.timesick.gameplay
             }
 
             //TODO, Start the escape process
+        }
+        #endregion
+
+
+        #region Abilities
+        private void HandleNoiseDevice()
+        {
+            if (!inQTE && InputManager.GetButtonDown(Button.Y))
+            {
+                Instantiate(noiseDevice,transform.position, Quaternion.identity);
+            }
         }
         #endregion
     }
