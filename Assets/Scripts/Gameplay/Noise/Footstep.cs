@@ -11,9 +11,10 @@ namespace uqac.timesick.gameplay
         public Sprite noiseSprite;
 
         private float timer = 0;
-
+        private CircleCollider2D collider;
         void Start()
         {
+            collider = GetComponent<CircleCollider2D>();
         }
 
         // Update is called once per frame
@@ -22,6 +23,7 @@ namespace uqac.timesick.gameplay
             timer += Time.deltaTime;
             float sizeNoise = noiseSpeed * timer;
             transform.localScale = new Vector3(sizeNoise, sizeNoise, 1);
+
             if (sizeNoise > noiseRange)
             {
                 Die();
