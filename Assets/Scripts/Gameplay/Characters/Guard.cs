@@ -25,9 +25,9 @@ namespace uqac.timesick.gameplay
         #region Audio properties
         [Header("Audio properties")]
         [SerializeField]
-        private string chaseSoundName;
+        private string chaseSoundName="";
         [SerializeField]
-        private string lostSoundName;
+        private string lostSoundName="";
 
         public string ChaseSoundName
         {

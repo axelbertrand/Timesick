@@ -27,7 +27,11 @@
         public override void StartState()
         {
             stateMachine.Subject.Sensor.OnLoseOfSight += IdleIfCharacter;
-            AudioManager.Instance.PlaySound(StateMachine.Subject.ChaseSoundName);
+
+            if(!StateMachine.Subject.ChaseSoundName.Equals(""))
+            {
+                AudioManager.Instance.PlaySound(StateMachine.Subject.ChaseSoundName);
+            }
         }
 
         public override void EndState()
