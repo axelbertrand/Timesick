@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cawotte.Toolbox.Audio;
 
 namespace uqac.timesick.gameplay
 {
@@ -373,7 +374,8 @@ namespace uqac.timesick.gameplay
                 currentStamina -= invisibilityCost;
                 staminaRegenerationDelayTimer = 0f;
                 Debug.Log("Start of invisibility");
-
+                //TODO
+                AudioManager.Instance.PlaySound("Invisibility");
                 Invoke("WaitAndSetVisible", invisibilityTime);
             }
             else if (currentStamina < maxStamina && !IsInvisible)

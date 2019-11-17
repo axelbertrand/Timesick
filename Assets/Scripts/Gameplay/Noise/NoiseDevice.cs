@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cawotte.Toolbox.Audio;
 
 namespace uqac.timesick.gameplay
 {
@@ -65,7 +66,8 @@ namespace uqac.timesick.gameplay
             timeSinceExplosion = explosionTimer - timeBeforeExplosion;
             GetComponent<SpriteRenderer>().sprite = explosionSprite;
             GetComponent<CircleCollider2D>().enabled = true;
-
+            //TODO
+            AudioManager.Instance.PlaySound("Grenade");
         }
         private void Exploded()
         {

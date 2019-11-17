@@ -21,5 +21,21 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 500
     source: {fileID: 0}
+  - name: Grenade
+    clip: {fileID: 8300000, guid: 75c85d796d5c16643bb300a23d6ee24b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    minDistance: 0
+    maxDistance: 500
+    source: {fileID: 0}
+  - name: Invisibility
+    clip: {fileID: 8300000, guid: 8ace0cc349b07bd42908cd9a0cd19549, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    minDistance: 0
+    maxDistance: 500
+    source: {fileID: 0}
   soundLists: []
   musics: []
