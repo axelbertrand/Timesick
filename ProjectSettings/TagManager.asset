@@ -16,9 +16,9 @@ TagManager:
   - Character
   - Wall
   - LineOfSight
-  - Patrol Point
+  - OnlyCharacter
   - Guard
-  - 
+  - Bullet
   - 
   - 
   - 

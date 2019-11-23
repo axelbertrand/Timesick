@@ -22,6 +22,7 @@
 
             StateMachine.Subject.RotateToward(player.Position);
 
+            StateMachine.Subject.TryShootAt(player.Position);
         }
 
         public override void StartState()
@@ -30,6 +31,8 @@
 
 
             StateMachine.Subject.StopMovement();
+
+            StateMachine.Subject.SetLineOfSightAsExtended(true);
 
 
             if (!StateMachine.Subject.ChaseSoundName.Equals(""))
@@ -40,8 +43,8 @@
 
         public override void EndState()
         {
+            StateMachine.Subject.SetLineOfSightAsExtended(false);
             stateMachine.Subject.SightSensor.OnPlayerLostOfSight -= SearchForPlayer;
-            StateMachine.Subject.StopMovement();
         }
 
         private void SearchForPlayer(MainCharacter player)

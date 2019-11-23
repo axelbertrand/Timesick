@@ -25,6 +25,13 @@ namespace uqac.timesick.gameplay
         [BoxGroup("Health bar"), SerializeField]
         protected int maxHealth = 10;
 
+
+        [BoxGroup("Health bar"), SerializeField]
+        protected float invincibilityFrame = 1f;
+
+        [ShowInInspector, ReadOnly]
+        protected bool isInvincible = false;
+
         [ShowInInspector, ReadOnly]
         protected bool isMoving = false;
 
@@ -93,11 +100,20 @@ namespace uqac.timesick.gameplay
 
         public virtual void DealDamage(int damage)
         {
-            currentHealth -= damage;
+            if (isInvincible)
+            {
+                return;
+            }
+
+            CurrentHealth -= damage;
 
             if (currentHealth == 0)
             {
                 OnDeath?.Invoke();
+            }
+            else
+            {
+                StartCoroutine(_InvincibilityFrames(invincibilityFrame));
             }
         }
 
@@ -139,6 +155,14 @@ namespace uqac.timesick.gameplay
 
         #endregion
 
+        private IEnumerator _InvincibilityFrames(float invincibilityLenght)
+        {
+            isInvincible = true;
+
+            yield return new WaitForSeconds(invincibilityLenght);
+
+            isInvincible = false;
+        }
 
         //Get the color of the health bar in the Inspector's UI. (ODIN)
         private Color GetHealthBarColor(int value)

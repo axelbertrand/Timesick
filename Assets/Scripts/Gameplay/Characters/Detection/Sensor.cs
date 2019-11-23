@@ -46,6 +46,13 @@ namespace uqac.timesick.gameplay
             OnLoseOfSight += InvokeOnPlayerLostOfSightIfSighted;
         }
 
+        public void SetSightLenght(float scale)
+        {
+            Vector3 newScale = transform.localScale;
+            newScale.x = scale;
+            transform.localScale = newScale;
+        }
+
         public List<T> GetSightedFromType<T>()
         {
             return sighted.OfType<T>().ToList();

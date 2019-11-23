@@ -11,18 +11,44 @@ namespace uqac.timesick.gameplay
 
     public class Guard : Character
     {
+        #region Members and Properties
         private Sensor sightSensor = null;
         private NoiseDetector hearingSensor = null;
 
-        public Sensor SightSensor { get => sightSensor; }
-        public NoiseDetector HearingSensor { get => hearingSensor; }
+        [SerializeField, Required, AssetsOnly]
+        private GameObject bulletPrefab;
 
-        public Action<PatrolPoint> OnPatrolVisit = null;
+        [Title("Sensor")]
+        [SerializeField]
+        private float defaultLineOfSightSize = 5.6f;
+        [SerializeField]
+        private float shootLineOfSightMultiplier = 1.3f;
+
+        [Title("Shooting")]
+        [SerializeField]
+        private float rateOfFire = 2f;
+        private float timerBulletFire = 0f;
+
+        [Title("Pathfinding")]
         [SerializeField]
         private TilePath pathToFollow = null;
 
+
+        //ACTION
+        public Action<PatrolPoint> OnPatrolVisit = null;
+
+
+        [Title("AI")]
+        //STATE MACHINE
         [SerializeField]
         private StateMachine<Guard> stateMachine;
+
+        //SENSOR
+        public Sensor SightSensor { get => sightSensor; }
+        public NoiseDetector HearingSensor { get => hearingSensor; }
+
+
+
 
         private const float minDistForNextPath = 0.2f;
 
@@ -53,6 +79,7 @@ namespace uqac.timesick.gameplay
 
         #endregion
 
+        #endregion
         protected override void Awake()
         {
             base.Awake();
@@ -88,6 +115,11 @@ namespace uqac.timesick.gameplay
             {
                 GetComponent<SpriteRenderer>().color = Color.red;
             } */
+
+            if (timerBulletFire > 0f)
+            {
+                timerBulletFire -= Time.deltaTime;
+            }
         }
 
         public void StopMovement()
@@ -142,6 +174,42 @@ namespace uqac.timesick.gameplay
             }
 
             isMoving = hasPath;
+        }
+
+        /// <summary>
+        /// If false, set line of sight to default size, else to extended size.
+        /// Extended size is only used for SHOOTING to avoid lose of sight too fast.
+        /// </summary>
+        /// <param name="isExtended"></param>
+        public void SetLineOfSightAsExtended(bool isExtended)
+        {
+            if (!isExtended)
+            {
+                sightSensor.SetSightLenght(defaultLineOfSightSize);
+            }
+            else
+            {
+                sightSensor.SetSightLenght(defaultLineOfSightSize * shootLineOfSightMultiplier);
+            }
+        }
+
+        public void TryShootAt(Vector2 pos)
+        {
+            if (timerBulletFire <= 0f)
+            {
+                ShootAt(pos);
+            }
+        }
+
+        private void ShootAt(Vector2 pos)
+        {
+            Bullet bullet = GameObject.Instantiate(bulletPrefab, Position, Quaternion.identity).GetComponent<Bullet>();
+
+            bullet.Direction = pos - Position;
+
+            bullet.gameObject.SetActive(true);
+
+            timerBulletFire = 1 / rateOfFire;
         }
 
         private void OnDrawGizmos()
