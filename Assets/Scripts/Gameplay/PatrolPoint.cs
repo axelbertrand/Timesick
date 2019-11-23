@@ -8,7 +8,7 @@ namespace uqac.timesick.gameplay
     public class PatrolPoint : MonoBehaviour
     {
 
-        private float timeSinceLastVisit = 0f;
+        private float timeSinceLastVisit = 1f;
 
         public float TimeSinceLastVisit { get => timeSinceLastVisit; }
 

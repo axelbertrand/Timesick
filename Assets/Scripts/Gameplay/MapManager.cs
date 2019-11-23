@@ -76,64 +76,55 @@ namespace uqac.timesick.gameplay
         {
 
         }
-
         public PatrolPoint PickPointToPatrol(Guard guard)
         {
-            //nb of closest point to choose from
-            int nbClosestPoint = 5;
+            bool printDebug = false;
 
-            List<PatrolPoint> pickPool = new List<PatrolPoint>();
+            Dictionary<PatrolPoint, float> pickPool = new Dictionary<PatrolPoint, float>();
 
-            //Pick the X closest patrol points
+            Dictionary<PatrolPoint, float> valuePool = new Dictionary<PatrolPoint, float>();
+
+            float cumulatedRandomCoeff = 0f;
+
             foreach (PatrolPoint pp in patrolPoints)
             {
-                //If there's not enough point in the pool, add them
-                if (pickPool.Count <= nbClosestPoint)
+                float coeffValue = pp.TimeSinceLastVisit *
+                    (1 / (2f * Vector2.Distance(guard.Position, pp.transform.position)));
+                cumulatedRandomCoeff += coeffValue;
+
+                pickPool.Add(pp, cumulatedRandomCoeff);
+
+                if (printDebug)
                 {
-                    pickPool.Add(pp);
-
-                }
-                //Else, replace with a new one if it's closer that the farthest one
-                else
-                {
-
-                    //Order by descending distance with guard
-                    pickPool = pickPool.OrderByDescending(
-                        (point) => Vector2.Distance(guard.Position, point.transform.position)
-                    ).ToList();
-
-                    float distanceCurrentPoint = Vector2.Distance(guard.Position, pp.transform.position);
-                    float distanceFarthestPoint = Vector2.Distance(guard.Position, pickPool[0].transform.position);
-
-                    if (distanceCurrentPoint < distanceFarthestPoint)
-                    {
-                        pickPool.RemoveAt(0);
-                        pickPool.Insert(0, pp);
-                    }
+                    valuePool.Add(pp, coeffValue);
                 }
             }
 
-            //Pick one randomly with bias toward the least visited one.
-            float randomRange = 0f;
-            foreach (PatrolPoint pp in pickPool)
+            float randomVal = UnityEngine.Random.Range(0, cumulatedRandomCoeff);
+
+            //PRINT
+            if (printDebug)
             {
-                randomRange += pp.TimeSinceLastVisit;
+                Debug.Log("Chosen value : " + randomVal.ToString("n2"));
+                foreach (KeyValuePair<PatrolPoint, float> pick in pickPool.OrderBy(key => key.Value))
+                {
+                    Debug.Log(pick.Key.gameObject.name +  " coeff : " + valuePool[pick.Key].ToString("n2") + ", Proba : " + (valuePool[pick.Key] / cumulatedRandomCoeff).ToString("n2"), pick.Key);
+                }
+
             }
-
-            float randVal = UnityEngine.Random.Range(0, randomRange);
-
-            randomRange = 0f;
-            foreach (PatrolPoint pp in pickPool)
+            //We iterate through the list, and return the first point with cumulated above the picked value.
+            foreach (KeyValuePair<PatrolPoint, float> pick in pickPool.OrderBy(key => key.Value))
             {
-                randomRange += pp.TimeSinceLastVisit;
-
-                if (randVal <= randomRange)
-                    return pp;
+                if (randomVal <= pick.Value)
+                {
+                    //Debug.Log("Chosen patrol : " + valuePool[pick.Key], pick.Key);
+                    return pick.Key;
+                }
             }
 
             Debug.Log("No point picked ! return last");
 
-            return pickPool[pickPool.Count - 1];
+            return null;
         }
 
         public TilePath GetPathFromTo(Vector2 startWorldpos, Vector2 endWorldPos)
