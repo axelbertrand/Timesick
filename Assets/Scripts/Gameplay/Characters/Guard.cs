@@ -7,6 +7,7 @@ namespace uqac.timesick.gameplay
     using System.Collections;
     using System.Collections.Generic;
     using UnityEngine;
+    using System;
 
     public class Guard : Character
     {
@@ -14,7 +15,9 @@ namespace uqac.timesick.gameplay
         private NoiseDetector hearingSensor = null;
 
         public Sensor SightSensor { get => sightSensor; }
+        public NoiseDetector HearingSensor { get => hearingSensor; }
 
+        public Action<PatrolPoint> OnPatrolVisit = null;
         [SerializeField]
         private TilePath pathToFollow = null;
 
@@ -47,6 +50,7 @@ namespace uqac.timesick.gameplay
                 lostSoundName = value;
             }
         }
+
         #endregion
 
         protected override void Awake()
@@ -57,15 +61,18 @@ namespace uqac.timesick.gameplay
             sightSensor.Eye = transform;
 
             hearingSensor = GetComponentInChildren<NoiseDetector>();
-            //Init state machine
-            stateMachine = new StateMachine<Guard>(new StateIdle(), this);
 
         }
 
         // Start is called before the first frame update
         void Start()
         {
+            MapManager.Instance.RegisterGuard(this);
 
+
+            //Init state machine
+            stateMachine = new StateMachine<Guard>(
+                new StatePatrol(MapManager.Instance.PickPointToPatrol(this)), this);
         }
 
         // Update is called once per frame
@@ -75,16 +82,12 @@ namespace uqac.timesick.gameplay
 
             HandleMovements();
 
-            List<MainCharacter> mcs = sightSensor.GetSightedFromType<MainCharacter>();
-            if (mcs.Count > 0)
-            {
-                RotateToward(mcs[0].Position);
-            }
+            /*
             List<Vector4> noises = hearingSensor.GetHeardNoises();
             if(noises.Count > 0)
             {
                 GetComponent<SpriteRenderer>().color = Color.red;
-            }
+            } */
         }
 
         public void StopMovement()
@@ -158,6 +161,12 @@ namespace uqac.timesick.gameplay
 
                 Gizmos.color = stateMachine.CurrentState.stateColor;
                 Gizmos.DrawSphere(Position, 0.2f);
+
+                if (stateMachine.CurrentState is StatePatrol)
+                {
+                    Gizmos.DrawLine(Position, ((StatePatrol)stateMachine.CurrentState).PatrolPoint.transform.position);
+
+                }
             }
         }
     }

@@ -23,6 +23,13 @@ namespace uqac.timesick.gameplay
         [HideInInspector]
         public Action<IDetectable> OnLoseOfSight = null; //events to invoke on lose of sight
 
+
+        [HideInInspector]
+        public Action<MainCharacter> OnPlayerSight = null; 
+
+        [HideInInspector]
+        public Action<MainCharacter> OnPlayerLostOfSight = null; 
+
         private Transform eye = null;
 
         public List<IDetectable> Sighted {
@@ -34,6 +41,9 @@ namespace uqac.timesick.gameplay
         private void Awake()
         {
             sighted = new List<IDetectable>();
+
+            OnSight += InvokeOnPlayerSightIfSighted;
+            OnLoseOfSight += InvokeOnPlayerLostOfSightIfSighted;
         }
 
         public List<T> GetSightedFromType<T>()
@@ -149,6 +159,22 @@ namespace uqac.timesick.gameplay
             {
                 //Remove it from the sighted list, and invoke events it it was in the list.
                 RemoveFromSight(detectable);
+            }
+        }
+
+        private void InvokeOnPlayerSightIfSighted(IDetectable detectable)
+        {
+            if (detectable is MainCharacter)
+            {
+                OnPlayerSight?.Invoke((MainCharacter)detectable);
+            }
+        }
+
+        private void InvokeOnPlayerLostOfSightIfSighted(IDetectable detectable)
+        {
+            if (detectable is MainCharacter)
+            {
+                OnPlayerLostOfSight?.Invoke((MainCharacter)detectable);
             }
         }
 

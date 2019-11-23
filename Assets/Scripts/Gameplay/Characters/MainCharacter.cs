@@ -98,6 +98,8 @@ namespace uqac.timesick.gameplay
         #region MonoBehaviour
         void Start()
         {
+            MapManager.Instance.RegisterPlayer(this);
+
             selected = null;
             inRange = new HashSet<GameObject>();
             updatePopup(null);
@@ -306,7 +308,7 @@ namespace uqac.timesick.gameplay
             }
             else
             {
-                if (popup.activeSelf)
+                if ( popup != null && popup.activeSelf)
                 {
                     popup.GetComponentInChildren<Slider>().gameObject.transform.localScale = new Vector3(0, 0, 0);
                     popup.gameObject.SetActive(false);

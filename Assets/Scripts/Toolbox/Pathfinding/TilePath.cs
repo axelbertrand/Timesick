@@ -110,12 +110,10 @@
             simplifiedPath = new TilePath(simplePath, true);
         }
 
-        [Serializable]
         public class PathIterator
         {
             private TilePath path;
 
-            [SerializeField]
             private int currentIndex;
 
 

@@ -43,6 +43,7 @@ namespace Cawotte.Toolbox.AI
         public virtual void EndState()
         {
         }
+
     }
 }
 

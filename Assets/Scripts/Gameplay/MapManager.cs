@@ -8,12 +8,16 @@ namespace uqac.timesick.gameplay
     using System.Collections.Generic;
     using UnityEngine;
     using UnityEngine.Tilemaps;
+    using System.Linq;
 
     public class MapManager : Singleton<MapManager>
     {
 
-        [SerializeField, Required, SceneObjectsOnly]
+        [SerializeField]
         private MainCharacter player;
+
+        [ShowInInspector]
+        private List<Guard> guards = new List<Guard>();
 
         [Header("Map Parameters")]
         [SerializeField, Required, SceneObjectsOnly]
@@ -22,6 +26,8 @@ namespace uqac.timesick.gameplay
         [SerializeField, Required, SceneObjectsOnly]
         private Grid grid;
 
+        [ShowInInspector]
+        private List<PatrolPoint> patrolPoints = new List<PatrolPoint>();
 
         [SerializeField]
         private Map map;
@@ -49,6 +55,85 @@ namespace uqac.timesick.gameplay
         void Update()
         {
 
+        }
+
+        public void RegisterPlayer(MainCharacter player)
+        {
+            this.player = player;
+        }
+
+        public void RegisterGuard(Guard guard)
+        {
+            guards.Add(guard);
+        }
+
+        public void RegisterPatrolPoint(PatrolPoint patrolPoint)
+        {
+            patrolPoints.Add(patrolPoint);
+        }
+
+        public void notifyAlert()
+        {
+
+        }
+
+        public PatrolPoint PickPointToPatrol(Guard guard)
+        {
+            //nb of closest point to choose from
+            int nbClosestPoint = 5;
+
+            List<PatrolPoint> pickPool = new List<PatrolPoint>();
+
+            //Pick the X closest patrol points
+            foreach (PatrolPoint pp in patrolPoints)
+            {
+                //If there's not enough point in the pool, add them
+                if (pickPool.Count <= nbClosestPoint)
+                {
+                    pickPool.Add(pp);
+
+                }
+                //Else, replace with a new one if it's closer that the farthest one
+                else
+                {
+
+                    //Order by descending distance with guard
+                    pickPool = pickPool.OrderByDescending(
+                        (point) => Vector2.Distance(guard.Position, point.transform.position)
+                    ).ToList();
+
+                    float distanceCurrentPoint = Vector2.Distance(guard.Position, pp.transform.position);
+                    float distanceFarthestPoint = Vector2.Distance(guard.Position, pickPool[0].transform.position);
+
+                    if (distanceCurrentPoint < distanceFarthestPoint)
+                    {
+                        pickPool.RemoveAt(0);
+                        pickPool.Insert(0, pp);
+                    }
+                }
+            }
+
+            //Pick one randomly with bias toward the least visited one.
+            float randomRange = 0f;
+            foreach (PatrolPoint pp in pickPool)
+            {
+                randomRange += pp.TimeSinceLastVisit;
+            }
+
+            float randVal = UnityEngine.Random.Range(0, randomRange);
+
+            randomRange = 0f;
+            foreach (PatrolPoint pp in pickPool)
+            {
+                randomRange += pp.TimeSinceLastVisit;
+
+                if (randVal <= randomRange)
+                    return pp;
+            }
+
+            Debug.Log("No point picked ! return last");
+
+            return pickPool[pickPool.Count - 1];
         }
 
         public TilePath GetPathFromTo(Vector2 startWorldpos, Vector2 endWorldPos)

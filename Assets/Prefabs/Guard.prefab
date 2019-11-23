@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1753076137670914257}
   - component: {fileID: 1753076137670914256}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: MarkerFrontOfChar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 1753076139047493226}
   - component: {fileID: 1753076139047493231}
   - component: {fileID: 1753076139047493221}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Guard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,14 +224,18 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
+    - Name: OnPatrolVisit
+      Entry: 6
+      Data: 
     - Name: stateMachine
       Entry: 6
       Data: 
-  speed: 3
   currentHealth: 10
   maxHealth: 10
   pathToFollow:
     path: []
+  chaseSoundName: 
+  lostSoundName: 
 --- !u!1 &6141534218125019735
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +247,7 @@ GameObject:
   - component: {fileID: 8448059521192379419}
   - component: {fileID: 3218857791970358350}
   - component: {fileID: 8867363856421901094}
-  m_Layer: 8
+  m_Layer: 12
   m_Name: Hearing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,6 +403,12 @@ MonoBehaviour:
       Entry: 6
       Data: 
     - Name: OnLoseOfSight
+      Entry: 6
+      Data: 
+    - Name: OnPlayerSight
+      Entry: 6
+      Data: 
+    - Name: OnPlayerLostOfSight
       Entry: 6
       Data: 
   seeThroughWall: 0

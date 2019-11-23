@@ -29,6 +29,7 @@ namespace uqac.timesick.gameplay
         protected bool isMoving = false;
 
         private Rigidbody2D rb;
+        private Vector2 lastPosition = Vector2.zero;
 
             //Trigger on position change, (PreviousPos, NewPos)
         protected Action<Vector2, Vector2> OnPositionChange = null;
@@ -37,6 +38,7 @@ namespace uqac.timesick.gameplay
         protected Action<int, int> OnHealthChange = null;
         protected Action OnDeath = null;
 
+
         #region Properties
 
         public Vector2 Position
@@ -44,6 +46,7 @@ namespace uqac.timesick.gameplay
             get => transform.position;
             set
             {
+                lastPosition = Position;
                 OnPositionChange?.Invoke(rb.position, value);
                 rb.MovePosition(value);
             }
@@ -85,6 +88,7 @@ namespace uqac.timesick.gameplay
             player = gameObject.AddComponent<AudioSourcePlayer>();
         }
 
+
         #endregion
 
         public virtual void DealDamage(int damage)
@@ -116,8 +120,11 @@ namespace uqac.timesick.gameplay
             Position += deltaMovement;
         }
 
-
-        protected void RotateToward(Vector2 worldPos)
+        public void RotateInStepDirection()
+        {
+            RotateToward(lastPosition - Position);
+        }
+        public void RotateToward(Vector2 worldPos)
         {
 
             Vector2 remainingDistance = (worldPos - (Vector2)transform.position);

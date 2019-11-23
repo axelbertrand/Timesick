@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,9 @@ namespace uqac.timesick.gameplay
     {
 
         private List<Vector4> noises;
+
+        [HideInInspector]
+        public Action<Vector2> OnNoiseHeard;
 
         void Start()
         {
@@ -22,14 +26,15 @@ namespace uqac.timesick.gameplay
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log("Collision ! ");
+            //Debug.Log("Collision ! ");
             // On ajoute l'objet à portée dans la liste des objets potentiellement sélectionnable
             Noise noise = collision.gameObject.GetComponent<Noise>();
             if (noise!= null)
             {
-                Debug.Log("AVec un noise");
                 Vector3 noisePosition = collision.gameObject.transform.position;
                 noises.Add(new Vector4(noisePosition.x,noisePosition.y, noisePosition.z,Time.time));
+
+                OnNoiseHeard?.Invoke(new Vector2(noisePosition.x, noisePosition.y)); //Trigger events on noise heard
             }
         }
 
