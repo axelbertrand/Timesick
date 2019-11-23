@@ -71,7 +71,7 @@ namespace uqac.timesick.gameplay
         private float staminaRegenerationIntervalTimer = 0f;
 
         //endregion
-        public bool IsInvisible
+        public new bool IsInvisible
         {
             get => isInvisible;
             set
@@ -351,6 +351,7 @@ namespace uqac.timesick.gameplay
 
 
         #region Abilities
+
         private void HandleNoiseDevice()
         {
             if (!inQTE && InputManager.GetButtonDown(Button.NOISEDEVICE))
@@ -358,7 +359,7 @@ namespace uqac.timesick.gameplay
                 Instantiate(noiseDevice,transform.position, Quaternion.identity);
             }
         }
-        #endregion
+        
         private void HandleSkills()
         {
             // Invisibility
@@ -407,6 +408,8 @@ namespace uqac.timesick.gameplay
             staminaRegenerationDelayTimer = 0f;
             Debug.Log("End of invisibility");
         }
+
+        #endregion
 
         //Get the color of the stamina bar in the Inspector's UI. (ODIN)
         private Color GetStaminaBarColor(int value)
