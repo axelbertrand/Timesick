@@ -28,12 +28,14 @@
                 StateMachine.Subject.GoTo(patrolPoint.transform.position);
             }
 
-            StateMachine.Subject.RotateInStepDirection();
 
         }
 
         public override void StartState()
         {
+            stateMachine.Subject.OnPositionChange +=
+                (oldP, newP) => stateMachine.Subject.RotateToward(newP); //rotate on movement
+
             stateMachine.Subject.OnPatrolVisit += SetNewPatrolPoint;
             stateMachine.Subject.SightSensor.OnPlayerSight += StartShooting;
             stateMachine.Subject.HearingSensor.OnNoiseHeard += StartSearching;
@@ -47,6 +49,10 @@
             stateMachine.Subject.HearingSensor.OnNoiseHeard -= StartSearching;
             stateMachine.Subject.SightSensor.OnPlayerSight -= StartShooting;
             stateMachine.Subject.OnPatrolVisit -= SetNewPatrolPoint;
+
+
+            stateMachine.Subject.OnPositionChange -=
+                (oldP, newP) => stateMachine.Subject.RotateToward(newP); //rotate on movement
 
         }
 

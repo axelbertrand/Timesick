@@ -90,6 +90,8 @@ namespace uqac.timesick.gameplay
         {
             base.Awake();
 
+            OnPositionChange += (oldP, newP) => RotateToward(newP); //rotate on movement
+
             spriteRenderer = GetComponent<SpriteRenderer>();
         }
 

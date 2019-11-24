@@ -24,7 +24,6 @@
 
         public override void Update()
         {
-            StateMachine.Subject.RotateInStepDirection();
 
             //If not close enough of the sound, go investigate it
             if (!stateMachine.Subject.IsMoving && Vector2.Distance(StateMachine.Subject.Position, searchPosition) > 1f)
@@ -41,7 +40,11 @@
 
         public override void StartState()
         {
-                //attack character if seen
+
+            stateMachine.Subject.OnPositionChange += 
+                (oldP, newP) => stateMachine.Subject.RotateToward(newP); //rotate on movement
+
+                                                                    //attack character if seen
             stateMachine.Subject.SightSensor.OnPlayerSight += StartShooting;
 
                 //search new position if new noise
@@ -54,6 +57,11 @@
         {
             stateMachine.Subject.SightSensor.OnPlayerSight -= StartShooting;
             stateMachine.Subject.HearingSensor.OnNoiseHeard -= searchPos;
+
+
+            stateMachine.Subject.OnPositionChange -= 
+                (oldP, newP) => stateMachine.Subject.RotateToward(newP); //rotate on movement
+
 
         }
 

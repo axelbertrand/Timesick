@@ -43,7 +43,7 @@ namespace uqac.timesick.gameplay
         private Vector2 lastPosition = Vector2.zero;
 
             //Trigger on position change, (PreviousPos, NewPos)
-        protected Action<Vector2, Vector2> OnPositionChange = null;
+        public Action<Vector2, Vector2> OnPositionChange = null;
 
             // PreviousHealth, NewHealth
         protected Action<int, int> OnHealthChange = null;
@@ -95,7 +95,6 @@ namespace uqac.timesick.gameplay
         {
             rb = GetComponent<Rigidbody2D>();
 
-            OnPositionChange += (oldP, newP) => RotateToward(newP); //lambda function
             player = gameObject.AddComponent<AudioSourcePlayer>();
 
             currentHealth = maxHealth;
@@ -144,7 +143,7 @@ namespace uqac.timesick.gameplay
 
         public void RotateInStepDirection()
         {
-            RotateToward(lastPosition - Position);
+            RotateToward(Position + (Position - lastPosition).normalized );
         }
 
         public void RotateToward(Vector2 worldPos)
