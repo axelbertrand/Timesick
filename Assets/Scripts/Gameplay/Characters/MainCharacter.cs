@@ -91,6 +91,8 @@ namespace uqac.timesick.gameplay
             base.Awake();
 
             spriteRenderer = GetComponent<SpriteRenderer>();
+
+            OnHealthChange += UpdateDamageEffect;
         }
 
         // Update is called once per frame
@@ -414,6 +416,12 @@ namespace uqac.timesick.gameplay
         private Color GetStaminaBarColor(int value)
         {
             return Color.Lerp(Color.yellow, Color.green, (float)value / maxStamina);
+        }
+
+        private void UpdateDamageEffect(int oldValue,int newValue)
+        {
+            float healthPercentage = (float)newValue / maxHealth;
+            CameraEffectsManager.Instance.UpdateDamageEffect(healthPercentage);
         }
     }
 

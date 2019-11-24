@@ -20,7 +20,7 @@ namespace uqac.timesick.gameplay
 
         [BoxGroup("Health bar"), SerializeField]
         [ProgressBar(0, "maxHealth", ColorMember = "GetHealthBarColor", Segmented = true)]
-        protected int currentHealth;
+        protected int currentHealth = 10;
 
         [BoxGroup("Health bar"), SerializeField]
         protected int maxHealth = 10;
