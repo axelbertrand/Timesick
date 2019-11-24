@@ -230,7 +230,9 @@ MonoBehaviour:
     - Name: stateMachine
       Entry: 6
       Data: 
-  rotateSpeed: 2
+  walkingSpeed: 6
+  sprintingSpeed: 12
+  rotateSpeed: 10
   currentHealth: 10
   maxHealth: 10
   invincibilityFrame: 1

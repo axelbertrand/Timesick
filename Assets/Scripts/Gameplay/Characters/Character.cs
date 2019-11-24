@@ -13,9 +13,9 @@ namespace uqac.timesick.gameplay
     {
         protected AudioSourcePlayer player;
 
-        [ShowInInspector]
+        [SerializeField]
         protected float walkingSpeed = 5f;
-        [ShowInInspector]
+        [SerializeField]
         protected float sprintingSpeed = 9f;
 
         [SerializeField]
@@ -97,6 +97,8 @@ namespace uqac.timesick.gameplay
 
             OnPositionChange += (oldP, newP) => RotateToward(newP); //lambda function
             player = gameObject.AddComponent<AudioSourcePlayer>();
+
+            currentHealth = maxHealth;
         }
 
 
@@ -144,6 +146,7 @@ namespace uqac.timesick.gameplay
         {
             RotateToward(lastPosition - Position);
         }
+
         public void RotateToward(Vector2 worldPos)
         {
 
