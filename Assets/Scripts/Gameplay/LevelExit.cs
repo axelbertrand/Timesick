@@ -2,31 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelExit : MonoBehaviour
+namespace uqac.timesick.gameplay
 {
-    private SpriteRenderer spriteRenderer;
-
-    private bool isEnabled;
-    public bool IsEnabled
+    public class LevelExit : MonoBehaviour
     {
-        get => isEnabled;
-        set
+        [SerializeField]
+        private MainCharacter mainCharacter;
+
+        private SpriteRenderer spriteRenderer;
+        private Collider2D circleCollider;
+
+        private bool isEnabled;
+        public bool IsEnabled
         {
-            isEnabled = value;
-            spriteRenderer.enabled = isEnabled;
+            get => isEnabled;
+            set
+            {
+                isEnabled = value;
+                spriteRenderer.enabled = isEnabled;
+                circleCollider.enabled = isEnabled;
+            }
         }
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        IsEnabled = false;
-    }
+        // Start is called before the first frame update
+        void Start()
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            circleCollider = GetComponent<CircleCollider2D>();
+            IsEnabled = false;
+            mainCharacter.MedicineStolenEvent += OnMedicineStolenEvents;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        void OnMedicineStolenEvents()
+        {
+            IsEnabled = true;
+            // Add sound and visual effects
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            Debug.Log("End of level");
+            // Animations + go to debrief scene
+        }
     }
 }

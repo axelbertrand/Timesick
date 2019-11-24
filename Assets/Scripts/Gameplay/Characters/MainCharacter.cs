@@ -70,6 +70,8 @@ namespace uqac.timesick.gameplay
         private float staminaRegenerationDelayTimer = 0f;
         private float staminaRegenerationIntervalTimer = 0f;
 
+        public event Action MedicineStolenEvent;
+
         //endregion
         public new bool IsInvisible
         {
@@ -339,13 +341,11 @@ namespace uqac.timesick.gameplay
         //Abstraction functions
         public void CollectMedicine(MedicineContainer medicineContainer)
         {
-
             if (medicineContainer.StealMedicine())
             {
                 hasMedicine = true;
+                MedicineStolenEvent();
             }
-
-            //TODO, Start the escape process
         }
         #endregion
 
