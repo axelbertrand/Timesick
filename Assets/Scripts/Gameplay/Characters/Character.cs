@@ -18,6 +18,10 @@ namespace uqac.timesick.gameplay
         [ShowInInspector]
         protected float sprintingSpeed = 9f;
 
+        [SerializeField]
+        private float rotateSpeed = 10f;
+        private float currentAngle = 0f;
+
         [BoxGroup("Health bar"), SerializeField]
         [ProgressBar(0, "maxHealth", ColorMember = "GetHealthBarColor", Segmented = true)]
         protected int currentHealth;
@@ -147,10 +151,18 @@ namespace uqac.timesick.gameplay
             Vector2 direction = remainingDistance.normalized;
 
             float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+
+            //max rotation per frame
+            float deltaAngle = angle - currentAngle;
+
+            deltaAngle = deltaAngle * Time.deltaTime * rotateSpeed;
+            currentAngle += deltaAngle;
+
+            Quaternion q = Quaternion.AngleAxis(currentAngle, Vector3.forward);
+
             transform.rotation = q;
 
-            //transform.rotation = Quaternion.Slerp(transform.rotation, q, RotateSpeed * Time.deltaTime);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, q, (rotateSpeed * Time.deltaTime) / rotateSpeed);
         }
 
         #endregion
