@@ -220,6 +220,7 @@ MonoBehaviour:
   feedbackCircleRange: 10
   feedbackCircleSpeed: 10
   feedbackCircleThickness: 1
+  sceneToLoad: DebriefingTest
 --- !u!58 &33459563
 CircleCollider2D:
   m_ObjectHideFlags: 0

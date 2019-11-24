@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/EndOfLevel.unity
+    guid: b7c902d59010d1e458dcb5a9d8961132
+  - enabled: 1
+    path: Assets/Scenes/DebriefingTest.unity
+    guid: 203ca233bbd39a44d9f7e3e5a410b7fa
   m_configObjects: {}

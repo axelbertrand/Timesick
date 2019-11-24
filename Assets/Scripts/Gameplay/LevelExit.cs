@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace uqac.timesick.gameplay
 {
@@ -17,6 +16,9 @@ namespace uqac.timesick.gameplay
 
         [SerializeField]
         private float feedbackCircleThickness = 2;
+
+        [SerializeField]
+        private string sceneToLoad = "Debriefing";
 
         private SpriteRenderer spriteRenderer;
         private Collider2D circleCollider;
@@ -69,7 +71,10 @@ namespace uqac.timesick.gameplay
         private void OnTriggerEnter2D(Collider2D collision)
         {
             Debug.Log("End of level");
-            // Animations + go to debrief scene
+
+            // TODO: Animations
+
+            SceneManager.LoadSceneAsync(sceneToLoad);
         }
 
         private void UpdateFeedback()
