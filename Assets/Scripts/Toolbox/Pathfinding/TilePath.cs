@@ -85,9 +85,13 @@
 
         private void LoadSimplifiedPath()
         {
-            if (IsEmpty) return;
-
             List<TileNode> simplePath = new List<TileNode>();
+
+            if (IsEmpty)
+            {
+                simplifiedPath = new TilePath(simplePath, true);
+                return;
+            }
 
             Vector3Int lastDirection = directionPath[0];
 
@@ -114,12 +118,16 @@
         {
             private TilePath path;
 
-            private int currentIndex;
+            private int currentIndex = 0;
 
 
             public TileNode Current
             {
                 get => path[currentIndex];
+            }
+            public int IndexCurrent
+            {
+                get => currentIndex;
             }
 
             public PathIterator(TilePath path)

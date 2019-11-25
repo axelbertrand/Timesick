@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBeforeExplosion: 2
-  explosionRange: 16
-  explosionSpeed: 12
+  explosionRange: 25
+  explosionSpeed: 75
   explosionSprite: {fileID: 21300000, guid: 8bd8e3b03f0394946bd916c604e52033, type: 3}
   idleSprite: {fileID: 21300000, guid: b6699803e6f1e1945b26889269dac141, type: 3}

@@ -88,8 +88,12 @@ namespace uqac.timesick.gameplay
 
             foreach (PatrolPoint pp in patrolPoints)
             {
-                float coeffValue = pp.TimeSinceLastVisit *
-                    (1 / (2f * Vector2.Distance(guard.Position, pp.transform.position)));
+                float coeffValue = getPatrolCoefficient(pp, guard);
+
+                //We skip incredibly small value, which is likely the patrol point the guard is already in contact with.
+                if (coeffValue < Mathf.Epsilon)
+                    continue;
+
                 cumulatedRandomCoeff += coeffValue;
 
                 pickPool.Add(pp, cumulatedRandomCoeff);
@@ -125,6 +129,14 @@ namespace uqac.timesick.gameplay
             Debug.Log("No point picked ! return last");
 
             return null;
+        }
+
+        private float getPatrolCoefficient(PatrolPoint pp, Guard guard)
+        {
+            float timeMultiplier = 2f;
+            float distanceMultiplier = 20f;
+            float sqrMagnitude = Vector2.SqrMagnitude((Vector2)pp.transform.position - guard.Position);
+            return timeMultiplier * pp.TimeSinceLastVisit * (1 / (sqrMagnitude * distanceMultiplier));
         }
 
         public TilePath GetPathFromTo(Vector2 startWorldpos, Vector2 endWorldPos)

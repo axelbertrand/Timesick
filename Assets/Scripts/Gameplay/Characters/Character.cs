@@ -13,10 +13,14 @@ namespace uqac.timesick.gameplay
     {
         protected AudioSourcePlayer player;
 
-        [ShowInInspector]
+        [SerializeField]
         protected float walkingSpeed = 5f;
-        [ShowInInspector]
+        [SerializeField]
         protected float sprintingSpeed = 9f;
+
+        [SerializeField]
+        private float rotateSpeed = 10f;
+        private float currentAngle = 0f;
 
         [BoxGroup("Health bar"), SerializeField]
         [ProgressBar(0, "maxHealth", ColorMember = "GetHealthBarColor", Segmented = true)]
@@ -39,7 +43,7 @@ namespace uqac.timesick.gameplay
         private Vector2 lastPosition = Vector2.zero;
 
             //Trigger on position change, (PreviousPos, NewPos)
-        protected Action<Vector2, Vector2> OnPositionChange = null;
+        public Action<Vector2, Vector2> OnPositionChange = null;
 
             // PreviousHealth, NewHealth
         protected Action<int, int> OnHealthChange = null;
@@ -91,8 +95,9 @@ namespace uqac.timesick.gameplay
         {
             rb = GetComponent<Rigidbody2D>();
 
-            OnPositionChange += (oldP, newP) => RotateToward(newP); //lambda function
             player = gameObject.AddComponent<AudioSourcePlayer>();
+
+            currentHealth = maxHealth;
         }
 
 
@@ -138,8 +143,9 @@ namespace uqac.timesick.gameplay
 
         public void RotateInStepDirection()
         {
-            RotateToward(lastPosition - Position);
+            RotateToward(Position + (Position - lastPosition).normalized );
         }
+
         public void RotateToward(Vector2 worldPos)
         {
 
@@ -147,11 +153,32 @@ namespace uqac.timesick.gameplay
             Vector2 direction = remainingDistance.normalized;
 
             float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+            //max rotation per frame
+            float deltaAngle = angle - currentAngle;
+
+            if (Mathf.Abs(deltaAngle) > 180)
+            {
+                deltaAngle += (deltaAngle > 180) ? -360 : 360;
+            }
+
+                
+
+            //Apply a max rotation, but makes sure the multiplier doesn't make it higher than the original one
+            if (Mathf.Abs(deltaAngle * Time.deltaTime * rotateSpeed) < Mathf.Abs(deltaAngle))
+            {
+                deltaAngle = deltaAngle * Time.deltaTime * rotateSpeed;
+            }
+
+            currentAngle += deltaAngle;
+
+
+            Quaternion q = Quaternion.AngleAxis(currentAngle, Vector3.forward);
+
             transform.rotation = q;
 
-            //transform.rotation = Quaternion.Slerp(transform.rotation, q, RotateSpeed * Time.deltaTime);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, q, (rotateSpeed * Time.deltaTime) / rotateSpeed);
         }
+
 
         #endregion
 

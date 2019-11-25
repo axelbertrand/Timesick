@@ -125,16 +125,24 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
+    SerializationNodes:
+    - Name: OnPositionChange
+      Entry: 6
+      Data: 
+  walkingSpeed: 8
+  sprintingSpeed: 14
+  rotateSpeed: 10
   currentHealth: 5
-  maxHealth: 10
-  invincibilityFrame: 1
+  maxHealth: 3
+  invincibilityFrame: 0.3
   currentStamina: 0
   popup: {fileID: 0}
   footsteps: {fileID: 4413518753259738751, guid: 1bb5042f4e53e234d9f2950455dc4362,
     type: 3}
   noiseDevice: {fileID: 5991989177141580737, guid: 62413e33293765f44a4bd790e6adb22e,
     type: 3}
+  mole: {fileID: 3064716921948989221, guid: ce49732ee19fd6c448464a5cc3cd1699, type: 3}
+  timeBetweenFootsteps: 0.3
   maxStamina: 10
   staminaRegenerationDelay: 3
   staminaRegenerationInterval: 1
@@ -155,7 +163,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.45
+  m_Radius: 0.35
 --- !u!1 &6989738295911599021
 GameObject:
   m_ObjectHideFlags: 0

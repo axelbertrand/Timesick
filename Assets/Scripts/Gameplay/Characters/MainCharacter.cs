@@ -21,6 +21,8 @@ namespace uqac.timesick.gameplay
         private GameObject footsteps = null;
         [SerializeField]
         private GameObject noiseDevice = null;
+        [SerializeField]
+        public GameObject mole;
         #endregion
         #region Private
         //True if the mainCharacter has stolen the medicine successfully
@@ -37,11 +39,13 @@ namespace uqac.timesick.gameplay
         //the name is self explanatory 
         private float timeSinceLastFootstep = 0f;
         //same
-        [ShowInInspector]
+        [SerializeField]
         private float timeBetweenFootsteps = 0.5f;
+
+        bool waitingTheMole = true;
         #endregion
         #endregion
-        
+
         [BoxGroup("Stamina bar"), SerializeField]
         private int maxStamina = 10;
 
@@ -86,9 +90,12 @@ namespace uqac.timesick.gameplay
             }
         }
 
+
         protected override void Awake()
         {
             base.Awake();
+
+            OnPositionChange += (oldP, newP) => RotateToward(newP); //rotate on movement
 
             spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -299,7 +306,7 @@ namespace uqac.timesick.gameplay
                 else
                 {
                     text.text = action.name;
-                    text.fontSize = 12;
+                    text.fontSize = 28;
                     button.text = InputManager.GetButtonName(action.button);
                     combos.text = "";
                     popup.GetComponentInChildren<Slider>().gameObject.transform.localScale = new Vector3(0, 0, 0);
@@ -317,16 +324,38 @@ namespace uqac.timesick.gameplay
                 }
             }
         }
+        public void CollectMedicine(MedicineContainer medicineContainer)
+        {
 
+            if (medicineContainer.StealMedicine())
+            {
+                hasMedicine = true;
+            }
 
+            CallTheMoleForTheRescue();
+
+        }
+        #endregion
+
+        #region Collisions
         //Collision with Interactives
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             // On ajoute l'objet à portée dans la liste des objets potentiellement sélectionnable
-            Interactive interactive = collision.gameObject.GetComponent<Interactive>();
+            Interactive interactive = other.gameObject.GetComponent<Interactive>();
             if (interactive != null)
             {
-                inRange.Add(collision.gameObject);
+                Debug.Log("Int");
+                inRange.Add(other.gameObject);
+                return;
+            }
+
+            if(other.name.Contains("Escape Route"))
+            {
+                GetComponent<SpriteRenderer>().color = Color.red;
+                Debug.Log("ON SE BARRE");
+                Destroy(this.gameObject);
+                return;
             }
         }
 
@@ -340,19 +369,16 @@ namespace uqac.timesick.gameplay
             }
         }
 
-        //Abstraction functions
-        public void CollectMedicine(MedicineContainer medicineContainer)
-        {
 
-            if (medicineContainer.StealMedicine())
-            {
-                hasMedicine = true;
-            }
-
-            //TODO, Start the escape process
-        }
         #endregion
 
+        #region Escaping
+        private void CallTheMoleForTheRescue()
+        {
+            waitingTheMole = true;
+            Instantiate(mole, new Vector2(0, 0), Quaternion.identity);
+        }
+        #endregion
 
         #region Abilities
         private void HandleNoiseDevice()
