@@ -36,6 +36,7 @@ public class CameraEffectsManager : Singleton<CameraEffectsManager>
         }
         else
         {
+
             float radius = 0.6f + 0.15f * healthPercentage;
             float softness = 0.25f + 0.1f * healthPercentage;
 
@@ -46,6 +47,7 @@ public class CameraEffectsManager : Singleton<CameraEffectsManager>
             damagePostProcess.damageMaterial.SetFloat("_VRadius", radius);
             damagePostProcess.damageMaterial.SetFloat("_VSoft", softness);
             damagePostProcess.damageMaterial.SetColor("_Color", new Color(redValue, greenAndBlueValue, greenAndBlueValue, 1));
+            damagePostProcess.IsActive = true;
         }
     }
 }

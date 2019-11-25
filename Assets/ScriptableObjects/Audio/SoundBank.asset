@@ -38,4 +38,12 @@ MonoBehaviour:
     maxDistance: 500
     source: {fileID: 0}
   soundLists: []
-  musics: []
+  musics:
+  - name: 
+    clip: {fileID: 8300000, guid: f5a301aa7c449df4baa034de686cd72c, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    minDistance: 0
+    maxDistance: 500
+    source: {fileID: 0}
