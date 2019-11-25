@@ -230,13 +230,14 @@ namespace uqac.timesick.gameplay
                 } */
             }
 
-            if (pathToFollow != null && pathToFollow.IteratorSimplePath.HasNext())
+            if (pathToFollow != null && pathToFollow.IteratorSimplePath != null)
             {
                 int startIndex = Mathf.Max(0, pathToFollow.IteratorSimplePath.IndexCurrent - 1);
                 for (int i = startIndex; i < pathToFollow.SimplifiedPath.Size - 1; i++)
                 {
                     Gizmos.DrawLine(pathToFollow.SimplifiedPath[i].CenterWorld, pathToFollow.SimplifiedPath[i + 1].CenterWorld);
                 }
+
             }
         }
     }

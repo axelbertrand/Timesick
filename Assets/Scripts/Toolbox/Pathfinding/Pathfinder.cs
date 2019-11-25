@@ -59,7 +59,7 @@
             //Keep tracks of the processed locations and unprocessed neighbors. 
             HashSet<StarCell> closedSet = new HashSet<StarCell>();
             HashSet<StarCell> openSet = new HashSet<StarCell>();
-            int g = 0;
+            float g = 0;
 
             openSet.Add(start);
 
@@ -71,9 +71,8 @@
                 nbIter++;
 
                 //Get the unprocessed location with the lowest FScore. 
-                //var lowest = openSet.Min(loc => loc.Fscore);
-                //current = openSet.First(loc => loc.Fscore == lowest);
-                current = openSet.Aggregate((p1, p2) => p1.FScore < p2.FScore ? p1 : p2);
+                current = openSet.OrderBy(p => p.FScore).First();
+                //current = openSet.Aggregate((p1, p2) => p1.FScore < p2.FScore ? p1 : p2);
                 
                 closedSet.Add(current);
                 openSet.Remove(current);
@@ -86,7 +85,7 @@
                 
                 //Get valid neighbors
                 List<Vector2Int> neighbors = GetWalkableNeighbors(current.GridPosition);
-                g++;
+                //g++;
 
                 foreach (Vector2Int neighborPos in neighbors)
                 {
@@ -96,12 +95,21 @@
                     if (closedSet.Contains(neighbor))
                         continue;
 
+                    g = current.GScore + Vector2Int.Distance(current.GridPosition, neighborPos);
+
                     // if it's not in the open list...
                     if (!openSet.Contains(neighbor))
                     {
                         // compute its scores, set the parent
                         neighbor.GScore = g;
-                        neighbor.HScore = Vector2Int.Distance(neighbor.GridPosition, goal.GridPosition);
+                        if (DiagonalMovements)
+                        {
+                            neighbor.HScore = OctileDistance(neighbor.GridPosition, goal.GridPosition);
+                        }
+                        else
+                        {
+                            neighbor.HScore = ManhattanDistance(neighbor.GridPosition, goal.GridPosition);
+                        }
                         neighbor.Parent = current;
 
                         // and add it to the open list
@@ -124,6 +132,32 @@
 
             Debug.Log("No path or flood ! Flood count : " + nbIter);
             return new Stack<TileNode>();
+        }
+
+        /// <summary>
+        /// Heuristic for DIAGONAL grid movements
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        private float OctileDistance(Vector2Int a, Vector2Int b)
+        {
+            float dx = Mathf.Abs(a.x - b.x);
+            float dy = Mathf.Abs(a.y - b.y);
+            return Mathf.Max(dx, dy) + (0.41f * Mathf.Min(dx, dy));
+        }
+
+        /// <summary>
+        /// Heuristic for NON-DIAGONAL grid movements
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        private float ManhattanDistance(Vector2Int a, Vector2Int b)
+        {
+            float dx = Mathf.Abs(a.x - b.x);
+            float dy = Mathf.Abs(a.y - b.y);
+            return dx + dy;
         }
 
         #region private Methods
