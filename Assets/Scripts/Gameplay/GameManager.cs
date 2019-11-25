@@ -18,4 +18,10 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene("Assets/Scenes/MainScene.unity");
         AudioManager.Instance.Player.InterruptSound("MainMenu");
     }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("Assets/Scenes/MainMenu.unity");
+        AudioManager.Instance.PlayMusic("MainMenu");
+    }
 }
