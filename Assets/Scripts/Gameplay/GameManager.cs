@@ -9,6 +9,6 @@ public class GameManager : Singleton<GameManager>
 {
     public void LoadMainLevel()
     {
-        SceneManager.LoadScene("Assets/Scenes/TestingGrounds.unity");
+        SceneManager.LoadScene("Assets/Scenes/MainScene.unity");
     }
 }
