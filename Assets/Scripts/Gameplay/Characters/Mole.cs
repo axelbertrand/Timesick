@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cawotte.Toolbox.Audio;
 
 public class Mole : MonoBehaviour
 {
@@ -30,8 +31,15 @@ public class Mole : MonoBehaviour
     private void DigTunnel()
     {
         timeSpentDigging += Time.deltaTime;
-        if(timeSpentDigging > timeRequiredToDigTunnel)
+
+        if(!AudioManager.Instance.Player.IsCurrentlyPlayed("MoleDigging"))
         {
+            AudioManager.Instance.PlaySound("MoleDigging");
+        }
+
+        if (timeSpentDigging > timeRequiredToDigTunnel)
+        {
+            AudioManager.Instance.Player.InterruptSound("MoleDigging");
             tunnelDug = true;
             PrepareForEscape();
         }
@@ -39,6 +47,7 @@ public class Mole : MonoBehaviour
 
     private void PrepareForEscape()
     {
+        AudioManager.Instance.PlaySound("MoleArrived");
         GameObject escapeRoutes = this.transform.GetChild(0).gameObject;
         int numberOfEscapeRoutes = escapeRoutes.transform.childCount;
         GameObject escapeRoute = escapeRoutes.transform.GetChild(Random.Range(0, numberOfEscapeRoutes - 1)).gameObject;

@@ -37,6 +37,22 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 500
     source: {fileID: 0}
+  - name: MoleArrived
+    clip: {fileID: 8300000, guid: 3991f61779bd7724abd2592eb0d3b365, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    minDistance: 0
+    maxDistance: 500
+    source: {fileID: 0}
+  - name: MoleDigging
+    clip: {fileID: 8300000, guid: f39766335fc02e842a047ebc55eb8c32, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    minDistance: 0
+    maxDistance: 500
+    source: {fileID: 0}
   soundLists: []
   musics:
   - name: MainMenu
