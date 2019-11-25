@@ -8,10 +8,17 @@ namespace uqac.timesick.gameplay
     public class PatrolPoint : MonoBehaviour
     {
 
+        private static Color pink = new Color(1f, 0.66f, 0f);
+
         private float timeSinceLastVisit = 1f;
 
         public float TimeSinceLastVisit { get => timeSinceLastVisit; }
 
+        private void Awake()
+        {
+            //Hide sprite in game
+            GetComponent<SpriteRenderer>().enabled = false;
+        }
         private void Start()
         {
             MapManager.Instance.RegisterPatrolPoint(this);
@@ -34,7 +41,12 @@ namespace uqac.timesick.gameplay
 
         private void OnDrawGizmos()
         {
+            //show patrol point timer on "gizmo"
             UnityEditor.Handles.Label(transform.position, timeSinceLastVisit.ToString("0."));
+
+            //show patrol point on gizmos
+            Gizmos.color = pink;
+            Gizmos.DrawWireSphere(transform.position, 0.25f);
         }
     }
 }

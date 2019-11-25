@@ -85,9 +85,13 @@
 
         private void LoadSimplifiedPath()
         {
-            if (IsEmpty) return;
-
             List<TileNode> simplePath = new List<TileNode>();
+
+            if (IsEmpty)
+            {
+                simplifiedPath = new TilePath(simplePath, true);
+                return;
+            }
 
             Vector3Int lastDirection = directionPath[0];
 

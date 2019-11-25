@@ -153,12 +153,24 @@ namespace uqac.timesick.gameplay
             Vector2 direction = remainingDistance.normalized;
 
             float angle = (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-
             //max rotation per frame
             float deltaAngle = angle - currentAngle;
 
-            deltaAngle = deltaAngle * Time.deltaTime * rotateSpeed;
+            if (Mathf.Abs(deltaAngle) > 180)
+            {
+                deltaAngle += (deltaAngle > 180) ? -360 : 360;
+            }
+
+                
+
+            //Apply a max rotation, but makes sure the multiplier doesn't make it higher than the original one
+            if (Mathf.Abs(deltaAngle * Time.deltaTime * rotateSpeed) < Mathf.Abs(deltaAngle))
+            {
+                deltaAngle = deltaAngle * Time.deltaTime * rotateSpeed;
+            }
+
             currentAngle += deltaAngle;
+
 
             Quaternion q = Quaternion.AngleAxis(currentAngle, Vector3.forward);
 
@@ -166,6 +178,7 @@ namespace uqac.timesick.gameplay
 
             //transform.rotation = Quaternion.Slerp(transform.rotation, q, (rotateSpeed * Time.deltaTime) / rotateSpeed);
         }
+
 
         #endregion
 
