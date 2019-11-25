@@ -13,6 +13,7 @@ namespace uqac.timesick.gameplay
         [BoxGroup("Stamina bar"), SerializeField]
         [ProgressBar(0, "maxStamina", ColorMember = "GetStaminaBarColor", Segmented = true)]
         private int currentStamina;
+
         #region Variables
         #region Public
         [SerializeField]
@@ -74,7 +75,20 @@ namespace uqac.timesick.gameplay
         private float staminaRegenerationDelayTimer = 0f;
         private float staminaRegenerationIntervalTimer = 0f;
 
+        protected Action<int, int> OnStaminaChange = null;
+
         //endregion
+
+        public int CurrentStamina
+        {
+            get => currentStamina;
+            set
+            {
+                OnStaminaChange?.Invoke(currentStamina, value);
+                currentStamina = value;
+            }
+        }
+
         public bool IsInvisible
         {
             get => isInvisible;
@@ -100,6 +114,7 @@ namespace uqac.timesick.gameplay
             spriteRenderer = GetComponent<SpriteRenderer>();
 
             OnHealthChange += UpdateDamageEffect;
+            OnStaminaChange += UpdateStaminaBar;
         }
 
         // Update is called once per frame
@@ -395,20 +410,20 @@ namespace uqac.timesick.gameplay
             if (InputManager.GetButtonDown(Button.INVISIBILITY))
             {
                 // Return if invisibility skill can't be used
-                if (IsInvisible || currentStamina < invisibilityCost)
+                if (IsInvisible || CurrentStamina < invisibilityCost)
                 {
                     return;
                 }
 
                 IsInvisible = true;
-                currentStamina -= invisibilityCost;
+                CurrentStamina -= invisibilityCost;
                 staminaRegenerationDelayTimer = 0f;
                 Debug.Log("Start of invisibility");
                 //TODO
                 AudioManager.Instance.PlaySound("Invisibility");
                 Invoke("WaitAndSetVisible", invisibilityTime);
             }
-            else if (currentStamina < maxStamina && !IsInvisible)
+            else if (CurrentStamina < maxStamina && !IsInvisible)
             {
                 if (staminaRegenerationDelayTimer >= staminaRegenerationDelay)
                 {
@@ -416,7 +431,7 @@ namespace uqac.timesick.gameplay
 
                     if (staminaRegenerationIntervalTimer >= staminaRegenerationInterval)
                     {
-                        currentStamina = Math.Min(currentStamina + 1, maxStamina);
+                        CurrentStamina = Math.Min(CurrentStamina + 1, maxStamina);
                         staminaRegenerationIntervalTimer = 0f;
                     }
                     else
@@ -435,7 +450,6 @@ namespace uqac.timesick.gameplay
         {
             IsInvisible = false;
             staminaRegenerationDelayTimer = 0f;
-            Debug.Log("End of invisibility");
         }
 
         //Get the color of the stamina bar in the Inspector's UI. (ODIN)
@@ -448,6 +462,11 @@ namespace uqac.timesick.gameplay
         {
             float healthPercentage = (float)newValue / maxHealth;
             CameraEffectsManager.Instance.UpdateDamageEffect(healthPercentage);
+        }
+
+        private void UpdateStaminaBar(int oldValue,int newValue)
+        {
+            UIManager.Instance.UpdateBar(newValue);
         }
     }
 

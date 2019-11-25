@@ -33,8 +33,8 @@ public class UIManager : Singleton<UIManager>
         //staminaBar.UpdateValue(currentStamina);
     }
 
-    public void UpdateBar(int value)
+    public void UpdateBar(int newValue)
     {
-        staminaBar.UpdateValue(value);
+        staminaBar.UpdateValue(newValue);
     }
 }

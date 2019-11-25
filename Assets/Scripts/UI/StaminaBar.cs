@@ -129,7 +129,8 @@ public class StaminaBar : MonoBehaviour
 
     public void UpdateValue(int newValue)
     {
-        if(newValue > currentValue)
+        
+        if (newValue > currentValue)
         {
             Refill(newValue - currentValue); 
         }
@@ -137,6 +138,8 @@ public class StaminaBar : MonoBehaviour
         {
             Consume(currentValue - newValue);
         }
+
+        currentValue = newValue;
     }
 
     public void Refill(int howMuch)
@@ -147,7 +150,7 @@ public class StaminaBar : MonoBehaviour
         }
         else
         {
-            for (int i = currentValue-1; i < currentValue + howMuch ; i++)
+            for (int i = currentValue; i < currentValue + howMuch; i++)
             {
                 points[i].GetComponent<Image>().color = fullColor;
             }
@@ -164,7 +167,6 @@ public class StaminaBar : MonoBehaviour
         {
             for (int i = currentValue - 1; i > currentValue - howMuch - 1; i--)
             {
-                Debug.Log("Loop !");
                 points[i].GetComponent<Image>().color = emptyColor;
             }
         }
