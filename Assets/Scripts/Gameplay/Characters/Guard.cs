@@ -214,26 +214,28 @@ namespace uqac.timesick.gameplay
 
         private void OnDrawGizmos()
         {
-            if (sightSensor != null)
-            {
-                foreach (IDetectable detectable in sightSensor.Sighted)
-                {
-                    Gizmos.color = Color.red;
-                    Gizmos.DrawLine(transform.position, ((MonoBehaviour)detectable).transform.position);
-                }
 
-            }
-
+            //draw current state
             if (stateMachine != null)
             {
 
                 Gizmos.color = stateMachine.CurrentState.stateColor;
                 Gizmos.DrawSphere(Position, 0.2f);
 
+                /*
                 if (stateMachine.CurrentState is StatePatrol)
                 {
                     Gizmos.DrawLine(Position, ((StatePatrol)stateMachine.CurrentState).PatrolPoint.transform.position);
 
+                } */
+            }
+
+            if (pathToFollow != null && pathToFollow.IteratorSimplePath.HasNext())
+            {
+                int startIndex = Mathf.Max(0, pathToFollow.IteratorSimplePath.IndexCurrent - 1);
+                for (int i = startIndex; i < pathToFollow.SimplifiedPath.Size - 1; i++)
+                {
+                    Gizmos.DrawLine(pathToFollow.SimplifiedPath[i].CenterWorld, pathToFollow.SimplifiedPath[i + 1].CenterWorld);
                 }
             }
         }
