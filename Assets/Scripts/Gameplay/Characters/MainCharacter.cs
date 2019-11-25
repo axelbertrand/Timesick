@@ -299,7 +299,7 @@ namespace uqac.timesick.gameplay
                 else
                 {
                     text.text = action.name;
-                    text.fontSize = 12;
+                    text.fontSize = 28;
                     button.text = InputManager.GetButtonName(action.button);
                     combos.text = "";
                     popup.GetComponentInChildren<Slider>().gameObject.transform.localScale = new Vector3(0, 0, 0);
