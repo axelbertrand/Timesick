@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4413518753259738738}
   - component: {fileID: 4413518753259738749}
   - component: {fileID: 4413518753259738748}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Footstep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,8 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0448d6ed6452ba4a8022ab0c7df6e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noiseRange: 6
-  noiseSpeed: 6
+  noiseRange: 18
+  noiseSpeed: 200
   noiseSprite: {fileID: 0}
 --- !u!58 &4413518753259738748
 CircleCollider2D:

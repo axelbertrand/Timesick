@@ -134,13 +134,15 @@ MonoBehaviour:
   rotateSpeed: 10
   currentHealth: 5
   maxHealth: 3
-  invincibilityFrame: 0.5
+  invincibilityFrame: 0.3
   currentStamina: 0
-  popup: {fileID: 9169798961506460669, guid: 131300922a19c9243aa95c7e64b6841e, type: 3}
+  popup: {fileID: 0}
   footsteps: {fileID: 4413518753259738751, guid: 1bb5042f4e53e234d9f2950455dc4362,
     type: 3}
   noiseDevice: {fileID: 5991989177141580737, guid: 62413e33293765f44a4bd790e6adb22e,
     type: 3}
+  mole: {fileID: 3064716921948989221, guid: ce49732ee19fd6c448464a5cc3cd1699, type: 3}
+  timeBetweenFootsteps: 0.3
   maxStamina: 10
   staminaRegenerationDelay: 3
   staminaRegenerationInterval: 1
