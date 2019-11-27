@@ -36,14 +36,14 @@ public class Timer : MonoBehaviour
     {
         if(run)
         {
-            float t = Time.time - startTime;
+            GameManager.Instance.LevelTime = Time.time - startTime;
 
-            string minutes = ((int)(t / 60)).ToString();
+            string minutes = ((int)(GameManager.Instance.LevelTime / 60)).ToString();
             if(minutes.Length < 2)
             {
                 minutes = '0' + minutes;
             }
-            string seconds = (t % 60).ToString("f2");
+            string seconds = (GameManager.Instance.LevelTime % 60).ToString("f2");
 
             timerText.text = minutes + ":" + seconds;
         }

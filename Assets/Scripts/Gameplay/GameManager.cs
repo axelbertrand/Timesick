@@ -8,6 +8,32 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
+    private float levelTime;
+
+    public float LevelTime
+    {
+        get => levelTime;
+        set
+        {
+            levelTime = value;
+        }
+    }
+
+    public string FormattedLevelTime
+    {
+        get
+        {
+            string minutes = ((int)(levelTime / 60)).ToString();
+            if (minutes.Length < 2)
+            {
+                minutes = '0' + minutes;
+            }
+            string seconds = (levelTime % 60).ToString("f2");
+
+            return string.Format("{0]:{1}",minutes,seconds);
+        }
+    }
+
     public void Start()
     {
         AudioManager.Instance.PlayMusic("MainMenu");
@@ -26,6 +52,7 @@ public class GameManager : Singleton<GameManager>
 
     public void LoadMainLevel()
     {
+        LevelTime = 0f;
         SceneManager.LoadScene("Assets/Scenes/MainScene.unity");
         AudioManager.Instance.Player.InterruptSound("MainMenu");
     }
@@ -34,6 +61,11 @@ public class GameManager : Singleton<GameManager>
     {
         SceneManager.LoadScene("Assets/Scenes/MainMenu.unity");
         AudioManager.Instance.PlayMusic("MainMenu");
+    }
+
+    public void LoadDebriefing()
+    {
+        SceneManager.LoadScene("Assets/Scenes/Debriefing.unity");
     }
 
     public void OnDeath()
