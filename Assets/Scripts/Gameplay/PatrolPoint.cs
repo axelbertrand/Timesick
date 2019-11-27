@@ -42,13 +42,12 @@ namespace uqac.timesick.gameplay
         #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-          
-                //show patrol point timer on "gizmo"
-                UnityEditor.Handles.Label(transform.position, timeSinceLastVisit.ToString("0."));
+            //show patrol point timer on "gizmo"
+            UnityEditor.Handles.Label(transform.position, timeSinceLastVisit.ToString("0."));
 
-                //show patrol point on gizmos
-                Gizmos.color = pink;
-                Gizmos.DrawWireSphere(transform.position, 0.25f);
+            //show patrol point on gizmos
+            Gizmos.color = pink;
+            Gizmos.DrawWireSphere(transform.position, 0.25f);
         }
         #endif
     }
