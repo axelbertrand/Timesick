@@ -68,6 +68,11 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene("Assets/Scenes/Debriefing.unity");
     }
 
+    public void OnLevelEnd()
+    {
+        LoadDebriefing();
+    }
+
     public void OnDeath()
     {
         UIManager.Instance.ShowGameOver();

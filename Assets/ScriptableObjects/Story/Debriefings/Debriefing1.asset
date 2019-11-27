@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e58516e176a3e7418ba5e909ae6f7b7, type: 3}
   m_Name: Debriefing1
   m_EditorClassIdentifier: 
-  text: 
+  text: 'Good job ! '
