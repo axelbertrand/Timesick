@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cawotte.Toolbox;
+using UnityEngine.UI;
 public class UIManager : Singleton<UIManager>
 {
     public Timer timer;
     public StaminaBar staminaBar;
+    public GameObject componentsContainer;
 
     private void Start()
     {
         timer.RunTimer();
+        componentsContainer.SetActive(true);
     }
 
     public void RunTimer()
@@ -36,5 +39,11 @@ public class UIManager : Singleton<UIManager>
     public void UpdateBar(int newValue)
     {
         staminaBar.UpdateValue(newValue);
+    }
+
+    public void HideUI()
+    {
+        componentsContainer.SetActive(false);
+        timer.PauseTimer();
     }
 }
