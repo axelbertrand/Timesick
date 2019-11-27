@@ -35,4 +35,9 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene("Assets/Scenes/MainMenu.unity");
         AudioManager.Instance.PlayMusic("MainMenu");
     }
+
+    public void OnDeath()
+    {
+        UIManager.Instance.ShowGameOver();
+    }
 }

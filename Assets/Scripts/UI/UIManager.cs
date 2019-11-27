@@ -8,11 +8,15 @@ public class UIManager : Singleton<UIManager>
     public Timer timer;
     public StaminaBar staminaBar;
     public GameObject componentsContainer;
+    public GameObject gameOverContainer;
+    public GameObject playerObject;
 
     private void Start()
     {
         timer.RunTimer();
         componentsContainer.SetActive(true);
+        gameOverContainer.SetActive(false);
+        playerObject.SetActive(true);
     }
 
     public void RunTimer()
@@ -45,5 +49,17 @@ public class UIManager : Singleton<UIManager>
     {
         componentsContainer.SetActive(false);
         timer.PauseTimer();
+    }
+
+    public void ShowGameOver()
+    {
+        playerObject.SetActive(false);
+        HideUI();
+        gameOverContainer.SetActive(true);
+    }
+
+    public void OnClickQuit()
+    {
+        GameManager.Instance.LoadMainMenu();
     }
 }

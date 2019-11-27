@@ -129,6 +129,7 @@ namespace uqac.timesick.gameplay
             updatePopup(null);
             timeSinceLastFootstep = float.PositiveInfinity;
             UIManager.Instance.InitializeStaminaBar(maxStamina,currentStamina);
+            OnDeath += Die;
         }
 
 
@@ -165,11 +166,12 @@ namespace uqac.timesick.gameplay
                     return;
                 }
                 
+                /*
                 if (IsInvisible)
                 {
                     IsInvisible = false;
                     staminaRegenerationDelayTimer = 0f;
-                }
+                }*/
 
                 //They are normalized for constant speed in all directions.
                 inputDirection = inputDirection.normalized;
@@ -467,6 +469,11 @@ namespace uqac.timesick.gameplay
         private void UpdateStaminaBar(int oldValue,int newValue)
         {
             UIManager.Instance.UpdateBar(newValue);
+        }
+
+        private void Die()
+        {
+            GameManager.Instance.OnDeath();
         }
     }
 
