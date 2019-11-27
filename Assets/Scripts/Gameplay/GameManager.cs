@@ -13,6 +13,17 @@ public class GameManager : Singleton<GameManager>
         AudioManager.Instance.PlayMusic("MainMenu");
     }
 
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void LoadBriefing()
+    {
+        SceneManager.LoadScene("Assets/Scenes/Briefing.unity");
+        AudioManager.Instance.Player.InterruptSound("MainMenu");
+    }
+
     public void LoadMainLevel()
     {
         SceneManager.LoadScene("Assets/Scenes/MainScene.unity");
