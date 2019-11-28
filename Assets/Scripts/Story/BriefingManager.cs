@@ -14,8 +14,8 @@ public class BriefingManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        image.sprite = briefing.image;
-        textBox.text = briefing.text;
+        //image.sprite = briefing.image;
+        //textBox.text = briefing.text;
     }
 
     public void StartLevel()
