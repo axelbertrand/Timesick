@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIManager : Singleton<UIManager>
 {
     public Timer timer;
-    public StaminaBar staminaBar;
+    public Slider staminaBar;
     public GameObject componentsContainer;
     public GameObject gameOverContainer;
     public GameObject playerObject;
@@ -36,13 +36,13 @@ public class UIManager : Singleton<UIManager>
 
     public void InitializeStaminaBar(int staminaMax, int currentStamina)
     {
-        staminaBar.Initialize(staminaMax,currentStamina);
-        //staminaBar.UpdateValue(currentStamina);
+        staminaBar.maxValue = staminaMax;
+        staminaBar.value = currentStamina;
     }
 
     public void UpdateBar(int newValue)
     {
-        staminaBar.UpdateValue(newValue);
+        staminaBar.value = newValue;
     }
 
     public void HideUI()
