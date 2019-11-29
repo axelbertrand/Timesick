@@ -19,6 +19,31 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public enum GameState
+    {
+        MAIN_MENU,
+        INTRO,
+        BRIEFING,
+        LEVEL,
+        DEBRIEF
+    }
+
+    private GameState currentState;
+
+    public GameState CurrentState
+    {
+        get => currentState;
+        set
+        {
+            if(currentState == GameState.LEVEL)
+            {
+                AudioManager.Instance.Player.InterruptSound("AmbiantLoop");
+            }
+
+            currentState = value;
+        }
+    }
+
     public string FormattedLevelTime
     {
         get
@@ -36,7 +61,19 @@ public class GameManager : Singleton<GameManager>
 
     public void Start()
     {
+        currentState = GameState.MAIN_MENU;
         AudioManager.Instance.PlayMusic("MainMenu");
+    }
+
+    public void Update()
+    {
+        if(CurrentState == GameState.LEVEL)
+        {
+            if(!AudioManager.Instance.Player.IsCurrentlyPlayed("AmbiantLoop"))
+            {
+                AudioManager.Instance.PlaySound("AmbiantLoop");
+            }
+        }
     }
 
     public void Quit()
@@ -46,31 +83,37 @@ public class GameManager : Singleton<GameManager>
 
     public void LoadBriefing()
     {
+        CurrentState = GameState.BRIEFING;
         AudioManager.Instance.Player.InterruptSound("MainMenu");
         SceneManager.LoadScene("Assets/Scenes/Main Game/Briefing.unity");
     }
 
     public void LoadMainLevel()
     {
+        CurrentState = GameState.LEVEL;
+
         LevelTime = 0f;
         SceneManager.LoadScene("Assets/Scenes/Main Game/MainScene.unity");
-       
     }
 
     public void LoadMainMenu()
     {
+        CurrentState = GameState.MAIN_MENU;
+
         SceneManager.LoadScene("Assets/Scenes/Main Game/MainMenu.unity");
         AudioManager.Instance.PlayMusic("MainMenu");
     }
 
     public void LoadIntroduction()
     {
+        CurrentState = GameState.INTRO;
         AudioManager.Instance.Player.InterruptSound("MainMenu");
         SceneManager.LoadScene("Assets/Scenes/Main Game/Introduction.unity");
     }
 
     public void LoadDebriefing()
     {
+        currentState = GameState.DEBRIEF;
         SceneManager.LoadScene("Assets/Scenes/Main Game/Debriefing.unity");
     }
 

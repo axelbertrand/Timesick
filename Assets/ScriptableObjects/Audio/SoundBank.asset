@@ -53,6 +53,14 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 500
     source: {fileID: 0}
+  - name: AmbiantLoop
+    clip: {fileID: 8300000, guid: 14472ee3aababfa46be5970aee9000c3, type: 3}
+    volume: 0.85
+    pitch: 1
+    loop: 0
+    minDistance: 0
+    maxDistance: 500
+    source: {fileID: 0}
   soundLists: []
   musics:
   - name: MainMenu
