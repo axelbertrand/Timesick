@@ -14,9 +14,6 @@ namespace uqac.timesick.gameplay
         [ShowInInspector, ReadOnly]
         private List<IDetectable> sighted = new List<IDetectable>();
 
-        [SerializeField]
-        private bool seeThroughWall = false;
-
         [HideInInspector]
         public Action<IDetectable> OnSight = null; //events to invoke on Sight of new detectable
 
@@ -62,6 +59,7 @@ namespace uqac.timesick.gameplay
         {
             if (detectable.IsInvisible)
             {
+                Debug.Log("Is invisible!");
                 return false;
             }
 
@@ -116,10 +114,9 @@ namespace uqac.timesick.gameplay
             IDetectable detectable = collision.GetComponent<IDetectable>();
 
             //If a detectable entered the line of sight
-            if (detectable != null)
+            if (detectable != null && !detectable.IsInvisible)
             {
-                if (seeThroughWall || 
-                    (!seeThroughWall && HasLineOfSightOn(detectable)))
+                if (HasLineOfSightOn(detectable))
                 {
                     AddToSighted(detectable);
                 }
@@ -128,8 +125,6 @@ namespace uqac.timesick.gameplay
 
         private void OnTriggerStay2D(Collider2D collision)
         {
-            if (seeThroughWall)
-                return;
 
             IDetectable detectable = collision.GetComponent<IDetectable>();
 
@@ -154,7 +149,7 @@ namespace uqac.timesick.gameplay
                     }
                 }
             }
-        }
+        } 
 
         private void OnTriggerExit2D(Collider2D collision)
         {

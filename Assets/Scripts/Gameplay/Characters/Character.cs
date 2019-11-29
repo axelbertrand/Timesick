@@ -9,7 +9,7 @@ namespace uqac.timesick.gameplay
     using Cawotte.Toolbox.Audio;
 
     [Serializable]
-    public class Character : SerializedMonoBehaviour, IDetectable
+    public class Character : SerializedMonoBehaviour
     {
         protected AudioSourcePlayer player;
 
@@ -61,11 +61,6 @@ namespace uqac.timesick.gameplay
                 OnPositionChange?.Invoke(rb.position, value);
                 rb.MovePosition(value);
             }
-        }
-
-        public bool IsInvisible
-        {
-            get;
         }
 
         public int CurrentHealth

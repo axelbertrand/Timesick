@@ -8,7 +8,7 @@ using Cawotte.Toolbox.Audio;
 
 namespace uqac.timesick.gameplay
 {
-    public class MainCharacter : Character
+    public class MainCharacter : Character, IDetectable
     {
         [BoxGroup("Stamina bar"), SerializeField]
         [ProgressBar(0, "maxStamina", ColorMember = "GetStaminaBarColor", Segmented = true)]
@@ -70,8 +70,12 @@ namespace uqac.timesick.gameplay
         [BoxGroup("Invisibility"), SerializeField]
         private float invisibilityTime = 2f;
 
+        [BoxGroup("Invisibility"), SerializeField, ReadOnly]
+        private bool isInvisible = false;
+
         private SpriteRenderer spriteRenderer;
-        private bool isInvisible;
+
+
         private float staminaRegenerationDelayTimer = 0f;
         private float staminaRegenerationIntervalTimer = 0f;
 
