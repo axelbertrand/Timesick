@@ -59,7 +59,7 @@ public class InputManager
             case Button.SKIP_INTRO:
                 return Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.Joystick1Button16);
             case Button.CONTINUE_INTRO:
-                return Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Joystick1Button17);
+                return Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Joystick1Button17);
         }
         return false;
     }
@@ -92,6 +92,10 @@ public class InputManager
                 return Input.GetAxisRaw("Vertical") > .2f;
             case Button.DOWN:
                 return Input.GetAxisRaw("Vertical") < -.2f;
+            case Button.SKIP_INTRO:
+                return Input.GetKey(KeyCode.R) || Input.GetKey(KeyCode.Joystick1Button16);
+            case Button.CONTINUE_INTRO:
+                return Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.KeypadEnter) || Input.GetKey(KeyCode.Joystick1Button17);
         }
         return false;
     }
