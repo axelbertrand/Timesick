@@ -46,21 +46,27 @@ public class GameManager : Singleton<GameManager>
 
     public void LoadBriefing()
     {
-        SceneManager.LoadScene("Assets/Scenes/Main Game/Briefing.unity");
         AudioManager.Instance.Player.InterruptSound("MainMenu");
+        SceneManager.LoadScene("Assets/Scenes/Main Game/Briefing.unity");
     }
 
     public void LoadMainLevel()
     {
         LevelTime = 0f;
         SceneManager.LoadScene("Assets/Scenes/Main Game/MainScene.unity");
-        AudioManager.Instance.Player.InterruptSound("MainMenu");
+       
     }
 
     public void LoadMainMenu()
     {
         SceneManager.LoadScene("Assets/Scenes/Main Game/MainMenu.unity");
         AudioManager.Instance.PlayMusic("MainMenu");
+    }
+
+    public void LoadIntroduction()
+    {
+        AudioManager.Instance.Player.InterruptSound("MainMenu");
+        SceneManager.LoadScene("Assets/Scenes/Main Game/Introduction.unity");
     }
 
     public void LoadDebriefing()

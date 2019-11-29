@@ -1064,7 +1064,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 852298761}
-        m_MethodName: LoadBriefing
+        m_MethodName: LoadIntroduction
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

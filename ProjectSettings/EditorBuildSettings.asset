@@ -9,9 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Game/MainMenu.unity
     guid: fb923c926d8d9634c9bfe8b92d99568c
   - enabled: 1
+    path: Assets/Scenes/Main Game/Introduction.unity
+    guid: 9404f08321974534986a5b169e43bd57
+  - enabled: 1
     path: Assets/Scenes/Main Game/Briefing.unity
     guid: 2d1e95dee2810eb4c8f5abd4cd22a9e2
   - enabled: 1
     path: Assets/Scenes/Main Game/MainScene.unity
     guid: cddae9acead05d344b057951ae77ed71
+  - enabled: 1
+    path: Assets/Scenes/Main Game/Debriefing.unity
+    guid: 92af3ec13e257854ca6ab7aec2b5eea2
   m_configObjects: {}
