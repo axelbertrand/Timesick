@@ -1692,7 +1692,24 @@ PrefabInstance:
         type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 6989738295210304788, guid: 2d8175f15ccf8444eaa5b90b960ace00,
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989738295210304788, guid: 2d8175f15ccf8444eaa5b90b960ace00,
+        type: 3}
+      propertyPath: noiseTrap
+      value: 
+      objectReference: {fileID: 5991989177141580737, guid: 62413e33293765f44a4bd790e6adb22e,
+        type: 3}
+    - target: {fileID: 6989738295210304788, guid: 2d8175f15ccf8444eaa5b90b960ace00,
+        type: 3}
+      propertyPath: footstepsNoisePrefab
+      value: 
+      objectReference: {fileID: 2433304363091728703, guid: 5f52294bef4945c4fb59d8056ca7b1ec,
+        type: 3}
+    - target: {fileID: 6989738295210304788, guid: 2d8175f15ccf8444eaa5b90b960ace00,
+        type: 3}
+      propertyPath: noiseTrapPrefab
+      value: 
+      objectReference: {fileID: 5991989177141580737, guid: 62413e33293765f44a4bd790e6adb22e,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d8175f15ccf8444eaa5b90b960ace00, type: 3}

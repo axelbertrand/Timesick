@@ -19,9 +19,9 @@ namespace uqac.timesick.gameplay
         [SerializeField]
         private GameObject popup = null;
         [SerializeField]
-        private GameObject footsteps = null;
+        private GameObject footstepsNoisePrefab = null;
         [SerializeField]
-        private GameObject noiseDevice = null;
+        private GameObject noiseTrapPrefab = null;
         [SerializeField]
         public GameObject mole;
         #endregion
@@ -194,7 +194,7 @@ namespace uqac.timesick.gameplay
                     }
                     else
                     {
-                        Instantiate(footsteps, transform.position, Quaternion.identity);
+                        Instantiate(footstepsNoisePrefab, transform.position, Quaternion.identity);
                         timeSinceLastFootstep = 0f;
                     }
                 }
@@ -410,9 +410,10 @@ namespace uqac.timesick.gameplay
         {
             if (!inQTE && InputManager.GetButtonDown(Button.NOISEDEVICE))
             {
-                Instantiate(noiseDevice,transform.position, Quaternion.identity);
+                Instantiate(noiseTrapPrefab,transform.position, Quaternion.identity).SetActive(true);
             }
         }
+
         #endregion
         private void HandleSkills()
         {
