@@ -622,14 +622,14 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 11.8
-  m_fontSizeBase: 11.8
+  m_fontSize: 8.4
+  m_fontSizeBase: 8.5
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 6
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 520
+  m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -639,7 +639,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 171
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -660,7 +660,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 1.4398804, y: 1.9769592, z: 0, w: 2.8785324}
   m_textInfo:
     textComponent: {fileID: 441945732}
     characterCount: 317
@@ -668,7 +668,7 @@ MonoBehaviour:
     spaceCount: 61
     wordCount: 59
     linkCount: 0
-    lineCount: 31
+    lineCount: 24
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
