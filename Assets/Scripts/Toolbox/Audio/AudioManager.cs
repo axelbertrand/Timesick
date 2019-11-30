@@ -39,9 +39,14 @@ namespace Cawotte.Toolbox.Audio
 
         public void PlayMusic(string musicName)
         {
+            if (musicCurrentlyPlaying.Equals(musicName))
+            {
+                return; //already playing
+            }
 
             Sound music = soundBank.FindMusic(musicName);
 
+            //if the music is found play it
             if (music != null)
             {
                 StopMusic();
