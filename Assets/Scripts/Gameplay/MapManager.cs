@@ -9,6 +9,7 @@ namespace uqac.timesick.gameplay
     using UnityEngine;
     using UnityEngine.Tilemaps;
     using System.Linq;
+    using System;
 
     public class MapManager : Singleton<MapManager>
     {
@@ -35,7 +36,19 @@ namespace uqac.timesick.gameplay
         [SerializeField]
         private bool diagonalMovements = false;
 
+        [Header("Alert")]
+        [SerializeField]
+        private float durationAlert = 10f;
+        
+        [ShowInInspector, ReadOnly]
+        private bool guardsAreAlerted = false;
+        [ShowInInspector, ReadOnly]
+        private float timerAlert = 0f;
+
         private Pathfinder pathfinder;
+
+        public Action OnAlertStart = null;
+        public Action OnAlertEnd = null;
 
         public MainCharacter Player { get => player; }
 
@@ -55,6 +68,17 @@ namespace uqac.timesick.gameplay
         void Update()
         {
 
+
+            if (timerAlert > 0f)
+            {
+                timerAlert -= Time.deltaTime;
+                
+                if (timerAlert < 0f)
+                {
+                    timerAlert = 0f;
+                    notifyAlert(false);
+                }
+            }
         }
 
         public void RegisterPlayer(MainCharacter player)
@@ -72,10 +96,30 @@ namespace uqac.timesick.gameplay
             patrolPoints.Add(patrolPoint);
         }
 
-        public void notifyAlert()
+        public void notifyAlert(bool setAlert)
         {
+            foreach (Guard guard in guards)
+            {
+                guard.IsAlerted = setAlert;
 
+                //If it was patrolling, make them pick new patrol points to imitate some change of plan
+                if (guard.StateMachine.CurrentState is StatePatrol)
+                {
+                    guard.StateMachine.CurrentState = new StatePatrol(MapManager.Instance.PickPointToPatrol(guard) );
+                }
+            }
+
+            if (setAlert)
+            {
+                timerAlert = durationAlert;
+                OnAlertStart?.Invoke();
+            }
+            else
+            {
+                OnAlertEnd?.Invoke();
+            }
         }
+
         public PatrolPoint PickPointToPatrol(Guard guard)
         {
             bool printDebug = false;

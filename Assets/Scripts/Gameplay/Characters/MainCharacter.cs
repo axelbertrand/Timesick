@@ -173,21 +173,14 @@ namespace uqac.timesick.gameplay
                     return;
                 }
                 
-                /*
-                if (IsInvisible)
-                {
-                    IsInvisible = false;
-                    staminaRegenerationDelayTimer = 0f;
-                }*/
 
                 //They are normalized for constant speed in all directions.
                 inputDirection = inputDirection.normalized;
                 
                 //Handle the change of speed if the mainCharacter is sprinting
-                bool sprinting=false;
                 if (InputManager.GetButton(Button.SPRINT))
                 {
-                    sprinting = true;
+                    currentSpeed = sprintingSpeed;
                     if(timeSinceLastFootstep < timeBetweenFootsteps)
                     {
                         timeSinceLastFootstep += Time.deltaTime;
@@ -198,15 +191,15 @@ namespace uqac.timesick.gameplay
                         timeSinceLastFootstep = 0f;
                     }
                 }
+                else
+                {
+                    currentSpeed = walkingSpeed;
+                }
 
-                MoveToward(Position + inputDirection,sprinting);
+                MoveToward(Position + inputDirection);
             }
         }
 
-        private void HandleFootsteps()
-        {
-
-        }
         #endregion
 
         #region Interations

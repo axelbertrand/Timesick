@@ -19,6 +19,7 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+
     public enum GameState
     {
         MAIN_MENU,
