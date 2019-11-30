@@ -31,6 +31,8 @@ namespace uqac.timesick.gameplay
         [SerializeField]
         private TilePath pathToFollow = null;
 
+        private int maxSizeLastPatrolVisited = 5;
+        private Queue<PatrolPoint> lastPatrolsVisited = new Queue<PatrolPoint>();
 
         //ACTION
         public Action<PatrolPoint> OnPatrolVisit = null;
@@ -97,6 +99,7 @@ namespace uqac.timesick.gameplay
         #endregion
 
         public StateMachine<Guard> StateMachine { get => stateMachine; }
+        public Queue<PatrolPoint> LastPatrolsVisited { get => lastPatrolsVisited; }
 
         #endregion
         protected override void Awake()
@@ -107,6 +110,8 @@ namespace uqac.timesick.gameplay
             sightSensor.Eye = transform;
 
             hearingSensor = GetComponentInChildren<NoiseDetector>();
+
+            OnPatrolVisit += AddPatrolToVisited;
 
         }
 
@@ -198,6 +203,15 @@ namespace uqac.timesick.gameplay
             }
 
             isMoving = hasPath;
+        }
+
+        private void AddPatrolToVisited(PatrolPoint pp)
+        {
+            lastPatrolsVisited.Enqueue(pp);
+            if (lastPatrolsVisited.Count > maxSizeLastPatrolVisited)
+            {
+                lastPatrolsVisited.Dequeue();
+            }
         }
          
         /// <summary>

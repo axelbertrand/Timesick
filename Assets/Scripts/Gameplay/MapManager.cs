@@ -132,6 +132,12 @@ namespace uqac.timesick.gameplay
 
             foreach (PatrolPoint pp in patrolPoints)
             {
+                //We do not pick recently visited patrol points
+                if (guard.LastPatrolsVisited.Contains(pp))
+                {
+                    continue;
+                }
+
                 float coeffValue = getPatrolCoefficient(pp, guard);
 
                 //We skip incredibly small value, which is likely the patrol point the guard is already in contact with.
