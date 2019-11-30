@@ -113,6 +113,7 @@ namespace uqac.timesick.gameplay
             {
                 GetComponent<SpriteRenderer>().color = Color.red;
             } */
+            sightSensor.UpdateRotation(currentAngle);
 
             if (timerBulletFire > 0f)
             {

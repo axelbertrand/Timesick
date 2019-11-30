@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6989738295210304789}
   - component: {fileID: 6989738295210304788}
   - component: {fileID: 6989738295210304784}
+  - component: {fileID: 3180812736723130185}
   m_Layer: 8
   m_Name: MainCharacter
   m_TagString: Untagged
@@ -138,10 +139,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   currentStamina: 0
   popup: {fileID: 0}
-  footsteps: {fileID: 4413518753259738751, guid: 1bb5042f4e53e234d9f2950455dc4362,
-    type: 3}
-  noiseDevice: {fileID: 5991989177141580737, guid: 62413e33293765f44a4bd790e6adb22e,
-    type: 3}
+  footstepsNoisePrefab: {fileID: 0}
+  noiseTrapPrefab: {fileID: 0}
   mole: {fileID: 3064716921948989221, guid: ce49732ee19fd6c448464a5cc3cd1699, type: 3}
   timeBetweenFootsteps: 0.3
   maxStamina: 10
@@ -166,3 +165,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.35
+--- !u!95 &3180812736723130185
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6989738295210304795}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1024eca170f8ddf4caa1867e92c2b7e9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

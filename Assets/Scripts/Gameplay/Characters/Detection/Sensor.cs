@@ -180,5 +180,10 @@ namespace uqac.timesick.gameplay
             }
         }
 
+
+        public void UpdateRotation(float angle)
+        {
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
     }
 }

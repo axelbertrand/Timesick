@@ -22,7 +22,7 @@ namespace uqac.timesick.gameplay
         private float rotateSpeed = 10f;
 
         [ShowInInspector, ReadOnly]
-        private float currentAngle = 0f;
+        protected float currentAngle = 0f;
 
         [BoxGroup("Health bar"), SerializeField]
         [ProgressBar(0, "maxHealth", ColorMember = "GetHealthBarColor", Segmented = true)]
@@ -145,7 +145,7 @@ namespace uqac.timesick.gameplay
             RotateToward(Position + (Position - lastPosition).normalized );
         }
 
-        public void RotateToward(Vector2 worldPos, bool transformRotation=true, bool instantRotation=false)
+        public void RotateToward(Vector2 worldPos, bool transformRotation=false, bool instantRotation=false)
         {
 
             Vector2 remainingDistance = (worldPos - (Vector2)transform.position);
