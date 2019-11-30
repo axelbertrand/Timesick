@@ -42,13 +42,19 @@ namespace Cawotte.Toolbox.Audio
 
             Sound music = soundBank.FindMusic(musicName);
 
-            if (music == null)
+            if (music != null)
             {
-                player.InterruptSound(musicCurrentlyPlaying);
+                StopMusic();
                 player.Play(music);
                 musicCurrentlyPlaying = musicName;
             }
 
+        }
+
+        public void StopMusic()
+        {
+            player.InterruptSound(musicCurrentlyPlaying);
+            musicCurrentlyPlaying = "";
         }
         #region Public Methods
         
