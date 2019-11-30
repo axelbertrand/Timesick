@@ -37,9 +37,9 @@ namespace Cawotte.Toolbox.Audio
             GetComponent<AudioSourcePlayer>().PlaySound(soundname);
         }
 
-        public void PlayMusic(string musicName)
+        public void PlayMusic(string musicName, bool restart = false)
         {
-            if (musicCurrentlyPlaying.Equals(musicName))
+            if (musicCurrentlyPlaying.Equals(musicName) && !restart)
             {
                 return; //already playing
             }

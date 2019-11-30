@@ -72,6 +72,11 @@ public class UIManager : Singleton<UIManager>
         GameManager.Instance.LoadMainMenu();
     }
 
+
+    public void OnClickRestart()
+    {
+        GameManager.Instance.LoadMainLevel();
+    }
     public void OnClickDebrief()
     {
         GameManager.Instance.LoadDebriefing();

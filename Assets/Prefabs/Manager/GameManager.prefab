@@ -50,13 +50,13 @@ MonoBehaviour:
     MusicName: MainMenu
   - State: 1
     SceneName: Introduction
-    MusicName: 
+    MusicName: MainMenu
   - State: 2
     SceneName: Briefing
-    MusicName: 
+    MusicName: MainMenu
   - State: 3
     SceneName: MainScene
     MusicName: AmbiantLoop
   - State: 4
     SceneName: Debriefing
-    MusicName: 
+    MusicName: MainMenu

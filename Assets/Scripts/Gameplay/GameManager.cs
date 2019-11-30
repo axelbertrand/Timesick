@@ -59,11 +59,6 @@ public class GameManager : Singleton<GameManager>
         get => currentState;
         set
         {
-            if(currentState == GameState.LEVEL)
-            {
-                AudioManager.Instance.Player.InterruptSound("AmbiantLoop");
-            }
-
             currentState = value;
         }
     }
@@ -104,6 +99,7 @@ public class GameManager : Singleton<GameManager>
     public void LoadMainLevel()
     {
         LoadSceneData(GameState.LEVEL);
+        AudioManager.Instance.PlayMusic(FindScene(GameState.LEVEL).MusicName, true);
         LevelTime = 0f;
     }
 
