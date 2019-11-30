@@ -20,6 +20,8 @@ namespace uqac.timesick.gameplay
 
         [SerializeField]
         private float rotateSpeed = 10f;
+
+        [ShowInInspector, ReadOnly]
         private float currentAngle = 0f;
 
         [BoxGroup("Health bar"), SerializeField]
@@ -164,7 +166,7 @@ namespace uqac.timesick.gameplay
                 deltaAngle = deltaAngle * Time.deltaTime * rotateSpeed;
             }
 
-            currentAngle += deltaAngle;
+            currentAngle = (currentAngle + deltaAngle +360) % 360;
 
 
             Quaternion q = Quaternion.AngleAxis(currentAngle, Vector3.forward);
