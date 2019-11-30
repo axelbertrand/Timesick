@@ -58,7 +58,17 @@ namespace Cawotte.Toolbox
         private void Awake()
         {
             if (_persistent)
-                DontDestroyOnLoad(gameObject);
+            {
+                //verify if there isn't already an instance
+                if (Instance != this)
+                {
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    DontDestroyOnLoad(gameObject);
+                }
+            }
             OnAwake();
         }
 
