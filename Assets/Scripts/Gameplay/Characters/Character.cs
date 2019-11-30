@@ -17,6 +17,8 @@ namespace uqac.timesick.gameplay
         protected float walkingSpeed = 5f;
         [SerializeField]
         protected float sprintingSpeed = 9f;
+        [ShowInInspector, ReadOnly]
+        protected float currentSpeed;
 
         [SerializeField]
         private float rotateSpeed = 10f;
@@ -97,6 +99,7 @@ namespace uqac.timesick.gameplay
             player = gameObject.AddComponent<AudioSourcePlayer>();
 
             currentHealth = maxHealth;
+            currentSpeed = walkingSpeed;
         }
 
 
@@ -123,20 +126,15 @@ namespace uqac.timesick.gameplay
 
         #region Movements
 
-        protected void MoveToward(Vector2 worldPos, bool sprinting)
+        protected void MoveToward(Vector2 worldPos)
         {
 
             Vector2 direction = (worldPos - rb.position).normalized;
 
             Vector2 deltaMovement;
-            if (sprinting)
-            {
-                deltaMovement = sprintingSpeed * Time.deltaTime * direction;
-            }
-            else
-            {
-                deltaMovement = walkingSpeed * Time.deltaTime * direction;
-            }
+
+            deltaMovement = currentSpeed * Time.deltaTime * direction;
+
             Position += deltaMovement;
         }
 

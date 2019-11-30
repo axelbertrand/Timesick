@@ -173,50 +173,36 @@ namespace uqac.timesick.gameplay
                     isMoving = false;
                 }
                 else
-                {
                     isMoving = true;
 
 
-                    /*
-                    if (IsInvisible)
+                //They are normalized for constant speed in all directions.
+                inputDirection = inputDirection.normalized;
+                
+                //Handle the change of speed if the mainCharacter is sprinting
+                if (InputManager.GetButton(Button.SPRINT))
+                {
+                    currentSpeed = sprintingSpeed;
+                    if(timeSinceLastFootstep < timeBetweenFootsteps)
                     {
                         IsInvisible = false;
                         staminaRegenerationDelayTimer = 0f;
-                    }*/
-
-                    //They are normalized for constant speed in all directions.
-                    inputDirection = inputDirection.normalized;
-
-                    //Handle the change of speed if the mainCharacter is sprinting
-                    bool sprinting = false;
-                    if (InputManager.GetButton(Button.SPRINT))
-                    {
-                        sprinting = true;
-                        if (timeSinceLastFootstep < timeBetweenFootsteps)
-                        {
-                            timeSinceLastFootstep += Time.deltaTime;
-                        }
-                        else
-                        {
-                            Instantiate(footstepsNoisePrefab, transform.position, Quaternion.identity);
-                            timeSinceLastFootstep = 0f;
-                        }
                     }
-
-                    MoveToward(Position + inputDirection, sprinting);
                 }
-                if(animator != null)
+                else
                 {
-                    animator.SetBool("IsMoving", isMoving);
-                    //animator.SetBool("IsSprinting", sprinting);
+                    currentSpeed = walkingSpeed;
                 }
+
+                MoveToward(Position + inputDirection);
+            }
+            if(animator != null)
+            {
+                animator.SetBool("IsMoving", isMoving);
+                //animator.SetBool("IsSprinting", sprinting);
             }
         }
 
-        private void HandleFootsteps()
-        {
-
-        }
         #endregion
 
         #region Interations

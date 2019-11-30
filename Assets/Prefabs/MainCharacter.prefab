@@ -129,7 +129,7 @@ MonoBehaviour:
     - Name: OnPositionChange
       Entry: 6
       Data: 
-  walkingSpeed: 8
+  walkingSpeed: 9
   sprintingSpeed: 14
   rotateSpeed: 10
   currentHealth: 5
@@ -138,10 +138,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   currentStamina: 0
   popup: {fileID: 0}
-  footsteps: {fileID: 4413518753259738751, guid: 1bb5042f4e53e234d9f2950455dc4362,
-    type: 3}
-  noiseDevice: {fileID: 5991989177141580737, guid: 62413e33293765f44a4bd790e6adb22e,
-    type: 3}
+  footstepsNoisePrefab: {fileID: 0}
+  noiseTrapPrefab: {fileID: 0}
   mole: {fileID: 3064716921948989221, guid: ce49732ee19fd6c448464a5cc3cd1699, type: 3}
   timeBetweenFootsteps: 0.3
   maxStamina: 10
