@@ -20,9 +20,7 @@ namespace uqac.timesick.gameplay
 
         [Title("Sensor")]
         [SerializeField]
-        private float defaultLineOfSightSize = 5.6f;
-        [SerializeField]
-        private float shootLineOfSightMultiplier = 1.3f;
+        private float shootLineOfSightMultiplier = 1.5f;
 
         [Title("Shooting")]
         [SerializeField]
@@ -175,7 +173,7 @@ namespace uqac.timesick.gameplay
 
             isMoving = hasPath;
         }
-
+         
         /// <summary>
         /// If false, set line of sight to default size, else to extended size.
         /// Extended size is only used for SHOOTING to avoid lose of sight too fast.
@@ -185,11 +183,11 @@ namespace uqac.timesick.gameplay
         {
             if (!isExtended)
             {
-                sightSensor.SetSightLenght(defaultLineOfSightSize);
+                sightSensor.MultiplySizeSight(1f / shootLineOfSightMultiplier);
             }
             else
             {
-                sightSensor.SetSightLenght(defaultLineOfSightSize * shootLineOfSightMultiplier);
+                sightSensor.MultiplySizeSight(shootLineOfSightMultiplier);
             }
         }
 
