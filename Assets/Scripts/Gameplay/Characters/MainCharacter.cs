@@ -115,7 +115,7 @@ namespace uqac.timesick.gameplay
         {
             base.Awake();
 
-            OnPositionChange += (oldP, newP) => RotateToward(newP); //rotate on movement
+            OnPositionChange += (oldP, newP) => RotateToward(newP,false,true); //rotate on movement
 
             spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -170,36 +170,46 @@ namespace uqac.timesick.gameplay
 
                 if (inputDirection.magnitude < Mathf.Epsilon)
                 {
-                    return;
+                    isMoving = false;
                 }
-                
-                /*
-                if (IsInvisible)
+                else
                 {
-                    IsInvisible = false;
-                    staminaRegenerationDelayTimer = 0f;
-                }*/
+                    isMoving = true;
 
-                //They are normalized for constant speed in all directions.
-                inputDirection = inputDirection.normalized;
-                
-                //Handle the change of speed if the mainCharacter is sprinting
-                bool sprinting=false;
-                if (InputManager.GetButton(Button.SPRINT))
-                {
-                    sprinting = true;
-                    if(timeSinceLastFootstep < timeBetweenFootsteps)
+
+                    /*
+                    if (IsInvisible)
                     {
-                        timeSinceLastFootstep += Time.deltaTime;
-                    }
-                    else
+                        IsInvisible = false;
+                        staminaRegenerationDelayTimer = 0f;
+                    }*/
+
+                    //They are normalized for constant speed in all directions.
+                    inputDirection = inputDirection.normalized;
+
+                    //Handle the change of speed if the mainCharacter is sprinting
+                    bool sprinting = false;
+                    if (InputManager.GetButton(Button.SPRINT))
                     {
-                        Instantiate(footsteps, transform.position, Quaternion.identity);
-                        timeSinceLastFootstep = 0f;
+                        sprinting = true;
+                        if (timeSinceLastFootstep < timeBetweenFootsteps)
+                        {
+                            timeSinceLastFootstep += Time.deltaTime;
+                        }
+                        else
+                        {
+                            Instantiate(footsteps, transform.position, Quaternion.identity);
+                            timeSinceLastFootstep = 0f;
+                        }
                     }
+
+                    MoveToward(Position + inputDirection, sprinting);
                 }
-
-                MoveToward(Position + inputDirection,sprinting);
+                if(animator != null)
+                {
+                    animator.SetBool("IsMoving", isMoving);
+                    //animator.SetBool("IsSprinting", sprinting);
+                }
             }
         }
 

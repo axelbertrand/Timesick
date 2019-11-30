@@ -51,6 +51,8 @@ namespace uqac.timesick.gameplay
         protected Action<int, int> OnHealthChange = null;
         protected Action OnDeath = null;
 
+        [SerializeField]
+        public Animator animator;
 
         #region Properties
 
@@ -143,7 +145,7 @@ namespace uqac.timesick.gameplay
             RotateToward(Position + (Position - lastPosition).normalized );
         }
 
-        public void RotateToward(Vector2 worldPos)
+        public void RotateToward(Vector2 worldPos, bool transformRotation=true, bool instantRotation=false)
         {
 
             Vector2 remainingDistance = (worldPos - (Vector2)transform.position);
@@ -157,22 +159,26 @@ namespace uqac.timesick.gameplay
             {
                 deltaAngle += (deltaAngle > 180) ? -360 : 360;
             }
-
                 
 
             //Apply a max rotation, but makes sure the multiplier doesn't make it higher than the original one
-            if (Mathf.Abs(deltaAngle * Time.deltaTime * rotateSpeed) < Mathf.Abs(deltaAngle))
+            if (!instantRotation && Mathf.Abs(deltaAngle * Time.deltaTime * rotateSpeed) < Mathf.Abs(deltaAngle))
             {
                 deltaAngle = deltaAngle * Time.deltaTime * rotateSpeed;
             }
 
             currentAngle = (currentAngle + deltaAngle +360) % 360;
-
+            if(animator != null)
+            {
+                animator.SetFloat("Angle", currentAngle);
+            }
 
             Quaternion q = Quaternion.AngleAxis(currentAngle, Vector3.forward);
-
-            transform.rotation = q;
-
+            if(transformRotation)
+            {
+                transform.rotation = q;
+            }
+            
             //transform.rotation = Quaternion.Slerp(transform.rotation, q, (rotateSpeed * Time.deltaTime) / rotateSpeed);
         }
 
