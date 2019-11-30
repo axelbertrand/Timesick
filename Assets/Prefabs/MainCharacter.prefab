@@ -148,6 +148,7 @@ MonoBehaviour:
   staminaRegenerationInterval: 1
   invisibilityCost: 1
   invisibilityTime: 2
+  isInvisible: 0
 --- !u!58 &6989738295210304784
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -43,7 +43,7 @@ namespace uqac.timesick.gameplay
         [SerializeField]
         private float timeBetweenFootsteps = 0.5f;
 
-        bool waitingTheMole = true;
+        //bool waitingTheMole = true;
         #endregion
         #endregion
 
@@ -80,6 +80,8 @@ namespace uqac.timesick.gameplay
         private float staminaRegenerationIntervalTimer = 0f;
 
         protected Action<int, int> OnStaminaChange = null;
+        protected Action OnEscape = null;
+
 
         //endregion
 
@@ -134,6 +136,7 @@ namespace uqac.timesick.gameplay
             timeSinceLastFootstep = float.PositiveInfinity;
             UIManager.Instance.InitializeStaminaBar(maxStamina,currentStamina);
             OnDeath += Die;
+            OnEscape += Escape;
         }
 
 
@@ -375,6 +378,7 @@ namespace uqac.timesick.gameplay
             {
                 GetComponent<SpriteRenderer>().color = Color.red;
                 Debug.Log("ON SE BARRE");
+                OnEscape?.Invoke();
                 Destroy(this.gameObject);
                 return;
             }
@@ -396,7 +400,7 @@ namespace uqac.timesick.gameplay
         #region Escaping
         private void CallTheMoleForTheRescue()
         {
-            waitingTheMole = true;
+            //waitingTheMole = true;
             Instantiate(mole, new Vector2(0, 0), Quaternion.identity);
         }
         #endregion
@@ -478,6 +482,11 @@ namespace uqac.timesick.gameplay
         private void Die()
         {
             GameManager.Instance.OnDeath();
+        }
+
+        private void Escape()
+        {
+            GameManager.Instance.OnEscape();
         }
     }
 

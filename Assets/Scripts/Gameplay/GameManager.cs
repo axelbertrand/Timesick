@@ -126,4 +126,9 @@ public class GameManager : Singleton<GameManager>
     {
         UIManager.Instance.ShowGameOver();
     }
+
+    public void OnEscape()
+    {
+        UIManager.Instance.ShowEscaped();
+    }
 }

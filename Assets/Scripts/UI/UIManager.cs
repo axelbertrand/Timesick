@@ -9,6 +9,7 @@ public class UIManager : Singleton<UIManager>
     public Slider staminaBar;
     public GameObject componentsContainer;
     public GameObject gameOverContainer;
+    public GameObject escapedContainer;
     public GameObject playerObject;
 
     private void Start()
@@ -16,6 +17,7 @@ public class UIManager : Singleton<UIManager>
         timer.RunTimer();
         componentsContainer.SetActive(true);
         gameOverContainer.SetActive(false);
+        escapedContainer.SetActive(false);
         playerObject.SetActive(true);
     }
 
@@ -58,8 +60,20 @@ public class UIManager : Singleton<UIManager>
         gameOverContainer.SetActive(true);
     }
 
+    public void ShowEscaped()
+    {
+        playerObject.SetActive(false);
+        HideUI();
+        escapedContainer.SetActive(true);
+    }
+
     public void OnClickQuit()
     {
         GameManager.Instance.LoadMainMenu();
+    }
+
+    public void OnClickDebrief()
+    {
+        GameManager.Instance.LoadDebriefing();
     }
 }

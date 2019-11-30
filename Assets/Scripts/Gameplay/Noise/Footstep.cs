@@ -11,10 +11,10 @@ namespace uqac.timesick.gameplay
         public Sprite noiseSprite;
 
         private float timer = 0;
-        private CircleCollider2D collider;
+        private CircleCollider2D m_Collider;
         void Start()
         {
-            collider = GetComponent<CircleCollider2D>();
+            m_Collider = GetComponent<CircleCollider2D>();
         }
 
         // Update is called once per frame
