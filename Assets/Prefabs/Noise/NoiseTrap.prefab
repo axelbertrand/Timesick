@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5991989177141580738}
   - component: {fileID: 3945928744353824967}
-  - component: {fileID: 7883588288191782915}
   - component: {fileID: 7641296497765053299}
   m_Layer: 11
-  m_Name: NoiseDevice
+  m_Name: NoiseTrap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,33 +70,17 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 8bd8e3b03f0394946bd916c604e52033, type: 3}
-  m_Color: {r: 1, g: 0.94392705, b: 0.14117646, a: 0.50980395}
+  m_Sprite: {fileID: 21300000, guid: 05c013478cb00e54898499987e878ffa, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &7883588288191782915
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5991989177141580737}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!114 &7641296497765053299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +94,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBeforeExplosion: 2
-  explosionRange: 25
-  explosionSpeed: 75
-  explosionSprite: {fileID: 21300000, guid: 8bd8e3b03f0394946bd916c604e52033, type: 3}
-  idleSprite: {fileID: 21300000, guid: b6699803e6f1e1945b26889269dac141, type: 3}
+  noiseWavePrefab: {fileID: 4004281804282077200, guid: 070cecb655bb2fe4b82ceedc6f04fffe,
+    type: 3}
