@@ -22,26 +22,15 @@
         [SerializeField]
         [Range(0f, 1f)]
         private float volume = 1f;
-        [SerializeField]
-        [Range(.1f, 3f)]
-        private float pitch = 1f;
+
         [SerializeField]
         private bool loop = false;
-
-        [SerializeField]
-        private float minDistance = 0f;
-        [SerializeField]
-        private float maxDistance = 500f;
-
         //component which will play the sound
         [HideInInspector] public AudioSource source;
         
         private string listName;
 
         public float Volume { get => volume; }
-        public float Pitch { get => pitch; }
-        public float MinDistance { get => minDistance;  }
-        public float MaxDistance { get => maxDistance; }
 
         public bool Loop { get => loop; set => loop = value; }
         public string ListName
@@ -60,12 +49,14 @@
         {
             source.clip = this.clip;
             source.volume = this.Volume;
-            source.pitch = this.Pitch;
             source.loop = this.Loop;
+
+            /*
+            source.pitch = this.Pitch;
             source.minDistance = this.MinDistance;
             source.maxDistance = this.MaxDistance;
             source.spatialBlend = 1f;
-            source.rolloffMode = AudioRolloffMode.Linear;
+            source.rolloffMode = AudioRolloffMode.Linear; */
         }
 
     }

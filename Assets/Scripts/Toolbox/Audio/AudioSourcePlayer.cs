@@ -116,7 +116,7 @@
             //Does the sound exist ?
             PlayingSound play;
 
-            if (!IsCurrentlyPlayed(name, out play))
+            if (!IsCurrentlyPlaying(name, out play))
             {
                 return;
             }
@@ -133,7 +133,7 @@
         public bool IsCurrentlyPlayed(string name)
         {
             PlayingSound play = null;
-            return IsCurrentlyPlayed(name, out play);
+            return IsCurrentlyPlaying(name, out play);
         }
         #endregion
 
@@ -145,7 +145,7 @@
         /// <param name="name"></param>
         /// <param name="play"></param>
         /// <returns></returns>
-        private bool IsCurrentlyPlayed(string name, out PlayingSound play)
+        private bool IsCurrentlyPlaying(string name, out PlayingSound play)
         {
             play = null;
             foreach (PlayingSound playing in currentlyPlaying)
@@ -164,7 +164,7 @@
         /// </summary>
         /// <param name="play"></param>
         /// <returns></returns>
-        private bool IsCurrentlyPlayed(PlayingSound play)
+        private bool IsCurrentlyPlaying(PlayingSound play)
         {
             return currentlyPlaying.Contains(play);
         }
@@ -248,7 +248,7 @@
             yield return new WaitForSeconds(source.clip.length);
 
             //Interrupt if it was removed from the current play list
-            if (!IsCurrentlyPlayed(playing))
+            if (!IsCurrentlyPlaying(playing))
             {
                 yield break;
             }
@@ -279,7 +279,7 @@
         {
             source.Stop();
             source.enabled = false;
-            RemoveFromCurrentlyPlayed(source);
+            RemoveFromCurrentlyPlaying(source);
             availableAudioSources.Push(source);
         }
 
@@ -288,7 +288,7 @@
         /// </summary>
         /// <param name="source"></param>
         /// <returns>True if the source was playing a sound, else false.</returns>
-        private bool RemoveFromCurrentlyPlayed(AudioSource source) {
+        private bool RemoveFromCurrentlyPlaying(AudioSource source) {
             foreach (PlayingSound entry in currentlyPlaying)
             {
                 if (entry.Source == source)

@@ -2,7 +2,7 @@
 
 namespace Cawotte.Toolbox.Audio 
 {
-    
+    using Sirenix.OdinInspector;
     using System;
     using UnityEngine;
 
@@ -16,7 +16,8 @@ namespace Cawotte.Toolbox.Audio
         [SerializeField] private SoundBank soundBank = null;
 
         private AudioSourcePlayer player; //Used for musics
-        private string currentlyPlayedMusic = "";
+        [SerializeField, ReadOnly]
+        private string musicCurrentlyPlaying = "";
 
         public AudioSourcePlayer Player => player;
 
@@ -36,11 +37,18 @@ namespace Cawotte.Toolbox.Audio
             GetComponent<AudioSourcePlayer>().PlaySound(soundname);
         }
 
-        public void PlayMusic(string music)
+        public void PlayMusic(string musicName)
         {
-            player.InterruptSound(currentlyPlayedMusic);
-            player.PlayMusic(music);
-            currentlyPlayedMusic = music;
+
+            Sound music = soundBank.FindMusic(musicName);
+
+            if (music == null)
+            {
+                player.InterruptSound(musicCurrentlyPlaying);
+                player.Play(music);
+                musicCurrentlyPlaying = musicName;
+            }
+
         }
         #region Public Methods
         
