@@ -38,16 +38,6 @@ namespace Cawotte.Toolbox.Audio {
             {
                 soundLists.Initialize();
             }
-            //Initialize sounds lists
-            foreach (Sound music in musics)
-            {
-                Debug.Log("Music : " + music.name);
-            }
-            //Initialize sounds lists
-            foreach (Sound sound in sounds)
-            {
-                Debug.Log("Sounds : " + sound.name);
-            }
         }
 
         public Sound FindSound(string soundName)

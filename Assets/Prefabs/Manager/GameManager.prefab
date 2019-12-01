@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 203561634923846848}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 413.3651, y: 212.4032, z: -598.30164}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -44,3 +44,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _persistent: 1
+  scenes:
+  - State: 0
+    SceneName: MainMenu
+    MusicName: MainMenu
+  - State: 1
+    SceneName: Introduction
+    MusicName: MainMenu
+  - State: 2
+    SceneName: Briefing
+    MusicName: MainMenu
+  - State: 3
+    SceneName: MainScene
+    MusicName: AmbiantLoop
+  - State: 4
+    SceneName: Debriefing
+    MusicName: MainMenu

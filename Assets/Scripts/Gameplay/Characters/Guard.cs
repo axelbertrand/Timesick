@@ -31,6 +31,8 @@ namespace uqac.timesick.gameplay
         [SerializeField]
         private TilePath pathToFollow = null;
 
+        private int maxSizeLastPatrolVisited = 5;
+        private Queue<PatrolPoint> lastPatrolsVisited = new Queue<PatrolPoint>();
 
         //ACTION
         public Action<PatrolPoint> OnPatrolVisit = null;
@@ -41,14 +43,32 @@ namespace uqac.timesick.gameplay
         [SerializeField]
         private StateMachine<Guard> stateMachine;
 
+        [SerializeField]
+        private bool isAlerted = false;
+
         //SENSOR
         public Sensor SightSensor { get => sightSensor; }
         public NoiseDetector HearingSensor { get => hearingSensor; }
 
 
-
-
         private const float minDistForNextPath = 0.2f;
+
+        public bool IsAlerted {
+            get => isAlerted;
+            set
+            {
+                isAlerted = value;
+
+                if (isAlerted)
+                {
+                    currentSpeed = sprintingSpeed;
+                }
+                else
+                {
+                    currentSpeed = walkingSpeed;
+                }
+            }
+        }
 
         #region Audio properties
         [Header("Audio properties")]
@@ -75,7 +95,11 @@ namespace uqac.timesick.gameplay
             }
         }
 
+
         #endregion
+
+        public StateMachine<Guard> StateMachine { get => stateMachine; }
+        public Queue<PatrolPoint> LastPatrolsVisited { get => lastPatrolsVisited; }
 
         #endregion
         protected override void Awake()
@@ -86,6 +110,8 @@ namespace uqac.timesick.gameplay
             sightSensor.Eye = transform;
 
             hearingSensor = GetComponentInChildren<NoiseDetector>();
+
+            OnPatrolVisit += AddPatrolToVisited;
 
         }
 
@@ -127,6 +153,11 @@ namespace uqac.timesick.gameplay
             isMoving = false;
         }
 
+        public void SetWalkingSpeed()
+        {
+
+        }
+
         public void GoTo(Vector2 worldPos)
         {
             pathToFollow = MapManager.Instance.GetPathFromTo(Position, worldPos);
@@ -153,7 +184,7 @@ namespace uqac.timesick.gameplay
                 //If the guard is not close enough to the next path point, move towards it.
                 if ( Vector2.Distance(Position, current.CenterWorld) > minDistForNextPath)
                 {
-                    MoveToward(current.CenterWorld,false);
+                    MoveToward(current.CenterWorld);
                 }
                 else
                 {
@@ -161,7 +192,7 @@ namespace uqac.timesick.gameplay
                     if (pathToFollow.IteratorSimplePath.HasNext())
                     {
                         current = pathToFollow.IteratorSimplePath.Next();
-                        MoveToward(current.CenterWorld,false);
+                        MoveToward(current.CenterWorld);
                     }
                     //If there' no next one, we stahp
                     else
@@ -173,6 +204,15 @@ namespace uqac.timesick.gameplay
             }
 
             isMoving = hasPath;
+        }
+
+        private void AddPatrolToVisited(PatrolPoint pp)
+        {
+            lastPatrolsVisited.Enqueue(pp);
+            if (lastPatrolsVisited.Count > maxSizeLastPatrolVisited)
+            {
+                lastPatrolsVisited.Dequeue();
+            }
         }
          
         /// <summary>

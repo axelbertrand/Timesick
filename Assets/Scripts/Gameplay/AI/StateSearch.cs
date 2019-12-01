@@ -51,6 +51,9 @@
             stateMachine.Subject.HearingSensor.OnNoiseHeard += searchPos;
 
             stateMachine.Subject.GoTo(searchPosition);
+
+            //Trigger a global alert
+            MapManager.Instance.notifyAlert(true);
         }
 
         public override void EndState()

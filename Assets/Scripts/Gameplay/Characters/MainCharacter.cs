@@ -177,46 +177,41 @@ namespace uqac.timesick.gameplay
                     isMoving = true;
 
 
-                    /*
-                    if (IsInvisible)
-                    {
-                        IsInvisible = false;
-                        staminaRegenerationDelayTimer = 0f;
-                    }*/
-
                     //They are normalized for constant speed in all directions.
                     inputDirection = inputDirection.normalized;
 
                     //Handle the change of speed if the mainCharacter is sprinting
-                    bool sprinting = false;
                     if (InputManager.GetButton(Button.SPRINT))
                     {
-                        sprinting = true;
+                        currentSpeed = sprintingSpeed;
+                        IsInvisible = false;
+                        staminaRegenerationDelayTimer = 0f;
                         if (timeSinceLastFootstep < timeBetweenFootsteps)
                         {
                             timeSinceLastFootstep += Time.deltaTime;
                         }
                         else
                         {
-                            Instantiate(footstepsNoisePrefab, transform.position, Quaternion.identity);
+                            Instantiate(footstepsNoisePrefab, transform.position, Quaternion.identity).SetActive(true);
                             timeSinceLastFootstep = 0f;
                         }
                     }
+                    else
+                    {
+                        currentSpeed = walkingSpeed;
+                    }
 
-                    MoveToward(Position + inputDirection, sprinting);
+                    MoveToward(Position + inputDirection);
                 }
-                if(animator != null)
+
+                if (animator != null)
                 {
                     animator.SetBool("IsMoving", isMoving);
-                    //animator.SetBool("IsSprinting", sprinting);
                 }
             }
-        }
-
-        private void HandleFootsteps()
-        {
 
         }
+
         #endregion
 
         #region Interations

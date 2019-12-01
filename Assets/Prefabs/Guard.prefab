@@ -153,8 +153,8 @@ MonoBehaviour:
     - Name: stateMachine
       Entry: 6
       Data: 
-  walkingSpeed: 6
-  sprintingSpeed: 12
+  walkingSpeed: 7
+  sprintingSpeed: 11
   rotateSpeed: 10
   currentHealth: 10
   maxHealth: 10
@@ -166,6 +166,7 @@ MonoBehaviour:
   rateOfFire: 8
   pathToFollow:
     path: []
+  isAlerted: 0
   chaseSoundName: Chase1
   lostSoundName: 
 --- !u!95 &304583387583206016

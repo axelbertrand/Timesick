@@ -45,8 +45,6 @@ namespace uqac.timesick.gameplay
 
         public void MultiplySizeSight(float scale)
         {
-            Vector3 newScale = transform.localScale;
-            newScale.x = scale;
             transform.localScale *= scale;
         }
 

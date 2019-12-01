@@ -4,6 +4,7 @@ using UnityEngine;
 using Cawotte.Toolbox;
 using Cawotte.Toolbox.Audio;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 
 public class GameManager : Singleton<GameManager>
@@ -19,6 +20,9 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    [SerializeField]
+    private List<SceneData> scenes = new List<SceneData>();
+
     public enum GameState
     {
         MAIN_MENU,
@@ -28,6 +32,26 @@ public class GameManager : Singleton<GameManager>
         DEBRIEF
     }
 
+    [System.Serializable]
+    public struct SceneData
+    {
+        public SceneData(GameState state, string scene, string musicName) : this(state, scene)
+        {
+            this.MusicName = musicName;
+        }
+
+        public SceneData(GameState state, string scene)
+        {
+            this.State = state;
+            this.SceneName = scene;
+            this.MusicName = "";
+        }
+
+        public GameState State;
+        public string SceneName;
+        public string MusicName;
+    }
+
     private GameState currentState;
 
     public GameState CurrentState
@@ -35,11 +59,6 @@ public class GameManager : Singleton<GameManager>
         get => currentState;
         set
         {
-            if(currentState == GameState.LEVEL)
-            {
-                AudioManager.Instance.Player.InterruptSound("AmbiantLoop");
-            }
-
             currentState = value;
         }
     }
@@ -61,19 +80,10 @@ public class GameManager : Singleton<GameManager>
 
     public void Start()
     {
-        currentState = GameState.MAIN_MENU;
-        AudioManager.Instance.PlayMusic("MainMenu");
-    }
-
-    public void Update()
-    {
-        if(CurrentState == GameState.LEVEL)
-        {
-            if(!AudioManager.Instance.Player.IsCurrentlyPlayed("AmbiantLoop"))
-            {
-                AudioManager.Instance.PlaySound("AmbiantLoop");
-            }
-        }
+        SceneData currentScene = GetCurrentScene();
+        currentState = currentScene.State;
+        if (!currentScene.MusicName.Equals(""))
+            AudioManager.Instance.PlayMusic(currentScene.MusicName);
     }
 
     public void Quit()
@@ -83,38 +93,30 @@ public class GameManager : Singleton<GameManager>
 
     public void LoadBriefing()
     {
-        CurrentState = GameState.BRIEFING;
-        AudioManager.Instance.Player.InterruptSound("MainMenu");
-        SceneManager.LoadScene("Assets/Scenes/Main Game/Briefing.unity");
+        LoadSceneData(GameState.BRIEFING);
     }
 
     public void LoadMainLevel()
     {
-        CurrentState = GameState.LEVEL;
-
+        LoadSceneData(GameState.LEVEL);
+        AudioManager.Instance.PlayMusic(FindScene(GameState.LEVEL).MusicName, true);
         LevelTime = 0f;
-        SceneManager.LoadScene("Assets/Scenes/Main Game/MainScene.unity");
     }
 
     public void LoadMainMenu()
     {
-        CurrentState = GameState.MAIN_MENU;
-
-        SceneManager.LoadScene("Assets/Scenes/Main Game/MainMenu.unity");
-        AudioManager.Instance.PlayMusic("MainMenu");
+        LoadSceneData(GameState.MAIN_MENU);
     }
 
     public void LoadIntroduction()
     {
-        CurrentState = GameState.INTRO;
-        AudioManager.Instance.Player.InterruptSound("MainMenu");
-        SceneManager.LoadScene("Assets/Scenes/Main Game/Introduction.unity");
+        LoadSceneData(GameState.INTRO);
     }
 
     public void LoadDebriefing()
     {
-        currentState = GameState.DEBRIEF;
-        SceneManager.LoadScene("Assets/Scenes/Main Game/Debriefing.unity");
+        LoadSceneData(GameState.DEBRIEF);
+        AudioManager.Instance.StopMusic();
     }
 
     public void OnLevelEnd()
@@ -130,5 +132,39 @@ public class GameManager : Singleton<GameManager>
     public void OnEscape()
     {
         UIManager.Instance.ShowEscaped();
+    }
+
+    /// <summary>
+    /// Return the sceneData with the given GameState
+    /// </summary>
+    /// <param name="state"></param>
+    /// <returns></returns>
+    private SceneData FindScene(GameState state)
+    {
+        return scenes.Where(scene => scene.State.Equals(state)).First();
+    }
+
+    private SceneData GetCurrentScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        return scenes.Where(scene => scene.SceneName.Equals(currentSceneName)).First();
+    }
+
+
+    private void LoadSceneData(GameState state)
+    {
+        LoadSceneData(FindScene(state));
+    }
+
+    private void LoadSceneData(SceneData scene)
+    {
+        Debug.Log("Loading Scene : " + scene.SceneName);
+        CurrentState = scene.State;
+        SceneManager.LoadScene(scene.SceneName);
+        if (scene.MusicName != "")
+        {
+            AudioManager.Instance.PlayMusic(scene.MusicName);
+        }
+
     }
 }
