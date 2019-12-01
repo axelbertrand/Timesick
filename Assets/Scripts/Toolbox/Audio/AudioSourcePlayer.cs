@@ -60,7 +60,7 @@
         /// </summary>
         /// <param name="listName"></param>
         /// <param name="onEndPlay">Action to perform when the sound finish playing without interruption</param>
-        public void PlayRandomFromList(string listName, Action onEndPlay = null)
+        public void PlayRandomFromList(string listName, bool canRepeat = false, Action onEndPlay = null)
         {
             //Does the sound exist ?
             SoundList soundList = AudioManager.Instance.FindList(listName);
@@ -68,7 +68,7 @@
             if (soundList == null) return;
 
             //If already being played, abort.
-            if (IsCurrentlyPlayed(listName))
+            if (!canRepeat && IsCurrentlyPlayed(listName))
             {
                 return;
             }

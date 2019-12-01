@@ -107,6 +107,9 @@ namespace uqac.timesick.gameplay
 
         public virtual void DealDamage(int damage)
         {
+
+            player.PlayRandomFromList("hit_l", true);
+
             if (isInvincible)
             {
                 return;

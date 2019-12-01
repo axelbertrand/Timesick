@@ -43,7 +43,24 @@ MonoBehaviour:
     volume: 0.85
     loop: 0
     source: {fileID: 0}
-  soundLists: []
+  soundLists:
+  - listName: hit_l
+    sounds:
+    - name: hit1
+      clip: {fileID: 8300000, guid: c225b58798d83fd44a974068538fe1eb, type: 3}
+      volume: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: hit2
+      clip: {fileID: 8300000, guid: 025d6d552ec05f9419169d64d9ec40b1, type: 3}
+      volume: 1
+      loop: 0
+      source: {fileID: 0}
+    - name: hit3
+      clip: {fileID: 8300000, guid: 938ee3d632895784aba2acf92cbe5675, type: 3}
+      volume: 1
+      loop: 0
+      source: {fileID: 0}
   musics:
   - name: MainMenu
     clip: {fileID: 8300000, guid: f5a301aa7c449df4baa034de686cd72c, type: 3}
