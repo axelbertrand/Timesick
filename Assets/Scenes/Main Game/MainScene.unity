@@ -20998,6 +20998,36 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8878522080839954181, guid: 503fd81572d230c47aaa47404eb7d086,
+        type: 3}
+      propertyPath: timer
+      value: 
+      objectReference: {fileID: 344227960}
+    - target: {fileID: 8878522080839954181, guid: 503fd81572d230c47aaa47404eb7d086,
+        type: 3}
+      propertyPath: staminaBar
+      value: 
+      objectReference: {fileID: 784561871}
+    - target: {fileID: 8878522080839954181, guid: 503fd81572d230c47aaa47404eb7d086,
+        type: 3}
+      propertyPath: componentsContainer
+      value: 
+      objectReference: {fileID: 1603678710}
+    - target: {fileID: 8878522080839954181, guid: 503fd81572d230c47aaa47404eb7d086,
+        type: 3}
+      propertyPath: gameOverContainer
+      value: 
+      objectReference: {fileID: 1691510983}
+    - target: {fileID: 8878522080839954181, guid: 503fd81572d230c47aaa47404eb7d086,
+        type: 3}
+      propertyPath: escapedContainer
+      value: 
+      objectReference: {fileID: 1781674096}
+    - target: {fileID: 8878522080839954181, guid: 503fd81572d230c47aaa47404eb7d086,
+        type: 3}
+      propertyPath: playerObject
+      value: 
+      objectReference: {fileID: 971420373}
     - target: {fileID: 8878522080839954182, guid: 503fd81572d230c47aaa47404eb7d086,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -21053,35 +21083,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8878522080839954181, guid: 503fd81572d230c47aaa47404eb7d086,
-        type: 3}
-      propertyPath: timer
-      value: 
-      objectReference: {fileID: 344227960}
-    - target: {fileID: 8878522080839954181, guid: 503fd81572d230c47aaa47404eb7d086,
-        type: 3}
-      propertyPath: staminaBar
-      value: 
-      objectReference: {fileID: 784561871}
-    - target: {fileID: 8878522080839954181, guid: 503fd81572d230c47aaa47404eb7d086,
-        type: 3}
-      propertyPath: componentsContainer
-      value: 
-      objectReference: {fileID: 1603678710}
-    - target: {fileID: 8878522080839954181, guid: 503fd81572d230c47aaa47404eb7d086,
-        type: 3}
-      propertyPath: gameOverContainer
-      value: 
-      objectReference: {fileID: 1691510983}
-    - target: {fileID: 8878522080839954181, guid: 503fd81572d230c47aaa47404eb7d086,
-        type: 3}
-      propertyPath: escapedContainer
-      value: 
-      objectReference: {fileID: 1781674096}
-    - target: {fileID: 8878522080839954181, guid: 503fd81572d230c47aaa47404eb7d086,
-        type: 3}
-      propertyPath: playerObject
-      value: 
-      objectReference: {fileID: 971420373}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 503fd81572d230c47aaa47404eb7d086, type: 3}
