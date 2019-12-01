@@ -117,7 +117,7 @@ namespace uqac.timesick.gameplay
 
             OnPositionChange += (oldP, newP) => RotateToward(newP,false,true); //rotate on movement
 
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
             OnHealthChange += UpdateDamageEffect;
             OnStaminaChange += UpdateStaminaBar;
@@ -381,7 +381,7 @@ namespace uqac.timesick.gameplay
 
             if(other.name.Contains("Escape Route"))
             {
-                GetComponent<SpriteRenderer>().color = Color.red;
+                spriteRenderer.color = Color.red;
                 Debug.Log("ON SE BARRE");
                 OnEscape?.Invoke();
                 Destroy(this.gameObject);
