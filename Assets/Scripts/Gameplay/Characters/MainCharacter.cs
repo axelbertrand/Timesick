@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cawotte.Toolbox.Audio;
+using UnityEngine.InputSystem;
 
 namespace uqac.timesick.gameplay
 {
@@ -478,6 +479,9 @@ namespace uqac.timesick.gameplay
         {
             float healthPercentage = (float)newValue / maxHealth;
             CameraEffectsManager.Instance.UpdateDamageEffect(healthPercentage);
+
+            // Gamepad vibration
+            //Gamepad.current.SetMotorSpeeds(0.25f, 0.75f);
         }
 
         private void UpdateStaminaBar(int oldValue,int newValue)
