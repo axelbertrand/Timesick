@@ -8,11 +8,20 @@ public class Timer : MonoBehaviour
     public TMPro.TextMeshProUGUI timerText;
 
     private float startTime;
+    private float duration = 0f;
+    private float currentTime = 0f;
     private bool run = false;
 
+    public System.Action OnTimerEnd = null;
+
+    public void StartTimer(float duration)
+    {
+        this.duration = duration;
+        this.currentTime = duration;
+        run = true;
+    }
     public void RunTimer()
     {
-        startTime = Time.time;
         run = true;
     }
 
@@ -36,16 +45,26 @@ public class Timer : MonoBehaviour
     {
         if(run)
         {
-            GameManager.Instance.LevelTime = Time.time - startTime;
+            currentTime -= Time.deltaTime;
 
-            string minutes = ((int)(GameManager.Instance.LevelTime / 60)).ToString();
+            if (currentTime < 0f)
+            {
+                currentTime = 0f;
+            }
+
+            string minutes = ((int)(currentTime / 60)).ToString();
             if(minutes.Length < 2)
             {
                 minutes = '0' + minutes;
             }
-            string seconds = (GameManager.Instance.LevelTime % 60).ToString("f2");
+            string seconds = (currentTime % 60).ToString("f2");
 
             timerText.text = minutes + ":" + seconds;
+
+            if (currentTime <= 0f)
+            {
+                GameManager.Instance.OnDeath("Game Over : Your time ran out!");
+            }
         }
     } 
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Cawotte.Toolbox.Audio;
 
 public class BriefingManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class BriefingManager : MonoBehaviour
 
     public void StartLevel()
     {
+        AudioManager.Instance.PlayClickUISound();
         GameManager.Instance.LoadMainLevel();
     }
    
