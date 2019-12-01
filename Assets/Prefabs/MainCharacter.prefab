@@ -189,10 +189,12 @@ MonoBehaviour:
   animator: {fileID: 3638965037683678813}
   currentStamina: 0
   popup: {fileID: 0}
-  footstepsNoisePrefab: {fileID: 0}
-  noiseTrapPrefab: {fileID: 0}
+  footstepsNoisePrefab: {fileID: 2433304363091728703, guid: 5f52294bef4945c4fb59d8056ca7b1ec,
+    type: 3}
+  noiseTrapPrefab: {fileID: 5991989177141580737, guid: 62413e33293765f44a4bd790e6adb22e,
+    type: 3}
   mole: {fileID: 3064716921948989221, guid: ce49732ee19fd6c448464a5cc3cd1699, type: 3}
-  timeBetweenFootsteps: 0.3
+  timeBetweenFootsteps: 0.5
   maxStamina: 10
   staminaRegenerationDelay: 3
   staminaRegenerationInterval: 1
@@ -212,6 +214,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.1, y: 0.11}
   serializedVersion: 2
   m_Radius: 0.35
