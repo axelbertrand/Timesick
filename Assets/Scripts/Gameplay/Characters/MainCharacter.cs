@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Cawotte.Toolbox.Audio;
+using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
+using UnityEngine.InputSystem.Controls;
 
 namespace uqac.timesick.gameplay
 {
@@ -82,6 +85,8 @@ namespace uqac.timesick.gameplay
         protected Action<int, int> OnStaminaChange = null;
         protected Action OnEscape = null;
 
+        private Controls controls;
+        private Vector2 movementInput;
 
         //endregion
 
@@ -110,10 +115,14 @@ namespace uqac.timesick.gameplay
             }
         }
 
-
+        #region MonoBehaviour
         protected override void Awake()
         {
             base.Awake();
+
+            controls = new Controls();
+            controls.Player.Invisibility.performed += _ => HandleInvisibility();
+            controls.Player.NoiseDevice.performed += _ => HandleNoiseDevice();
 
             OnPositionChange += (oldP, newP) => RotateToward(newP,false,true); //rotate on movement
 
@@ -126,8 +135,6 @@ namespace uqac.timesick.gameplay
         }
 
         // Update is called once per frame
-
-        #region MonoBehaviour
         void Start()
         {
             MapManager.Instance.RegisterPlayer(this);
@@ -141,13 +148,21 @@ namespace uqac.timesick.gameplay
             OnEscape += Escape;
         }
 
+        private void OnEnable()
+        {
+            controls.Enable();
+        }
+
+        private void OnDisable()
+        {
+            controls.Disable();
+        }
 
         void Update()
         {
 
-            //Moove the mainCharacter if he presses the movement keys
+            //Move the mainCharacter if he presses the movement keys
             HandleMovements();
-
 
             //Execute the current action (if one available) if the mainCharacter press the actions's button
             HandleAction();
@@ -155,9 +170,7 @@ namespace uqac.timesick.gameplay
             //Update the current selection of the nearest Interactive
             UpdateSelection();
 
-            HandleNoiseDevice();
-
-            HandleSkills();
+            RestaureStaminaOverTime();
         }
 
         #endregion
@@ -167,8 +180,8 @@ namespace uqac.timesick.gameplay
         {
             if (currentAction == null || !inQTE)
             {
-                //Read the direction of the current inputs
-                Vector2 inputDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+                // Read the direction of the current inputs
+                Vector2 inputDirection = controls.Player.Move.ReadValue<Vector2>();
 
                 if (inputDirection.magnitude < Mathf.Epsilon)
                 {
@@ -178,42 +191,42 @@ namespace uqac.timesick.gameplay
                 {
                     isMoving = true;
 
+                    HandleSprint();
 
                     //They are normalized for constant speed in all directions.
-                    inputDirection = inputDirection.normalized;
-
-                    //Handle the change of speed if the mainCharacter is sprinting
-                    if (InputManager.GetButton(Button.SPRINT))
-                    {
-                        currentSpeed = sprintingSpeed;
-                        IsInvisible = false;
-                        staminaRegenerationDelayTimer = 0f;
-                        if (timeSinceLastFootstep < timeBetweenFootsteps)
-                        {
-                            timeSinceLastFootstep += Time.deltaTime;
-                        }
-                        else
-                        {
-                            Instantiate(footstepsNoisePrefab, transform.position, Quaternion.identity).SetActive(true);
-                            timeSinceLastFootstep = 0f;
-                        }
-                    }
-                    else
-                    {
-                        currentSpeed = walkingSpeed;
-                    }
-
-                    MoveToward(Position + inputDirection);
+                    MoveToward(Position + inputDirection.normalized);
                 }
 
-                if (animator != null)
-                {
-                    animator.SetBool("IsMoving", isMoving);
-                }
+                animator?.SetBool("IsMoving", isMoving);
             }
 
         }
 
+        private void HandleSprint()
+        {
+            // Handle the change of speed if the mainCharacter is sprinting
+
+            // Check if sprint button is hold pressed
+            if (controls.Player.Sprint.ReadValue<float>() >= InputSystem.settings.defaultButtonPressPoint)
+            {
+                currentSpeed = sprintingSpeed;
+                IsInvisible = false;
+                staminaRegenerationDelayTimer = 0f;
+                if (timeSinceLastFootstep < timeBetweenFootsteps)
+                {
+                    timeSinceLastFootstep += Time.deltaTime;
+                }
+                else
+                {
+                    Instantiate(footstepsNoisePrefab, transform.position, Quaternion.identity).SetActive(true);
+                    timeSinceLastFootstep = 0f;
+                }
+            }
+            else
+            {
+                currentSpeed = walkingSpeed;
+            }
+        }
         #endregion
 
         #region Interations
@@ -415,33 +428,38 @@ namespace uqac.timesick.gameplay
         #region Abilities
         private void HandleNoiseDevice()
         {
-            if (!inQTE && InputManager.GetButtonDown(Button.NOISEDEVICE))
+            if (!inQTE)
             {
                 Instantiate(noiseTrapPrefab,transform.position, Quaternion.identity).SetActive(true);
             }
         }
 
         #endregion
-        private void HandleSkills()
+        private void HandleInvisibility()
         {
-            // Invisibility
-            if (InputManager.GetButtonDown(Button.INVISIBILITY))
+            // Return if invisibility skill can't be used
+            if (IsInvisible || CurrentStamina < invisibilityCost)
             {
-                // Return if invisibility skill can't be used
-                if (IsInvisible || CurrentStamina < invisibilityCost)
-                {
-                    return;
-                }
-
-                IsInvisible = true;
-                CurrentStamina -= invisibilityCost;
-                staminaRegenerationDelayTimer = 0f;
-                Debug.Log("Start of invisibility");
-                //TODO
-                AudioManager.Instance.PlaySound("Invisibility");
-                Invoke("WaitAndSetVisible", invisibilityTime);
+                return;
             }
-            else if (CurrentStamina < maxStamina && !IsInvisible)
+
+            IsInvisible = true;
+            CurrentStamina -= invisibilityCost;
+            staminaRegenerationDelayTimer = 0f;
+                
+            AudioManager.Instance.PlaySound("Invisibility");
+            Invoke("WaitAndSetVisible", invisibilityTime);
+        }
+
+        private void WaitAndSetVisible()
+        {
+            IsInvisible = false;
+            staminaRegenerationDelayTimer = 0f;
+        }
+
+        private void RestaureStaminaOverTime()
+        {
+            if (CurrentStamina < maxStamina && !IsInvisible)
             {
                 if (staminaRegenerationDelayTimer >= staminaRegenerationDelay)
                 {
@@ -464,12 +482,6 @@ namespace uqac.timesick.gameplay
             }
         }
 
-        private void WaitAndSetVisible()
-        {
-            IsInvisible = false;
-            staminaRegenerationDelayTimer = 0f;
-        }
-
         //Get the color of the stamina bar in the Inspector's UI. (ODIN)
         private Color GetStaminaBarColor(int value)
         {
@@ -480,6 +492,9 @@ namespace uqac.timesick.gameplay
         {
             float healthPercentage = (float)newValue / maxHealth;
             CameraEffectsManager.Instance.UpdateDamageEffect(healthPercentage);
+
+            // Gamepad vibration
+            //Gamepad.current.SetMotorSpeeds(0.25f, 0.75f);
         }
 
         private void UpdateStaminaBar(int oldValue,int newValue)
