@@ -692,7 +692,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 14.4
+  m_fontSize: 12.65
   m_fontSizeBase: 8.5
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -738,7 +738,7 @@ MonoBehaviour:
     spaceCount: 61
     wordCount: 59
     linkCount: 0
-    lineCount: 24
+    lineCount: 27
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
@@ -1580,22 +1580,22 @@ PrefabInstance:
     - target: {fileID: 6575074037372926894, guid: 17e740c89a15b124eb0070778e31aa97,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 6575074037372926894, guid: 17e740c89a15b124eb0070778e31aa97,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 103.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6575074037372926894, guid: 17e740c89a15b124eb0070778e31aa97,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 215.3
+      value: 152.54
       objectReference: {fileID: 0}
     - target: {fileID: 6575074037372926894, guid: 17e740c89a15b124eb0070778e31aa97,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 207
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6575074037372926894, guid: 17e740c89a15b124eb0070778e31aa97,
         type: 3}

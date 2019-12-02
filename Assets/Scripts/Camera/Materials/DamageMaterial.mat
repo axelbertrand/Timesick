@@ -71,9 +71,9 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _VRadius: 0.69375
-    - _VSoft: 0.3125
+    - _VRadius: 0.6
+    - _VSoft: 0.25
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.8125, g: 0.35, b: 0.35, a: 1}
+    - _Color: {r: 0.5, g: 0.099999994, b: 0.099999994, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

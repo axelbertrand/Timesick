@@ -521,7 +521,7 @@ namespace uqac.timesick.gameplay
             }
             else
             {
-                GameManager.Instance.OnDeath("Game Over : Your were killed!");
+                GameManager.Instance.OnDeath("Game Over :\nYou have been killed!");
             }
         }
 
