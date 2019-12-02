@@ -45,6 +45,8 @@ namespace uqac.timesick.gameplay
         //same
         [SerializeField]
         private float timeBetweenFootsteps = 0.5f;
+        [SerializeField]
+        private int noiseDeviceCost;
 
         //bool waitingTheMole = true;
         #endregion
@@ -430,7 +432,16 @@ namespace uqac.timesick.gameplay
         {
             if (!inQTE)
             {
-                Instantiate(noiseTrapPrefab,transform.position, Quaternion.identity).SetActive(true);
+                if(currentStamina >= noiseDeviceCost)
+                {
+                    currentStamina -= noiseDeviceCost;
+                    Instantiate(noiseTrapPrefab, transform.position, Quaternion.identity).SetActive(true);
+                    AudioManager.Instance.PlaySound("NoiseDevice");
+                }else
+                {
+                    AudioManager.Instance.PlaySound("ActionImpossible");
+                }
+                
             }
         }
 

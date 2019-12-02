@@ -183,7 +183,7 @@ MonoBehaviour:
   walkingSpeed: 9
   sprintingSpeed: 14
   rotateSpeed: 10
-  currentHealth: 5
+  currentHealth: 20
   maxHealth: 3
   invincibilityFrame: 0.3
   animator: {fileID: 3638965037683678813}
@@ -195,6 +195,7 @@ MonoBehaviour:
     type: 3}
   mole: {fileID: 3064716921948989221, guid: ce49732ee19fd6c448464a5cc3cd1699, type: 3}
   timeBetweenFootsteps: 0.5
+  noiseDeviceCost: 5
   maxStamina: 10
   staminaRegenerationDelay: 3
   staminaRegenerationInterval: 1

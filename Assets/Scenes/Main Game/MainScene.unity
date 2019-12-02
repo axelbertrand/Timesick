@@ -670,7 +670,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.82478553}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -21.91, y: -3.7998352}
+  m_AnchoredPosition: {x: -21.909973, y: -3.7998352}
   m_SizeDelta: {x: 158.74, y: -30}
   m_Pivot: {x: 0.99999994, y: 0.5}
 --- !u!114 &344227960
@@ -4845,23 +4845,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6989738295210304788, guid: 2d8175f15ccf8444eaa5b90b960ace00,
         type: 3}
-      propertyPath: serializationData.Prefab
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6989738295210304788, guid: 2d8175f15ccf8444eaa5b90b960ace00,
-        type: 3}
       propertyPath: popup
       value: 
       objectReference: {fileID: 1768782584}
     - target: {fileID: 6989738295210304788, guid: 2d8175f15ccf8444eaa5b90b960ace00,
         type: 3}
-      propertyPath: maxHealth
-      value: 20
+      propertyPath: serializationData.Prefab
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6989738295210304788, guid: 2d8175f15ccf8444eaa5b90b960ace00,
         type: 3}
-      propertyPath: currentHealth
-      value: 20
+      propertyPath: noiseDeviceCost
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d8175f15ccf8444eaa5b90b960ace00, type: 3}
