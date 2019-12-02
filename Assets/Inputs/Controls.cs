@@ -382,6 +382,74 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""QTE"",
+            ""id"": ""0d7b3e85-15b2-4232-a40d-17e69ceb12cf"",
+            ""actions"": [
+                {
+                    ""name"": ""Up Key"",
+                    ""type"": ""Button"",
+                    ""id"": ""2d866765-4c57-4671-b712-0a08f87a783d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Down Key"",
+                    ""type"": ""Button"",
+                    ""id"": ""eb9f1db0-6359-4f75-9996-cc221d08f369"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""bbccb1d9-7f2c-4651-88b7-fb7a5eb97157"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Up Key"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0db27f68-4fae-40f2-9243-fca9fa80d15a"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Up Key"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a5ea09c-beff-4776-a232-49ead9f97bbf"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Down Key"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0322d7ab-55af-462c-8b3d-7c396c4ab0ad"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Down Key"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -420,6 +488,10 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Introduction = asset.FindActionMap("Introduction", throwIfNotFound: true);
         m_Introduction_SkipIntro = m_Introduction.FindAction("Skip Intro", throwIfNotFound: true);
         m_Introduction_ContinueIntro = m_Introduction.FindAction("Continue Intro", throwIfNotFound: true);
+        // QTE
+        m_QTE = asset.FindActionMap("QTE", throwIfNotFound: true);
+        m_QTE_UpKey = m_QTE.FindAction("Up Key", throwIfNotFound: true);
+        m_QTE_DownKey = m_QTE.FindAction("Down Key", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -571,6 +643,47 @@ public class @Controls : IInputActionCollection, IDisposable
         }
     }
     public IntroductionActions @Introduction => new IntroductionActions(this);
+
+    // QTE
+    private readonly InputActionMap m_QTE;
+    private IQTEActions m_QTEActionsCallbackInterface;
+    private readonly InputAction m_QTE_UpKey;
+    private readonly InputAction m_QTE_DownKey;
+    public struct QTEActions
+    {
+        private @Controls m_Wrapper;
+        public QTEActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @UpKey => m_Wrapper.m_QTE_UpKey;
+        public InputAction @DownKey => m_Wrapper.m_QTE_DownKey;
+        public InputActionMap Get() { return m_Wrapper.m_QTE; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(QTEActions set) { return set.Get(); }
+        public void SetCallbacks(IQTEActions instance)
+        {
+            if (m_Wrapper.m_QTEActionsCallbackInterface != null)
+            {
+                @UpKey.started -= m_Wrapper.m_QTEActionsCallbackInterface.OnUpKey;
+                @UpKey.performed -= m_Wrapper.m_QTEActionsCallbackInterface.OnUpKey;
+                @UpKey.canceled -= m_Wrapper.m_QTEActionsCallbackInterface.OnUpKey;
+                @DownKey.started -= m_Wrapper.m_QTEActionsCallbackInterface.OnDownKey;
+                @DownKey.performed -= m_Wrapper.m_QTEActionsCallbackInterface.OnDownKey;
+                @DownKey.canceled -= m_Wrapper.m_QTEActionsCallbackInterface.OnDownKey;
+            }
+            m_Wrapper.m_QTEActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @UpKey.started += instance.OnUpKey;
+                @UpKey.performed += instance.OnUpKey;
+                @UpKey.canceled += instance.OnUpKey;
+                @DownKey.started += instance.OnDownKey;
+                @DownKey.performed += instance.OnDownKey;
+                @DownKey.canceled += instance.OnDownKey;
+            }
+        }
+    }
+    public QTEActions @QTE => new QTEActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -601,5 +714,10 @@ public class @Controls : IInputActionCollection, IDisposable
     {
         void OnSkipIntro(InputAction.CallbackContext context);
         void OnContinueIntro(InputAction.CallbackContext context);
+    }
+    public interface IQTEActions
+    {
+        void OnUpKey(InputAction.CallbackContext context);
+        void OnDownKey(InputAction.CallbackContext context);
     }
 }
