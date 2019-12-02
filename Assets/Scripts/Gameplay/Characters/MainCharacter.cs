@@ -421,6 +421,11 @@ namespace uqac.timesick.gameplay
             {
                 currentStamina -= noiseDeviceCost;
                 Instantiate(noiseTrapPrefab,transform.position, Quaternion.identity).SetActive(true);
+                AudioManager.Instance.PlaySound("NoiseDevice");
+            }
+            else
+            {
+                AudioManager.Instance.PlaySound("ActionImpossible");
             }
         }
 
