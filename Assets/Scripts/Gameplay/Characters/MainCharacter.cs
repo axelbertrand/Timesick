@@ -417,15 +417,18 @@ namespace uqac.timesick.gameplay
         #region Abilities
         private void HandleNoiseDevice()
         {
-            if (!inQTE && InputManager.GetButtonDown(Button.NOISEDEVICE) && currentStamina>= noiseDeviceCost)
+            if (!inQTE && InputManager.GetButtonDown(Button.NOISEDEVICE))
             {
-                currentStamina -= noiseDeviceCost;
-                Instantiate(noiseTrapPrefab,transform.position, Quaternion.identity).SetActive(true);
-                AudioManager.Instance.PlaySound("NoiseDevice");
-            }
-            else
-            {
-                AudioManager.Instance.PlaySound("ActionImpossible");
+                if(currentStamina >= noiseDeviceCost)
+                {
+                    currentStamina -= noiseDeviceCost;
+                    Instantiate(noiseTrapPrefab, transform.position, Quaternion.identity).SetActive(true);
+                    AudioManager.Instance.PlaySound("NoiseDevice");
+                }else
+                {
+                    AudioManager.Instance.PlaySound("ActionImpossible");
+                }
+                
             }
         }
 
