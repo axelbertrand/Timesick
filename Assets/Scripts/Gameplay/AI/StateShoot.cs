@@ -35,6 +35,12 @@
             StateMachine.Subject.SetLineOfSightAsExtended(true);
 
 
+            stateMachine.Subject.ShowExclamationPopup();
+
+            //Trigger a global alert
+            MapManager.Instance.notifyAlert(true);
+
+
             if (!StateMachine.Subject.ChaseSoundName.Equals(""))
             {
                 AudioManager.Instance.PlaySound(StateMachine.Subject.ChaseSoundName);

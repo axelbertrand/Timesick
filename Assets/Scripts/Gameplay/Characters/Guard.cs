@@ -46,6 +46,12 @@ namespace uqac.timesick.gameplay
         [SerializeField]
         private bool isAlerted = false;
 
+        [SerializeField]
+        private FadingPopup questionMarkPopup;
+        [SerializeField]
+        private FadingPopup exclamationMarkPopup;
+
+
         //SENSOR
         public Sensor SightSensor { get => sightSensor; }
         public NoiseDetector HearingSensor { get => hearingSensor; }
@@ -118,6 +124,10 @@ namespace uqac.timesick.gameplay
         // Start is called before the first frame update
         void Start()
         {
+
+            exclamationMarkPopup.Init();
+            questionMarkPopup.Init();
+
             MapManager.Instance.RegisterGuard(this);
 
 
@@ -249,6 +259,17 @@ namespace uqac.timesick.gameplay
             bullet.gameObject.SetActive(true);
 
             timerBulletFire = 1 / rateOfFire;
+        }
+
+        public void ShowExclamationPopup()
+        {
+            exclamationMarkPopup.Show();
+        }
+
+
+        public void ShowQuestionPopup()
+        {
+            questionMarkPopup.Show();
         }
 
         private void OnDrawGizmos()

@@ -6,7 +6,6 @@ using Cawotte.Toolbox.Audio;
 using UnityEngine.SceneManagement;
 using System.Linq;
 
-
 public class GameManager : Singleton<GameManager>
 {
     private float levelTime;

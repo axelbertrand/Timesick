@@ -52,8 +52,11 @@
 
             stateMachine.Subject.GoTo(searchPosition);
 
+
+            stateMachine.Subject.ShowQuestionPopup();
+
             //Trigger a global alert
-            MapManager.Instance.notifyAlert(true);
+            //MapManager.Instance.notifyAlert(true);
         }
 
         public override void EndState()
