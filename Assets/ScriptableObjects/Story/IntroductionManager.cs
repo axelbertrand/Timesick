@@ -19,6 +19,8 @@ public class IntroductionManager : MonoBehaviour
     [SerializeField]
     public Scene[] scenes;
 
+    private Controls controls;
+
     private int currentSceneIndex;
     private int currentLineIndex;
 
@@ -38,37 +40,22 @@ public class IntroductionManager : MonoBehaviour
 
     private void Awake()
     {
+        controls = new Controls();
+        controls.Introduction.SkipIntro.performed += _ => EndIntroduction();
+        controls.Introduction.ContinueIntro.performed += _ => ContinueIntroduction();
+
         printCoroutine = TypeLine(scenes[currentSceneIndex].lines[currentLineIndex]);
         StartCoroutine(printCoroutine);
     }
 
-    public void Update()
+    private void OnEnable()
     {
-        if (InputManager.GetButtonDown(Button.SKIP_INTRO))
-        {
-            EndIntroduction();
-        }
+        controls.Enable();
+    }
 
-        if(InputManager.GetButtonDown(Button.CONTINUE_INTRO))
-        {
-            StopCoroutine(printCoroutine);
-
-            currentLineIndex++;
-
-            if (currentLineIndex >= scenes[currentSceneIndex].lines.Length)
-            {
-                currentSceneIndex++;
-                currentLineIndex = 0;
-            }
-
-            if (currentSceneIndex >= scenes.Length)
-            {
-                EndIntroduction();
-            }
-
-            printCoroutine = TypeLine(scenes[currentSceneIndex].lines[currentLineIndex]);
-            StartCoroutine(printCoroutine);
-        }
+    private void OnDisable()
+    {
+        controls.Disable();
     }
 
     public void FixedUpdate()
@@ -97,5 +84,26 @@ public class IntroductionManager : MonoBehaviour
     public void EndIntroduction()
     {
         GameManager.Instance.LoadBriefing();
+    }
+
+    public void ContinueIntroduction()
+    {
+        StopCoroutine(printCoroutine);
+
+        currentLineIndex++;
+
+        if (currentLineIndex >= scenes[currentSceneIndex].lines.Length)
+        {
+            currentSceneIndex++;
+            currentLineIndex = 0;
+        }
+
+        if (currentSceneIndex >= scenes.Length)
+        {
+            EndIntroduction();
+        }
+
+        printCoroutine = TypeLine(scenes[currentSceneIndex].lines[currentLineIndex]);
+        StartCoroutine(printCoroutine);
     }
 }
