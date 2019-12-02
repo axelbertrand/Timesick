@@ -4847,8 +4847,7 @@ PrefabInstance:
         type: 3}
       propertyPath: serializationData.Prefab
       value: 
-      objectReference: {fileID: 6989738295210304788, guid: 2d8175f15ccf8444eaa5b90b960ace00,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 6989738295210304788, guid: 2d8175f15ccf8444eaa5b90b960ace00,
         type: 3}
       propertyPath: popup
@@ -4857,12 +4856,27 @@ PrefabInstance:
     - target: {fileID: 6989738295210304788, guid: 2d8175f15ccf8444eaa5b90b960ace00,
         type: 3}
       propertyPath: maxHealth
-      value: 20
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6989738295210304788, guid: 2d8175f15ccf8444eaa5b90b960ace00,
         type: 3}
       propertyPath: currentHealth
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989738295210304788, guid: 2d8175f15ccf8444eaa5b90b960ace00,
+        type: 3}
+      propertyPath: invincibilityFrame
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989738295210304788, guid: 2d8175f15ccf8444eaa5b90b960ace00,
+        type: 3}
+      propertyPath: currentStamina
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6989738295210304788, guid: 2d8175f15ccf8444eaa5b90b960ace00,
+        type: 3}
+      propertyPath: staminaRegenerationDelay
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d8175f15ccf8444eaa5b90b960ace00, type: 3}
@@ -10649,6 +10663,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6117571849652801091, guid: 9cc7530c641e3f543b3b59b249639c3e,
+        type: 3}
+      propertyPath: spriteStolenMedicine
+      value: 
+      objectReference: {fileID: 2592730141682180124, guid: ef9a997bbbae1db4180db4179978b422,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cc7530c641e3f543b3b59b249639c3e, type: 3}
 --- !u!4 &1129515913 stripped

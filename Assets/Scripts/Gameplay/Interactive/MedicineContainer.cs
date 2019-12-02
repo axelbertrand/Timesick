@@ -10,6 +10,9 @@
         // True if the medicine has not yet been stolen, false otherwise
         private bool hasMedicine = true;
 
+        [SerializeField]
+        private Sprite spriteStolenMedicine;
+
         private SpriteRenderer rd;
 
 
@@ -41,7 +44,7 @@
         {
             if (MedicineAvailable())
             {
-                return new UserAction("Voler", Button.INTERACT, new List<Button>() { Button.UP, Button.DOWN }, 3, () => mainCharacter.CollectMedicine(this));
+                return new UserAction("Voler", Button.INTERACT, new List<Button>() { Button.UP, Button.DOWN }, 3, () => OnMedicineStolen(mainCharacter));
             }
             else
             {
@@ -61,6 +64,12 @@
                 return false;
             }
                 
+        }
+
+        private void OnMedicineStolen(MainCharacter mc)
+        {
+            mc.CollectMedicine(this);
+            rd.sprite = spriteStolenMedicine;
         }
 
 
