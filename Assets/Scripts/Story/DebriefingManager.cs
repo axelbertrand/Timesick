@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Cawotte.Toolbox.Audio;
 
 public class DebriefingManager : MonoBehaviour
 {
@@ -21,11 +22,13 @@ public class DebriefingManager : MonoBehaviour
 
     public void StartLevel()
     {
+        AudioManager.Instance.PlayClickUISound();
         GameManager.Instance.LoadMainLevel();
     }
 
     public void ReturnToMenu()
     {
+        AudioManager.Instance.PlayClickUISound();
         GameManager.Instance.LoadMainMenu();
     }
 }
