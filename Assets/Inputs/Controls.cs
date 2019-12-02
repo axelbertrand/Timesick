@@ -20,9 +20,9 @@ public class @Controls : IInputActionCollection, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""3fb54419-f64d-4a1d-b367-1509d0f8a735"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -54,7 +54,7 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""name"": ""Sprint"",
                     ""type"": ""Value"",
                     ""id"": ""5c95f4c1-2654-413e-988c-885decc1e283"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Double"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
