@@ -32,6 +32,12 @@ namespace Cawotte.Toolbox.Audio
         {
             //PlayMusic("");
         }
+
+        public void PlayClickUISound()
+        {
+            player.PlaySound("ClickUI");
+        }
+
         public void PlaySound(string soundname)
         {
             GetComponent<AudioSourcePlayer>().PlaySound(soundname);

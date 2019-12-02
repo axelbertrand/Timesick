@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cawotte.Toolbox;
 using UnityEngine.UI;
+using Cawotte.Toolbox.Audio;
+using TMPro;
+
 public class UIManager : Singleton<UIManager>
 {
     public Timer timer;
     public Slider staminaBar;
     public GameObject componentsContainer;
     public GameObject gameOverContainer;
+    public TextMeshProUGUI gameOverText;
+    public float durationTimer = 40f;
+
     public GameObject escapedContainer;
     public GameObject playerObject;
 
     private void Start()
     {
-        timer.RunTimer();
+        timer.StartTimer(durationTimer);
         componentsContainer.SetActive(true);
         gameOverContainer.SetActive(false);
         escapedContainer.SetActive(false);
@@ -53,8 +59,9 @@ public class UIManager : Singleton<UIManager>
         timer.PauseTimer();
     }
 
-    public void ShowGameOver()
+    public void ShowGameOver(string gameOverMessage)
     {
+        gameOverText.text = gameOverMessage;
         playerObject.SetActive(false);
         HideUI();
         gameOverContainer.SetActive(true);
@@ -69,16 +76,19 @@ public class UIManager : Singleton<UIManager>
 
     public void OnClickQuit()
     {
+        AudioManager.Instance.PlayClickUISound();
         GameManager.Instance.LoadMainMenu();
     }
 
 
     public void OnClickRestart()
     {
+        AudioManager.Instance.PlayClickUISound();
         GameManager.Instance.LoadMainLevel();
     }
     public void OnClickDebrief()
     {
+        AudioManager.Instance.PlayClickUISound();
         GameManager.Instance.LoadDebriefing();
     }
 }

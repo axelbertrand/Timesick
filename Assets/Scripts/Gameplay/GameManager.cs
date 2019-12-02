@@ -124,9 +124,9 @@ public class GameManager : Singleton<GameManager>
         LoadDebriefing();
     }
 
-    public void OnDeath()
+    public void OnDeath(string gameOverMessage)
     {
-        UIManager.Instance.ShowGameOver();
+        UIManager.Instance.ShowGameOver(gameOverMessage);
     }
 
     public void OnEscape()

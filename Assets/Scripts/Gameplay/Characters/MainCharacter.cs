@@ -126,6 +126,8 @@ namespace uqac.timesick.gameplay
 
             OnPositionChange += (oldP, newP) => RotateToward(newP,false,true); //rotate on movement
 
+            OnPositionChange += (oldP, newP) => player.PlayRandomFromList("footsteps_l", false);
+
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
             OnHealthChange += UpdateDamageEffect;
@@ -502,7 +504,14 @@ namespace uqac.timesick.gameplay
 
         private void Die()
         {
-            GameManager.Instance.OnDeath();
+            if (currentHealth > 0)
+            {
+                GameManager.Instance.OnDeath("Game Over : Your time ran out!");
+            }
+            else
+            {
+                GameManager.Instance.OnDeath("Game Over : Your were killed!");
+            }
         }
 
         private void Escape()
