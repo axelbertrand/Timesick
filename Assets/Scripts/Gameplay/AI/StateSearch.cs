@@ -52,6 +52,7 @@
 
             stateMachine.Subject.GoTo(searchPosition);
 
+            stateMachine.Subject.SetLineOfSightAsReduced(true);
 
             stateMachine.Subject.ShowQuestionPopup();
 
@@ -61,6 +62,9 @@
 
         public override void EndState()
         {
+
+            stateMachine.Subject.SetLineOfSightAsReduced(false);
+
             stateMachine.Subject.SightSensor.OnPlayerSight -= StartShooting;
             stateMachine.Subject.HearingSensor.OnNoiseHeard -= searchPos;
 

@@ -33,11 +33,15 @@
 
         public override void StartState()
         {
+            //Make the guard rotate toward walking direction
             stateMachine.Subject.OnPositionChange +=
                 (oldP, newP) => stateMachine.Subject.RotateToward(newP); //rotate on movement
 
+            //On point patrolled, patrol a new point
             stateMachine.Subject.OnPatrolVisit += SetNewPatrolPoint;
-            stateMachine.Subject.SightSensor.OnPlayerSight += StartShooting;
+            //On player almost  spotted, looks for him.
+            stateMachine.Subject.SightSensor.OnPlayerSight += StartSearchingPlayer;
+            //On noise heard, looks for it.
             stateMachine.Subject.HearingSensor.OnNoiseHeard += StartSearching;
 
             StateMachine.Subject.StopMovement();
@@ -47,7 +51,7 @@
         public override void EndState()
         {
             stateMachine.Subject.HearingSensor.OnNoiseHeard -= StartSearching;
-            stateMachine.Subject.SightSensor.OnPlayerSight -= StartShooting;
+            stateMachine.Subject.SightSensor.OnPlayerSight -= StartSearchingPlayer;
             stateMachine.Subject.OnPatrolVisit -= SetNewPatrolPoint;
 
 
@@ -64,9 +68,9 @@
             }
         }
 
-        private void StartShooting(MainCharacter player)
+        private void StartSearchingPlayer(MainCharacter player)
         {
-            StateMachine.CurrentState = new StateShoot(player);
+            StateMachine.CurrentState = new StateSearch(player.Position);
         }
 
         private void StartSearching(Vector2 noiseSource)

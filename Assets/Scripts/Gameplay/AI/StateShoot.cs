@@ -32,7 +32,7 @@
 
             StateMachine.Subject.StopMovement();
 
-            StateMachine.Subject.SetLineOfSightAsExtended(true);
+            //StateMachine.Subject.SetLineOfSightAsExtended(true);
 
 
             stateMachine.Subject.ShowExclamationPopup();
@@ -49,7 +49,7 @@
 
         public override void EndState()
         {
-            StateMachine.Subject.SetLineOfSightAsExtended(false);
+            //StateMachine.Subject.SetLineOfSightAsExtended(false);
             stateMachine.Subject.SightSensor.OnPlayerLostOfSight -= SearchForPlayer;
         }
 

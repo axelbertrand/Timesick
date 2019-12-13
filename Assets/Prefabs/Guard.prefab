@@ -156,8 +156,8 @@ MonoBehaviour:
     - Name: stateMachine
       Entry: 6
       Data: 
-  walkingSpeed: 6
-  sprintingSpeed: 9
+  walkingSpeed: 5
+  sprintingSpeed: 8
   rotateSpeed: 10
   currentHealth: 10
   maxHealth: 10
@@ -165,7 +165,7 @@ MonoBehaviour:
   animator: {fileID: 3736259798234048350}
   bulletPrefab: {fileID: 4576605814438244910, guid: aa6a6e9bd510af54584f4a5cf65303d1,
     type: 3}
-  shootLineOfSightMultiplier: 1.5
+  reducedLineOfSight: 0.7
   rateOfFire: 8
   pathToFollow:
     path: []

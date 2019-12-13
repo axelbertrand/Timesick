@@ -20,7 +20,7 @@ namespace uqac.timesick.gameplay
 
         [Title("Sensor")]
         [SerializeField]
-        private float shootLineOfSightMultiplier = 1.5f;
+        private float reducedLineOfSight = 0.7f;
 
         [Title("Shooting")]
         [SerializeField]
@@ -230,15 +230,15 @@ namespace uqac.timesick.gameplay
         /// Extended size is only used for SHOOTING to avoid lose of sight too fast.
         /// </summary>
         /// <param name="isExtended"></param>
-        public void SetLineOfSightAsExtended(bool isExtended)
+        public void SetLineOfSightAsReduced(bool isExtended)
         {
             if (!isExtended)
             {
-                sightSensor.MultiplySizeSight(1f / shootLineOfSightMultiplier);
+                sightSensor.MultiplySizeSight(1f / reducedLineOfSight);
             }
             else
             {
-                sightSensor.MultiplySizeSight(shootLineOfSightMultiplier);
+                sightSensor.MultiplySizeSight(reducedLineOfSight);
             }
         }
 
@@ -263,12 +263,14 @@ namespace uqac.timesick.gameplay
 
         public void ShowExclamationPopup()
         {
+            questionMarkPopup.Hide();
             exclamationMarkPopup.Show();
         }
 
 
         public void ShowQuestionPopup()
         {
+            exclamationMarkPopup.Hide();
             questionMarkPopup.Show();
         }
 

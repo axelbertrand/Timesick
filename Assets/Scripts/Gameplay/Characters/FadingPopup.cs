@@ -77,6 +77,13 @@ public class FadingPopup : MonoBehaviour
         AudioManager.Instance.PlaySound(noiseOnShow);
     }
 
+    public void Hide()
+    {
+        timer = 0f;
+        state = StatePopup.INVISIBLE;
+        SetAlpha(0f);
+    }
+
     private void SetAlpha(float alpha)
     {
         Color temp = sr.color;
