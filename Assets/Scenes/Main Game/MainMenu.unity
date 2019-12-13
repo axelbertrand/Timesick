@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 920809505}
   - component: {fileID: 920809507}
   - component: {fileID: 920809506}
+  - component: {fileID: 920809508}
   m_Layer: 5
   m_Name: Timesick LOGO
   m_TagString: Untagged
@@ -224,10 +225,10 @@ RectTransform:
   m_Father: {fileID: 1315121568}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.8, y: -78.8}
-  m_SizeDelta: {x: 162, y: 152.8}
+  m_AnchorMin: {x: 0.3771962, y: 0.46269864}
+  m_AnchorMax: {x: 0.6247304, y: 1}
+  m_AnchoredPosition: {x: 15.208878, y: 6.354395}
+  m_SizeDelta: {x: -38.299988, y: 0}
   m_Pivot: {x: 0.43840027, y: 0.5885987}
 --- !u!114 &920809506
 MonoBehaviour:
@@ -265,6 +266,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 920809504}
   m_CullTransparentMesh: 0
+--- !u!114 &920809508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920809504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 1
+  m_AspectRatio: 1.0609626
 --- !u!1 &1068900311
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,10 +314,10 @@ RectTransform:
   m_Father: {fileID: 1315121568}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 12.5, y: 45}
-  m_SizeDelta: {x: 183.4, y: 64.3}
+  m_AnchorMin: {x: 0.3707777, y: 0}
+  m_AnchorMax: {x: 0.6247304, y: 0.22684933}
+  m_AnchoredPosition: {x: 9, y: -4}
+  m_SizeDelta: {x: -30.599976, y: -31.699997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1068900313
 MonoBehaviour:
@@ -594,10 +609,10 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 26
+  m_fontSize: 60.25
   m_fontSizeBase: 26
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -632,7 +647,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 5.9503937, y: 5.100357, z: 5.9503784, w: 5.52536}
+  m_margin: {x: 16.016464, y: 10.43222, z: 15.79715, w: 10.857269}
   m_textInfo:
     textComponent: {fileID: 1365487769}
     characterCount: 4
@@ -833,10 +848,10 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 26
+  m_fontSize: 63.4
   m_fontSizeBase: 26
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -871,7 +886,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 11.912537, y: 7.6580734, z: 9.359894, w: 7.6580887}
+  m_margin: {x: 12.759644, y: 11.04644, z: 11.901123, w: 11.046425}
   m_textInfo:
     textComponent: {fileID: 1617308527}
     characterCount: 4
@@ -939,10 +954,10 @@ RectTransform:
   m_Father: {fileID: 1315121568}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 12.5, y: 129.6}
-  m_SizeDelta: {x: 183.4, y: 69.5}
+  m_AnchorMin: {x: 0.3771962, y: 0.22684933}
+  m_AnchorMax: {x: 0.6247304, y: 0.46269864}
+  m_AnchoredPosition: {x: 5.4999, y: -11}
+  m_SizeDelta: {x: -27.600006, y: -31.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1842941790
 MonoBehaviour:
@@ -1243,7 +1258,7 @@ PrefabInstance:
     - target: {fileID: 6575074037372926894, guid: 17e740c89a15b124eb0070778e31aa97,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000030517578
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6575074037372926894, guid: 17e740c89a15b124eb0070778e31aa97,
         type: 3}
