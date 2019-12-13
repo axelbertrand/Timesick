@@ -5,16 +5,25 @@ using Cawotte.Toolbox;
 using UnityEngine.UI;
 using Cawotte.Toolbox.Audio;
 using TMPro;
+using Sirenix.OdinInspector;
 
 public class UIManager : Singleton<UIManager>
 {
-    public Timer timer;
-    public Slider staminaBar;
+
+    [Title("Gameplay UI")]
     public GameObject componentsContainer;
-    public GameObject gameOverContainer;
-    public TextMeshProUGUI gameOverText;
+    public Slider staminaBar;
+    public Timer timer;
     public float durationTimer = 40f;
 
+    public Image trapDisabledImage;
+    public Image invisiblityDisabledImage;
+
+    [Title("Game Over Screen")]
+    public GameObject gameOverContainer;
+    public TextMeshProUGUI gameOverText;
+
+    [Title("Other")]
     public GameObject escapedContainer;
     public GameObject playerObject;
 
@@ -72,6 +81,16 @@ public class UIManager : Singleton<UIManager>
         playerObject.SetActive(false);
         HideUI();
         escapedContainer.SetActive(true);
+    }
+
+    public void SetTrapEnabled(bool enable)
+    {
+        trapDisabledImage.gameObject.SetActive(!enable);
+    }
+
+    public void SetInvisibilityEnabled(bool enable)
+    {
+        invisiblityDisabledImage.gameObject.SetActive(!enable);
     }
 
     public void OnClickQuit()

@@ -13,9 +13,6 @@ namespace uqac.timesick.gameplay
 {
     public class MainCharacter : Character, IDetectable
     {
-        [BoxGroup("Stamina bar"), SerializeField]
-        [ProgressBar(0, "maxStamina", ColorMember = "GetStaminaBarColor", Segmented = true)]
-        private int currentStamina;
 
         #region Variables
         #region Public
@@ -45,12 +42,14 @@ namespace uqac.timesick.gameplay
         //same
         [SerializeField]
         private float timeBetweenFootsteps = 0.5f;
-        [SerializeField]
-        private int noiseDeviceCost;
 
         //bool waitingTheMole = true;
         #endregion
         #endregion
+
+        [BoxGroup("Stamina bar"), SerializeField]
+        [ProgressBar(0, "maxStamina", ColorMember = "GetStaminaBarColor", Segmented = true)]
+        private int currentStamina;
 
         [BoxGroup("Stamina bar"), SerializeField]
         private int maxStamina = 10;
@@ -68,15 +67,20 @@ namespace uqac.timesick.gameplay
         [BoxGroup("Stamina bar"), SerializeField]
         private float staminaRegenerationInterval = 1f;
 
-        [BoxGroup("Invisibility"), SerializeField]
+        [BoxGroup("Invisibility Skill"), SerializeField]
         [ProgressBar(0, "maxStamina", ColorMember = "GetStaminaBarColor", Segmented = true)]
         private int invisibilityCost = 1;
 
-        [BoxGroup("Invisibility"), SerializeField]
+        [BoxGroup("Invisibility Skill"), SerializeField]
         private float invisibilityTime = 2f;
 
-        [BoxGroup("Invisibility"), SerializeField, ReadOnly]
+        [BoxGroup("Invisibility Skill"), SerializeField, ReadOnly]
         private bool isInvisible = false;
+
+
+        [BoxGroup("Noise Trap Skill"), SerializeField]
+        [ProgressBar(0, "maxStamina", ColorMember = "GetStaminaBarColor", Segmented = true)]
+        private int noiseDeviceCost = 1;
 
         private SpriteRenderer spriteRenderer;
 
@@ -134,6 +138,7 @@ namespace uqac.timesick.gameplay
 
             OnHealthChange += UpdateDamageEffect;
             OnStaminaChange += UpdateStaminaBar;
+            OnStaminaChange += UpdateSkillAvailability;
         }
 
         // Update is called once per frame
@@ -148,6 +153,8 @@ namespace uqac.timesick.gameplay
             UIManager.Instance.InitializeStaminaBar(maxStamina,currentStamina);
             OnDeath += Die;
             OnEscape += Escape;
+
+            CurrentStamina = CurrentStamina; //Trigger OnChange updates
         }
 
         private void OnEnable()
@@ -511,6 +518,12 @@ namespace uqac.timesick.gameplay
         private void UpdateStaminaBar(int oldValue,int newValue)
         {
             UIManager.Instance.UpdateBar(newValue);
+        }
+
+        private void UpdateSkillAvailability(int oldValue, int newValue)
+        {
+            UIManager.Instance.SetInvisibilityEnabled(newValue >= invisibilityCost);
+            UIManager.Instance.SetTrapEnabled(newValue >= noiseDeviceCost);
         }
 
         private void Die()
